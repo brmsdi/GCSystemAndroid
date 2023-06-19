@@ -9,6 +9,6 @@ import com.brmsdi.gcsystem.data.listeners.APIEventStringAndJSON
  * @since 1
  */
 
-interface EmployeeRepository : CallRepository {
+interface EmployeeRepository : CallRepository, LoginRepository {
     fun requestCode(email : String, apiEvent: APIEventStringAndJSON)
 }

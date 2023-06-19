@@ -10,6 +10,5 @@ import com.brmsdi.gcsystem.ui.utils.Token
  */
 
 interface LoginRepository : CallRepository {
-    fun authenticateEmployee(cpf: String, password: String, apiEvent: APIEvent<Token>)
-    fun authenticateLessee(cpf: String, password: String, apiEvent: APIEvent<Token>)
+    fun authenticate(cpf: String, password: String, apiEvent: APIEvent<Token>)
 }
