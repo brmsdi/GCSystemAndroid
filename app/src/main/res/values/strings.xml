@@ -46,4 +46,5 @@
     <string name="update_password">Atualizar senha de acesso</string>
     <string name="field_email_empty">"Preencha o campo E-mail! "</string>
     <string name="MESSAGE_EMAIL_NOT_EXISTS">"Nenhum registro encontrado com esse E-mail. "</string>
+    <string name="invalide_type_auth">"Tipo de autenticação inválido: "</string>
 </resources>

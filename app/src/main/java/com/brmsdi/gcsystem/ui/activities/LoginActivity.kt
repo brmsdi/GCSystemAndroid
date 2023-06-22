@@ -8,13 +8,16 @@ import android.view.View.OnClickListener
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.brmsdi.gcsystem.R
+import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
 import com.brmsdi.gcsystem.databinding.ActivityLoginBinding
-import com.brmsdi.gcsystem.ui.fragments.SendEmailChangePasswordFragment
+import com.brmsdi.gcsystem.ui.utils.AuthType.*
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.cpfIsValid
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.setMaxLength
 import com.brmsdi.gcsystem.ui.viewmodels.LoginViewModel
+import org.koin.android.ext.android.get
+import org.koin.core.qualifier.named
 
 /**
  *
@@ -22,7 +25,7 @@ import com.brmsdi.gcsystem.ui.viewmodels.LoginViewModel
  * @since 1
  */
 
-class LoginActivity : AppCompatActivity(), OnClickListener {
+class LoginActivity : TypedActivity(), OnClickListener {
     private lateinit var binding : ActivityLoginBinding
     private val itemList = mutableListOf<String>()
     private lateinit var loginViewModel: LoginViewModel
@@ -70,7 +73,8 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             displayMessage(applicationContext, getString(R.string.cpf_invalid))
             return
         }
-        loginViewModel.authenticate(cpf, password, typeAuth)
+        val repository = getRepositoryTypeAuth(typeAuth)
+        loginViewModel.authenticate(cpf, password, repository)
     }
 
     private fun addAction() {

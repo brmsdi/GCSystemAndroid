@@ -76,7 +76,10 @@ class SendEmailChangePasswordFragment private constructor() : BaseFragment(), On
                 displayMessage(this.requireContext(), it.errors[0].message)
             } else {
                 val fragment = SendCodeFragment.newInstance()
-                initSendCodeFragment(fragment)
+                val bundle = Bundle()
+                val changePasswordData = ChangePasswordData(email = this.email, typeAuth = this.typeAuth)
+                bundle.putParcelable(CHANGE_PASSWORD_DATA, changePasswordData)
+                initSendCodeFragment(fragment, bundle)
             }
         } // END responseRequest
 
@@ -85,10 +88,7 @@ class SendEmailChangePasswordFragment private constructor() : BaseFragment(), On
         } // END errorMessage
     }
 
-    private fun initSendCodeFragment(fragment: Fragment) {
-        val bundle = Bundle()
-        val changePasswordData = ChangePasswordData(email = this.email, typeAuth = this.typeAuth)
-        bundle.putParcelable(CHANGE_PASSWORD_DATA, changePasswordData)
+    private fun initSendCodeFragment(fragment: Fragment, bundle: Bundle) {
         fragment.arguments = bundle
         replaceFragment(R.id.fragment_container, fragment)
     }

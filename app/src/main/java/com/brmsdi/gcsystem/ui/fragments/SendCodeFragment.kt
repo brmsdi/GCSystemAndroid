@@ -11,9 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.constants.Constant.AUTH.CHANGE_PASSWORD_DATA
-import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
 import com.brmsdi.gcsystem.databinding.FragmentSendCodeBinding
 import com.brmsdi.gcsystem.ui.utils.AuthType.*
 import com.brmsdi.gcsystem.ui.utils.ChangePasswordData
@@ -21,10 +21,8 @@ import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.setMaxLength
 import com.brmsdi.gcsystem.ui.viewmodels.SendCodeViewModel
-import org.koin.android.ext.android.get
-import org.koin.core.qualifier.named
 
-class SendCodeFragment : BaseFragment(), View.OnClickListener {
+class SendCodeFragment : TypedFragment(), View.OnClickListener {
 
     companion object {
         fun newInstance() = SendCodeFragment()
@@ -91,14 +89,20 @@ class SendCodeFragment : BaseFragment(), View.OnClickListener {
         setMaxLength(_binding.editCode2, 1)
         setMaxLength(_binding.editCode3, 1)
         setMaxLength(_binding.editCode4, 1)
+        setMaxLength(_binding.editCode5, 1)
+        setMaxLength(_binding.editCode6, 1)
         addWatcher(_binding.editCode1, _binding.editCode2)
         addWatcher(_binding.editCode2, _binding.editCode3)
         addWatcher(_binding.editCode3, _binding.editCode4)
-        addWatcher(_binding.editCode4, null)
+        addWatcher(_binding.editCode4, _binding.editCode5)
+        addWatcher(_binding.editCode5, _binding.editCode6)
+        addWatcher(_binding.editCode6, null)
         editor(_binding.editCode1)
         editor(_binding.editCode2, _binding.editCode1)
         editor(_binding.editCode3, _binding.editCode2)
         editor(_binding.editCode4, _binding.editCode3)
+        editor(_binding.editCode5, _binding.editCode4)
+        editor(_binding.editCode6, _binding.editCode5)
     }
 
     private fun addAction() {
@@ -119,35 +123,41 @@ class SendCodeFragment : BaseFragment(), View.OnClickListener {
 
         changePasswordData?.let {
             it.code = assembleCode()
-            val repository = getRepositoryTypeAuth(it)
-            val w = "s"
+            val repository = getRepositoryTypeAuth(it.typeAuth)
             viewModel.sendCode(it, repository)
         }
     }
 
     private fun assembleCode(): String {
         return String.format(
-            "%s%s%s%s",
+            "%s%s%s%s%s%s",
             _binding.editCode1.text.toString(),
             _binding.editCode2.text.toString(),
             _binding.editCode3.text.toString(),
-            _binding.editCode4.text.toString()
+            _binding.editCode4.text.toString(),
+            _binding.editCode5.text.toString(),
+            _binding.editCode6.text.toString()
         )
     }
 
-    private fun getRepositoryTypeAuth(changePasswordData: ChangePasswordData): AuthenticableRepository {
-        return when (changePasswordData.typeAuth) {
-            getString(R.string.employee) -> get(named(EMPLOYEE.type))
-            getString(R.string.lessee) -> get(named(LESSEE.type))
-            else -> throw IllegalArgumentException("Tipo de autenticação inválido: ${changePasswordData.typeAuth}")
+    private fun observe() {
+        viewModel.validateModel.observe(viewLifecycleOwner) { validationModelWithToken ->
+            if (!validationModelWithToken.status()) {
+                displayMessage(this.requireContext(), validationModelWithToken.message())
+            } else {
+                validationModelWithToken.token()?.let {
+                    changePasswordData?.token = it.token
+                    val fragment = NewPasswordFragment.newInstance()
+                    val bundle = Bundle()
+                    bundle.putParcelable(CHANGE_PASSWORD_DATA, changePasswordData)
+                    initNewPasswordFragment(fragment, bundle)
+                }
+            }
         }
     }
 
-    private fun observe() {
-        viewModel.validateModel.observe(viewLifecycleOwner) {
-            if (!it.status()) {
-                displayMessage(this.requireContext(), it.message())
-            }
-        }
+    private fun initNewPasswordFragment(fragment: Fragment, bundle: Bundle) {
+        fragment.arguments = bundle
+        replaceFragment(R.id.fragment_container, fragment)
     }
 }

@@ -10,4 +10,4 @@ import kotlinx.parcelize.Parcelize
  */
 
 @Parcelize
-class ChangePasswordData(var email: String = "", var code: String = "", var typeAuth: String) : Parcelable {}
+class ChangePasswordData(var email: String = "", var code: String = "", var typeAuth: String, var token: String = "") : Parcelable {}

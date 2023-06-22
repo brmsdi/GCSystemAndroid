@@ -75,16 +75,7 @@ class LoginViewModel(application : Application) : AndroidViewModel(application) 
         }
     } */
 
-    fun authenticate(cpf: String, password: String, typeAuth: String) {
-        if (typeAuth == this.getApplication<Application>().getString(R.string.employee))
-        {
-            authenticate(cpf, password, EmployeeRepositoryImpl())
-        } else if (typeAuth == this.getApplication<Application>().getString(R.string.lessee)) {
-            authenticate(cpf, password, LesseeRepositoryImpl())
-        }
-    }
-
-    private fun authenticate(cpf: String, password: String, authenticableRepository : AuthenticableRepository) {
+    fun authenticate(cpf: String, password: String, authenticableRepository : AuthenticableRepository) {
         authenticableRepository.authenticate(cpf, password, object : APIEvent<Token> {
             override fun onResponse(model: Token) {
                 securityPreferences.story(TOKEN, model.token)

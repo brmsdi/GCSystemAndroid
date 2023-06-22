@@ -52,7 +52,6 @@ class SendCodeViewModel(application: Application) : AndroidViewModel(application
                     )
                 }
             }
-
         })
     }
 }

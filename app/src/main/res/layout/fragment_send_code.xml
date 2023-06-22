@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -48,8 +49,22 @@
         android:id="@+id/edit_code_4"
         style="@style/edit_code"
         android:autofillHints=""
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/edit_code_5"
         app:layout_constraintStart_toEndOf="@+id/edit_code_3" />
+
+    <EditText
+        android:id="@+id/edit_code_5"
+        style="@style/edit_code"
+        android:autofillHints=""
+        app:layout_constraintEnd_toStartOf="@id/edit_code_6"
+        app:layout_constraintStart_toEndOf="@+id/edit_code_4" />
+
+    <EditText
+        android:id="@+id/edit_code_6"
+        style="@style/edit_code"
+        android:autofillHints=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edit_code_5" />
 
     <Button
         android:id="@+id/button_send"
