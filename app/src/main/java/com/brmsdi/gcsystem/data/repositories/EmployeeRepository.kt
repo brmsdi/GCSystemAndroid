@@ -1,7 +1,5 @@
 package com.brmsdi.gcsystem.data.repositories
 
-import com.brmsdi.gcsystem.data.listeners.APIEventStringAndJSON
-
 
 /**
  *
@@ -9,6 +7,5 @@ import com.brmsdi.gcsystem.data.listeners.APIEventStringAndJSON
  * @since 1
  */
 
-interface EmployeeRepository : CallRepository, LoginRepository {
-    fun requestCode(email : String, apiEvent: APIEventStringAndJSON)
+interface EmployeeRepository : CallRepository, AuthenticableRepository {
 }

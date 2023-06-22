@@ -1,6 +1,6 @@
 package com.brmsdi.gcsystem.ui.utils
 
-class ValidationModel(messageError: String = "") {
+open class ValidationModel(messageError: String = "") {
     private var _status = true
     private var _messageValidation = ""
 

@@ -18,6 +18,7 @@ class Constant private constructor() {
 
     object AUTH {
         const val TOKEN = "TOKEN"
+        const val CHANGE_PASSWORD_DATA = "CHANGE_PASSWORD_DATA"
     }
 
     object ENDPOINT {
@@ -25,5 +26,7 @@ class Constant private constructor() {
         const val LOGIN_LESSEES = "login/lessees"
         const val REQUEST_CODE_EMPLOYEE = "employees/password/request-code"
         const val REQUEST_CODE_LESSEE = "lessees/password/request-code"
+        const val SEND_CODE_EMPLOYEE = "employees/password/receive-code"
+        const val SEND_CODE_LESSEES = "lessees/password/receive-code"
     }
 }

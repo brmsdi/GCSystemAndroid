@@ -7,8 +7,11 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import com.brmsdi.gcsystem.R
+import com.brmsdi.gcsystem.data.constants.Constant.AUTH.CHANGE_PASSWORD_DATA
 import com.brmsdi.gcsystem.databinding.FragmentSendEmailChangePasswordBinding
+import com.brmsdi.gcsystem.ui.utils.ChangePasswordData
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import com.brmsdi.gcsystem.ui.viewmodels.SendEmailChangePasswordViewModel
@@ -23,6 +26,8 @@ class SendEmailChangePasswordFragment private constructor() : BaseFragment(), On
     private lateinit var _binding: FragmentSendEmailChangePasswordBinding
     private lateinit var viewModel: SendEmailChangePasswordViewModel
     private val itemList = mutableListOf<String>()
+    private var email = ""
+    private var typeAuth = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,8 +60,8 @@ class SendEmailChangePasswordFragment private constructor() : BaseFragment(), On
     }
 
     private fun send() {
-        val email = _binding.editSendEmail.text.toString()
-        val typeAuth = _binding.spinnerTypeAuth.selectedItem.toString()
+        email = _binding.editSendEmail.text.toString()
+        typeAuth = _binding.spinnerTypeAuth.selectedItem.toString()
         if (!fieldsIsNotEmpty(email, typeAuth)) {
             displayMessage(this.requireContext(), getString(R.string.field_email_empty))
             return
@@ -70,13 +75,21 @@ class SendEmailChangePasswordFragment private constructor() : BaseFragment(), On
             if (it.status != HttpsURLConnection.HTTP_OK) {
                 displayMessage(this.requireContext(), it.errors[0].message)
             } else {
-                replaceFragment(R.id.fragment_container, SendCodeFragment.newInstance())
+                val fragment = SendCodeFragment.newInstance()
+                initSendCodeFragment(fragment)
             }
         } // END responseRequest
 
         viewModel.errorMessage.observe(this.viewLifecycleOwner) {
             displayMessage(this.requireContext(), it)
         } // END errorMessage
+    }
 
+    private fun initSendCodeFragment(fragment: Fragment) {
+        val bundle = Bundle()
+        val changePasswordData = ChangePasswordData(email = this.email, typeAuth = this.typeAuth)
+        bundle.putParcelable(CHANGE_PASSWORD_DATA, changePasswordData)
+        fragment.arguments = bundle
+        replaceFragment(R.id.fragment_container, fragment)
     }
 }

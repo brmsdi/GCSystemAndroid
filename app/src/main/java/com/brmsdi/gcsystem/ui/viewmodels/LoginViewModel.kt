@@ -8,7 +8,7 @@ import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.constants.Constant.AUTH.TOKEN
 import com.brmsdi.gcsystem.data.listeners.APIEvent
 import com.brmsdi.gcsystem.data.remote.retrofit.RetrofitClient
-import com.brmsdi.gcsystem.data.repositories.LoginRepository
+import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
 import com.brmsdi.gcsystem.data.repositories.impl.EmployeeRepositoryImpl
 import com.brmsdi.gcsystem.data.repositories.impl.LesseeRepositoryImpl
 import com.brmsdi.gcsystem.data.security.SecurityPreferences
@@ -84,8 +84,8 @@ class LoginViewModel(application : Application) : AndroidViewModel(application) 
         }
     }
 
-    private fun authenticate(cpf: String, password: String, loginRepository : LoginRepository) {
-        loginRepository.authenticate(cpf, password, object : APIEvent<Token> {
+    private fun authenticate(cpf: String, password: String, authenticableRepository : AuthenticableRepository) {
+        authenticableRepository.authenticate(cpf, password, object : APIEvent<Token> {
             override fun onResponse(model: Token) {
                 securityPreferences.story(TOKEN, model.token)
                 RetrofitClient.addToken(model.token)
