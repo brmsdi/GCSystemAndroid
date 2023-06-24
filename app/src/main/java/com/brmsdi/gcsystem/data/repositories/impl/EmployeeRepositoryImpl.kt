@@ -1,5 +1,6 @@
 package com.brmsdi.gcsystem.data.repositories.impl
 
+import com.brmsdi.gcsystem.data.dto.TokenChangePasswordDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
 import com.brmsdi.gcsystem.data.listeners.APIEventStringAndJSON
 import com.brmsdi.gcsystem.data.remote.retrofit.RetrofitClient
@@ -28,5 +29,12 @@ class EmployeeRepositoryImpl : EmployeeRepository {
 
     override fun sendCode(changePasswordData: ChangePasswordData, apiEvent: APIEvent<Token>) {
         call(employeeService.sendCode(changePasswordData.email, changePasswordData.code), apiEvent)
+    }
+
+    override fun changePassword(
+        tokenChangePasswordDTO: TokenChangePasswordDTO,
+        event: APIEventStringAndJSON
+    ) {
+        callStringAndJson(employeeService.changePassword(tokenChangePasswordDTO), event)
     }
 }

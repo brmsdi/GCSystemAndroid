@@ -47,4 +47,8 @@
     <string name="field_email_empty">"Preencha o campo E-mail! "</string>
     <string name="MESSAGE_EMAIL_NOT_EXISTS">"Nenhum registro encontrado com esse E-mail. "</string>
     <string name="invalide_type_auth">"Tipo de autenticação inválido: "</string>
+    <string name="types_empty">Sem tipos definidos</string>
+    <string name="passwords_not_equals">"As senhas digitadas não correspondem. Tente novamente! "</string>
+    <string name="password_empty">"Por favor, preencha os campos “senha” e “Repetir senha”."</string>
+    <string name="minimum_size_password">"A senha deve conter no mínimo 8 caracteres. "</string>
 </resources>

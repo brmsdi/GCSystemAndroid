@@ -28,5 +28,7 @@ class Constant private constructor() {
         const val REQUEST_CODE_LESSEE = "lessees/password/request-code"
         const val SEND_CODE_EMPLOYEE = "employees/password/receive-code"
         const val SEND_CODE_LESSEES = "lessees/password/receive-code"
+        const val CHANGE_PASSWORD_EMPLOYEE = "employees/password/change"
+        const val CHANGE_PASSWORD_LESSEE = "lessees/password/change"
     }
 }

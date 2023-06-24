@@ -10,4 +10,6 @@ import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
 
 interface TypedAuth {
     fun getRepositoryTypeAuth(typeAuth: String): AuthenticableRepository
+
+    fun setTypes(types: Map<String, String>)
 }

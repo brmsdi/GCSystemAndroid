@@ -19,17 +19,15 @@ import javax.net.ssl.HttpsURLConnection
 
 class SendEmailChangePasswordViewModel(application: Application) : AndroidViewModel(application) {
     private val _responseRequest = MutableLiveData<ResponseRequest>()
-    val responseRequest : LiveData<ResponseRequest> = _responseRequest
+    val responseRequest: LiveData<ResponseRequest> = _responseRequest
     private val _errorMessage = MutableLiveData<String>()
-    val errorMessage : LiveData<String> = _errorMessage
-    private val employeeRepository : EmployeeRepository = EmployeeRepositoryImpl()
-    private val lesseeRepository : LesseeRepository = LesseeRepositoryImpl()
-
+    val errorMessage: LiveData<String> = _errorMessage
+    private val employeeRepository: EmployeeRepository = EmployeeRepositoryImpl()
+    private val lesseeRepository: LesseeRepository = LesseeRepositoryImpl()
     private var executor: Executor = Executors.newSingleThreadExecutor()
 
     fun requestCode(email: String, typeAuth: String) {
-        if (typeAuth == this.getApplication<Application>().getString(R.string.employee))
-        {
+        if (typeAuth == this.getApplication<Application>().getString(R.string.employee)) {
             executor.execute {
                 requestCodeEmployee(email)
             }
@@ -40,7 +38,7 @@ class SendEmailChangePasswordViewModel(application: Application) : AndroidViewMo
         }
     }
 
-    private fun requestCodeEmployee(email : String) {
+    private fun requestCodeEmployee(email: String) {
         employeeRepository.requestCode(email, object : APIEventStringAndJSON {
             override fun onSuccess() {
                 val responseRequest = ResponseRequest()
@@ -58,7 +56,7 @@ class SendEmailChangePasswordViewModel(application: Application) : AndroidViewMo
         })
     }
 
-    private fun requestCodeLessee(email : String) {
+    private fun requestCodeLessee(email: String) {
         lesseeRepository.requestCode(email, object : APIEventStringAndJSON {
             override fun onSuccess() {
                 val responseRequest = ResponseRequest()

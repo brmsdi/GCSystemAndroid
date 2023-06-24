@@ -1,14 +1,12 @@
 package com.brmsdi.gcsystem.ui.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.brmsdi.gcsystem.R
-import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
 import com.brmsdi.gcsystem.databinding.ActivityLoginBinding
 import com.brmsdi.gcsystem.ui.utils.AuthType.*
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.cpfIsValid
@@ -16,8 +14,6 @@ import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.setMaxLength
 import com.brmsdi.gcsystem.ui.viewmodels.LoginViewModel
-import org.koin.android.ext.android.get
-import org.koin.core.qualifier.named
 
 /**
  *
@@ -54,6 +50,14 @@ class LoginActivity : TypedActivity(), OnClickListener {
         {
             initChangePassword()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val newTypes : HashMap<String, String> = hashMapOf()
+        newTypes[getString(R.string.employee)] = EMPLOYEE.type
+        newTypes[getString(R.string.lessee)] = LESSEE.type
+        setTypes(newTypes)
     }
 
     private fun loginHandle() {

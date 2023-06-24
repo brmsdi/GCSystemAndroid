@@ -1,5 +1,6 @@
 package com.brmsdi.gcsystem.data.repositories
 
+import com.brmsdi.gcsystem.data.dto.TokenChangePasswordDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
 import com.brmsdi.gcsystem.data.listeners.APIEventStringAndJSON
 import com.brmsdi.gcsystem.ui.utils.ChangePasswordData
@@ -18,4 +19,6 @@ interface AuthenticableRepository : CallRepository {
     fun requestCode(email: String, event: APIEventStringAndJSON)
 
     fun sendCode(changePasswordData: ChangePasswordData, apiEvent: APIEvent<Token>)
+
+    fun changePassword(tokenChangePasswordDTO: TokenChangePasswordDTO, event:APIEventStringAndJSON)
 }

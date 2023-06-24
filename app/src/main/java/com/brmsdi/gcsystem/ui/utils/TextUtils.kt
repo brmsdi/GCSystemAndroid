@@ -53,6 +53,10 @@ class TextUtils {
             editText.filters = filters
         } // END setMaxLength
 
+        fun haveMinimumSize(text: String, min: UInt): Boolean {
+            return text.length >= min.toInt()
+        }
+
         fun cpfIsValid(value : String) : Boolean {
             return value.length == 11
         }

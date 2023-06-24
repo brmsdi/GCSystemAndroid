@@ -23,7 +23,6 @@ import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.setMaxLength
 import com.brmsdi.gcsystem.ui.viewmodels.SendCodeViewModel
 
 class SendCodeFragment : TypedFragment(), View.OnClickListener {
-
     companion object {
         fun newInstance() = SendCodeFragment()
     }
@@ -53,6 +52,13 @@ class SendCodeFragment : TypedFragment(), View.OnClickListener {
         return _binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        val newTypes : HashMap<String, String> = hashMapOf()
+        newTypes[getString(R.string.employee)] = EMPLOYEE.type
+        newTypes[getString(R.string.lessee)] = LESSEE.type
+        setTypes(newTypes)
+    }
     override fun onClick(view: View) {
         if (view.id == _binding.buttonSend.id) {
             //replaceFragment(R.id.fragment_container, NewPasswordFragment.newInstance())
