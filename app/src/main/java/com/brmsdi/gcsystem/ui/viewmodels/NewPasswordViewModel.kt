@@ -8,7 +8,7 @@ import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.dto.TokenChangePasswordDTO
 import com.brmsdi.gcsystem.data.listeners.APIEventStringAndJSON
 import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
-import com.brmsdi.gcsystem.ui.utils.ResponseRequest
+import com.brmsdi.gcsystem.data.dto.ResponseRequestDTO
 import com.brmsdi.gcsystem.ui.utils.TextUtils
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -16,8 +16,8 @@ import javax.net.ssl.HttpsURLConnection
 
 class NewPasswordViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _responseRequest = MutableLiveData<ResponseRequest>()
-    val responseRequest: LiveData<ResponseRequest> = _responseRequest
+    private val _responseRequestDTO = MutableLiveData<ResponseRequestDTO>()
+    val responseRequestDTO: LiveData<ResponseRequestDTO> = _responseRequestDTO
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
     private var executor: Executor = Executors.newSingleThreadExecutor()
@@ -31,16 +31,16 @@ class NewPasswordViewModel(application: Application) : AndroidViewModel(applicat
                 tokenChangePasswordDTO,
                 object : APIEventStringAndJSON {
                     override fun onSuccess() {
-                        val responseRequest = ResponseRequest()
-                        responseRequest.status = HttpsURLConnection.HTTP_OK
-                        _responseRequest.postValue(responseRequest)
+                        val responseRequestDTO = ResponseRequestDTO()
+                        responseRequestDTO.status = HttpsURLConnection.HTTP_OK
+                        _responseRequestDTO.postValue(responseRequestDTO)
                     }
 
                     override fun onError(errorString: String) {
-                        _responseRequest.postValue(
+                        _responseRequestDTO.postValue(
                             TextUtils.jsonToObject(
                                 errorString,
-                                ResponseRequest::class.java
+                                ResponseRequestDTO::class.java
                             )
                         )
                     }

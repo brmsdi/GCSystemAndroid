@@ -6,7 +6,7 @@
     android:background="@drawable/shape_background"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".ui.fragments.SendEmailChangePasswordFragment">
+    tools:context=".ui.fragments.SendEmailFragment">
 
     <TextView
         android:textStyle="bold"

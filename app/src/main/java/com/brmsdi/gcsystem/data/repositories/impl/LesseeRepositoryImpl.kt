@@ -7,8 +7,8 @@ import com.brmsdi.gcsystem.data.remote.retrofit.RetrofitClient
 import com.brmsdi.gcsystem.data.repositories.LesseeRepository
 import com.brmsdi.gcsystem.data.services.LesseeService
 import com.brmsdi.gcsystem.data.services.LoginService
-import com.brmsdi.gcsystem.ui.utils.ChangePasswordData
-import com.brmsdi.gcsystem.ui.utils.Token
+import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
+import com.brmsdi.gcsystem.data.dto.TokenDTO
 
 /**
  *
@@ -18,15 +18,15 @@ import com.brmsdi.gcsystem.ui.utils.Token
 class LesseeRepositoryImpl : LesseeRepository {
     private val lesseeService = RetrofitClient.createService(LesseeService::class.java)
     private val loginService = RetrofitClient.createService(LoginService::class.java)
-    override fun authenticate(cpf: String, password: String, apiEvent: APIEvent<Token>) {
+    override fun authenticate(cpf: String, password: String, apiEvent: APIEvent<TokenDTO>) {
         call(loginService.loginLessee(cpf, password), apiEvent)
     }
     override fun requestCode(email: String, event: APIEventStringAndJSON) {
         callStringAndJson(lesseeService.requestCode(email), event)
     }
 
-    override fun sendCode(changePasswordData: ChangePasswordData, apiEvent: APIEvent<Token>) {
-        call(lesseeService.sendCode(changePasswordData.email, changePasswordData.code), apiEvent)
+    override fun sendCode(changePasswordDataDTO: ChangePasswordDataDTO, apiEvent: APIEvent<TokenDTO>) {
+        call(lesseeService.sendCode(changePasswordDataDTO.email, changePasswordDataDTO.code), apiEvent)
     }
 
     override fun changePassword(

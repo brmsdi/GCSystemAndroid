@@ -26,4 +26,6 @@ open class TypedFragment : BaseFragment(), TypedAuth {
     override fun setTypes(types: Map<String, String>) {
         _types = types
     }
+
+    override fun getTypes(): Map<String, String> = _types
 }

@@ -12,4 +12,6 @@ interface TypedAuth {
     fun getRepositoryTypeAuth(typeAuth: String): AuthenticableRepository
 
     fun setTypes(types: Map<String, String>)
+
+    fun getTypes(): Map<String, String>
 }

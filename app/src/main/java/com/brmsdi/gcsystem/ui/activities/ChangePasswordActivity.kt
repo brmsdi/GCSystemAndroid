@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.databinding.ActivityChangePasswordBinding
-import com.brmsdi.gcsystem.ui.fragments.SendEmailChangePasswordFragment
+import com.brmsdi.gcsystem.ui.fragments.SendEmailFragment
 
 class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var _binding : ActivityChangePasswordBinding
@@ -14,7 +14,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //supportActionBar?.hide()
         _binding = ActivityChangePasswordBinding.inflate(layoutInflater)
-        replaceFragment(SendEmailChangePasswordFragment.newInstance())
+        replaceFragment(SendEmailFragment.newInstance())
         setContentView(_binding.root)
     }
 

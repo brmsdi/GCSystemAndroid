@@ -16,20 +16,29 @@ import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.constants.Constant.AUTH.CHANGE_PASSWORD_DATA
 import com.brmsdi.gcsystem.databinding.FragmentSendCodeBinding
 import com.brmsdi.gcsystem.ui.utils.AuthType.*
-import com.brmsdi.gcsystem.ui.utils.ChangePasswordData
+import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
+import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
+import com.brmsdi.gcsystem.ui.utils.LoadChangePasswordData
+import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.assembleCode
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.setMaxLength
 import com.brmsdi.gcsystem.ui.viewmodels.SendCodeViewModel
 
-class SendCodeFragment : TypedFragment(), View.OnClickListener {
+class SendCodeFragment : TypedFragment(), View.OnClickListener, LoadChangePasswordData {
     companion object {
         fun newInstance() = SendCodeFragment()
     }
 
     private lateinit var _binding: FragmentSendCodeBinding
     private lateinit var viewModel: SendCodeViewModel
-    private var changePasswordData: ChangePasswordData? = null
+    private var changePasswordDataDTO: ChangePasswordDataDTO? = null
+    private var code1 = ""
+    private var code2 = ""
+    private var code3 = ""
+    private var code4 = ""
+    private var code5 = ""
+    private var code6 = ""
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
@@ -39,31 +48,87 @@ class SendCodeFragment : TypedFragment(), View.OnClickListener {
     ): View {
         _binding = FragmentSendCodeBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[SendCodeViewModel::class.java]
-        arguments.let {
-            changePasswordData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                it!!.getParcelable(CHANGE_PASSWORD_DATA, ChangePasswordData::class.java)
-            } else {
-                it!!.getParcelable(CHANGE_PASSWORD_DATA)
-            }
-        }
+        changePasswordDataDTO = loadChangePasswordData(arguments)
+        addTypes()
         actionsEditCode()
         addAction()
         observe()
         return _binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        val newTypes : HashMap<String, String> = hashMapOf()
+    private fun observe() {
+        viewModel.validateModel.observe(viewLifecycleOwner) { validationModelWithToken ->
+            if (!validationModelWithToken.status()) {
+                displayMessage(this.requireContext(), validationModelWithToken.message())
+            } else {
+                validationModelWithToken.token()?.let {
+                    changePasswordDataDTO?.token = it.token
+                    val fragment = NewPasswordFragment.newInstance()
+                    val bundle = Bundle()
+                    bundle.putParcelable(CHANGE_PASSWORD_DATA, changePasswordDataDTO)
+                    initializeNewPasswordFragment(fragment, bundle)
+                }
+            }
+        }
+    }
+
+    override fun onClick(view: View) {
+        when (view.id) {
+            _binding.buttonSendCode.id ->  {
+                getFields()
+                if (fieldsIsCorrect(code1, code2, code3, code4, code5, code6)) sendCode()
+            }
+        }
+    }
+
+    private fun addAction() {
+        _binding.buttonSendCode.setOnClickListener(this)
+    }
+
+    private fun addTypes() {
+        val newTypes: HashMap<String, String> = hashMapOf()
         newTypes[getString(R.string.employee)] = EMPLOYEE.type
         newTypes[getString(R.string.lessee)] = LESSEE.type
         setTypes(newTypes)
     }
-    override fun onClick(view: View) {
-        if (view.id == _binding.buttonSendCode.id) {
-            //replaceFragment(R.id.fragment_container, NewPasswordFragment.newInstance())
-            sendCode()
+
+    private fun sendCode() {
+        changePasswordDataDTO?.let {
+            it.code = assembleCode(code1, code2, code3, code4, code5, code6).toString()
+            val repository = getRepositoryTypeAuth(it.typeAuth)
+            sendCode(it, repository)
         }
+    }
+
+    private fun sendCode(
+        changePasswordDataDTO: ChangePasswordDataDTO,
+        repository: AuthenticableRepository
+    ) {
+        viewModel.sendCode(changePasswordDataDTO, repository)
+    }
+
+    private fun getFields() {
+        code1 = _binding.editCode1.text.toString()
+        code2 = _binding.editCode2.text.toString()
+        code3 = _binding.editCode3.text.toString()
+        code4 = _binding.editCode4.text.toString()
+        code5 = _binding.editCode5.text.toString()
+        code6 = _binding.editCode6.text.toString()
+    }
+
+    private fun fieldsIsCorrect(vararg codes: String): Boolean {
+        for (code in codes) {
+            if (!fieldsIsNotEmpty(code)) {
+                displayMessage(this.requireContext(), getString(R.string.fields_empty))
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun initializeNewPasswordFragment(fragment: Fragment, bundle: Bundle) {
+        fragment.arguments = bundle
+        replaceFragment(R.id.fragment_container, fragment)
     }
 
     private fun addWatcher(currentEdit: EditText, nextEditText: EditText?) {
@@ -109,61 +174,5 @@ class SendCodeFragment : TypedFragment(), View.OnClickListener {
         editor(_binding.editCode4, _binding.editCode3)
         editor(_binding.editCode5, _binding.editCode4)
         editor(_binding.editCode6, _binding.editCode5)
-    }
-
-    private fun addAction() {
-        _binding.buttonSendCode.setOnClickListener(this)
-    }
-
-    private fun sendCode() {
-        if (!fieldsIsNotEmpty(
-                _binding.editCode1.text.toString(),
-                _binding.editCode2.text.toString(),
-                _binding.editCode3.text.toString(),
-                _binding.editCode4.text.toString()
-            )
-        ) {
-            displayMessage(this.requireContext(), getString(R.string.fields_empty))
-            return
-        }
-
-        changePasswordData?.let {
-            it.code = assembleCode()
-            val repository = getRepositoryTypeAuth(it.typeAuth)
-            viewModel.sendCode(it, repository)
-        }
-    }
-
-    private fun assembleCode(): String {
-        return String.format(
-            "%s%s%s%s%s%s",
-            _binding.editCode1.text.toString(),
-            _binding.editCode2.text.toString(),
-            _binding.editCode3.text.toString(),
-            _binding.editCode4.text.toString(),
-            _binding.editCode5.text.toString(),
-            _binding.editCode6.text.toString()
-        )
-    }
-
-    private fun observe() {
-        viewModel.validateModel.observe(viewLifecycleOwner) { validationModelWithToken ->
-            if (!validationModelWithToken.status()) {
-                displayMessage(this.requireContext(), validationModelWithToken.message())
-            } else {
-                validationModelWithToken.token()?.let {
-                    changePasswordData?.token = it.token
-                    val fragment = NewPasswordFragment.newInstance()
-                    val bundle = Bundle()
-                    bundle.putParcelable(CHANGE_PASSWORD_DATA, changePasswordData)
-                    initNewPasswordFragment(fragment, bundle)
-                }
-            }
-        }
-    }
-
-    private fun initNewPasswordFragment(fragment: Fragment, bundle: Bundle) {
-        fragment.arguments = bundle
-        replaceFragment(R.id.fragment_container, fragment)
     }
 }

@@ -1,6 +1,5 @@
 package com.brmsdi.gcsystem.ui.fragments
 
-import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,29 +7,27 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import com.brmsdi.gcsystem.R
-import com.brmsdi.gcsystem.data.constants.Constant
 import com.brmsdi.gcsystem.data.dto.TokenChangePasswordDTO
 import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
 import com.brmsdi.gcsystem.databinding.FragmentNewPasswordBinding
 import com.brmsdi.gcsystem.ui.utils.AuthType
-import com.brmsdi.gcsystem.ui.utils.ChangePasswordData
+import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
+import com.brmsdi.gcsystem.ui.utils.LoadChangePasswordData
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.haveMinimumSize
 import com.brmsdi.gcsystem.ui.viewmodels.NewPasswordViewModel
 import javax.net.ssl.HttpsURLConnection
 
-class NewPasswordFragment : TypedFragment(), OnClickListener {
+class NewPasswordFragment : TypedFragment(), OnClickListener, LoadChangePasswordData {
     companion object {
         fun newInstance() = NewPasswordFragment()
     }
-
     private lateinit var viewModel: NewPasswordViewModel
     private lateinit var _binding: FragmentNewPasswordBinding
     private var newPassword = ""
     private var passwordRepeat = ""
-    private var changePasswordData: ChangePasswordData? = null
-
+    private var changePasswordDataDTO: ChangePasswordDataDTO? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,14 +35,15 @@ class NewPasswordFragment : TypedFragment(), OnClickListener {
     ): View {
         viewModel = ViewModelProvider(this)[NewPasswordViewModel::class.java]
         _binding = FragmentNewPasswordBinding.inflate(inflater, container, false)
-        loadChangePasswordData()
+        changePasswordDataDTO = loadChangePasswordData(arguments)
+        addTypes()
         addAction()
         observe()
         return _binding.root
     }
 
     private fun observe() {
-        viewModel.responseRequest.observe(this.viewLifecycleOwner) {
+        viewModel.responseRequestDTO.observe(this.viewLifecycleOwner) {
             if (it.status != HttpsURLConnection.HTTP_OK) {
                 displayMessage(this.requireContext(), it.errors[0].message)
             } else {
@@ -60,34 +58,18 @@ class NewPasswordFragment : TypedFragment(), OnClickListener {
     }
 
     override fun onClick(view: View) {
-        if (view.id == _binding.buttonSendNewPassword.id) {
-            newPassword = _binding.editNewPassword.text.toString()
-            passwordRepeat = _binding.editNewPasswordRepeat.text.toString()
-            val result = filterPassword(
-                newPassword,
-                passwordRepeat
-            )
-
-            if (result.isNotEmpty()) {
-                displayMessage(this.requireContext(), result)
-                return
+        when (view.id) {
+            _binding.buttonSendNewPassword.id -> {
+                getFields()
+                if (isCorrectPasswordFields(newPassword, passwordRepeat)) save()
             }
-
-            save()
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        val newTypes : HashMap<String, String> = hashMapOf()
-        newTypes[getString(R.string.employee)] = AuthType.EMPLOYEE.type
-        newTypes[getString(R.string.lessee)] = AuthType.LESSEE.type
-        setTypes(newTypes)
-    }
-    private fun prepareToken(changePasswordData: ChangePasswordData): TokenChangePasswordDTO {
+    private fun prepareToken(changePasswordDataDTO: ChangePasswordDataDTO): TokenChangePasswordDTO {
         return TokenChangePasswordDTO(
-            changePasswordData.typeAuth,
-            changePasswordData.token,
+            changePasswordDataDTO.typeAuth,
+            changePasswordDataDTO.token,
             newPassword
         )
     }
@@ -96,49 +78,50 @@ class NewPasswordFragment : TypedFragment(), OnClickListener {
         _binding.buttonSendNewPassword.setOnClickListener(this)
     }
 
-    private fun filterPassword(newPassword: String, newPasswordRepeat: String): String {
+    private fun addTypes() {
+        val newTypes: HashMap<String, String> = hashMapOf()
+        newTypes[getString(R.string.employee)] = AuthType.EMPLOYEE.type
+        newTypes[getString(R.string.lessee)] = AuthType.LESSEE.type
+        setTypes(newTypes)
+    }
+    private fun getFields() {
+        newPassword = _binding.editNewPassword.text.toString()
+        passwordRepeat = _binding.editNewPasswordRepeat.text.toString()
+    }
+
+    private fun isCorrectPasswordFields(newPassword: String, newPasswordRepeat: String): Boolean {
         if (!fieldsIsNotEmpty(newPassword, newPasswordRepeat)) {
-            return getString(R.string.password_empty)
+            displayMessage(this.requireContext(), getString(R.string.password_empty))
+            return false
         }
 
         if (!passwordsIsEquals(newPassword, newPasswordRepeat)) {
             _binding.editNewPasswordRepeat.requestFocus()
-            return getString(R.string.passwords_not_equals)
+            displayMessage(this.requireContext(), getString(R.string.passwords_not_equals))
+            return false
         }
 
         if (!haveMinimumSize(newPassword, 8u)) {
-            return getString(R.string.minimum_size_password)
+            displayMessage(this.requireContext(), getString(R.string.minimum_size_password))
+            return false
         }
 
-        return ""
-
+        return true
     }
 
     private fun passwordsIsEquals(password: String, repeatPassword: String): Boolean {
         return password == repeatPassword
     }
 
-    @Deprecated("Melhorar")
     private fun save() {
-        val tokenChangePasswordDTO = changePasswordData?.let { prepareToken(it) }
-        val repository = changePasswordData?.let { getRepositoryTypeAuth(it.typeAuth) }
-        save(tokenChangePasswordDTO!!, repository!!)
+        changePasswordDataDTO?.let {
+            val tokenChangePasswordDTO = prepareToken(it)
+            val repository = getRepositoryTypeAuth(it.typeAuth)
+            save(tokenChangePasswordDTO, repository)
+        }
     }
 
     private fun save(tokenChangePasswordDTO: TokenChangePasswordDTO, repository: AuthenticableRepository) {
         viewModel.save(tokenChangePasswordDTO, repository)
-    }
-
-    private fun loadChangePasswordData() {
-        arguments.let {
-            changePasswordData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                it!!.getParcelable(
-                    Constant.AUTH.CHANGE_PASSWORD_DATA,
-                    ChangePasswordData::class.java
-                )
-            } else {
-                it!!.getParcelable(Constant.AUTH.CHANGE_PASSWORD_DATA)
-            }
-        }
     }
 }

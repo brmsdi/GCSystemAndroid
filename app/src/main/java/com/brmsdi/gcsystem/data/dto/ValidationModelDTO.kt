@@ -1,6 +1,6 @@
-package com.brmsdi.gcsystem.ui.utils
+package com.brmsdi.gcsystem.data.dto
 
-open class ValidationModel(messageError: String = "") {
+open class ValidationModelDTO(messageError: String = "") {
     private var _status = true
     private var _messageValidation = ""
 

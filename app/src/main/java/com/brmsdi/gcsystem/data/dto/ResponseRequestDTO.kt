@@ -1,4 +1,4 @@
-package com.brmsdi.gcsystem.ui.utils
+package com.brmsdi.gcsystem.data.dto
 
 import com.google.gson.annotations.SerializedName
 import java.sql.Timestamp
@@ -9,7 +9,7 @@ import java.sql.Timestamp
  * @since 1
  */
 
-class ResponseRequest {
+class ResponseRequestDTO {
 
     @SerializedName("timestamp")
     lateinit var timestamp : Timestamp
@@ -21,5 +21,5 @@ class ResponseRequest {
     lateinit var code : String
 
     @SerializedName("errors")
-    lateinit var errors : List<Error>
+    lateinit var errors : List<ErrorDTO>
 }

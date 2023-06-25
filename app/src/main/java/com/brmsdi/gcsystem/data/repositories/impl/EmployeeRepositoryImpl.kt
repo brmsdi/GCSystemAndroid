@@ -7,8 +7,8 @@ import com.brmsdi.gcsystem.data.remote.retrofit.RetrofitClient
 import com.brmsdi.gcsystem.data.repositories.EmployeeRepository
 import com.brmsdi.gcsystem.data.services.EmployeeService
 import com.brmsdi.gcsystem.data.services.LoginService
-import com.brmsdi.gcsystem.ui.utils.ChangePasswordData
-import com.brmsdi.gcsystem.ui.utils.Token
+import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
+import com.brmsdi.gcsystem.data.dto.TokenDTO
 
 /**
  *
@@ -19,7 +19,7 @@ class EmployeeRepositoryImpl : EmployeeRepository {
     private val employeeService = RetrofitClient.createService(EmployeeService::class.java)
     private val loginService = RetrofitClient.createService(LoginService::class.java)
 
-    override fun authenticate(cpf: String, password: String, apiEvent: APIEvent<Token>) {
+    override fun authenticate(cpf: String, password: String, apiEvent: APIEvent<TokenDTO>) {
         call(loginService.loginEmployee(cpf, password), apiEvent)
     }
 
@@ -27,8 +27,8 @@ class EmployeeRepositoryImpl : EmployeeRepository {
         callStringAndJson(employeeService.requestCode(email), event)
     }
 
-    override fun sendCode(changePasswordData: ChangePasswordData, apiEvent: APIEvent<Token>) {
-        call(employeeService.sendCode(changePasswordData.email, changePasswordData.code), apiEvent)
+    override fun sendCode(changePasswordDataDTO: ChangePasswordDataDTO, apiEvent: APIEvent<TokenDTO>) {
+        call(employeeService.sendCode(changePasswordDataDTO.email, changePasswordDataDTO.code), apiEvent)
     }
 
     override fun changePassword(

@@ -1,4 +1,4 @@
-package com.brmsdi.gcsystem.ui.utils
+package com.brmsdi.gcsystem.data.dto
 
 import com.google.gson.annotations.SerializedName
 
@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
  * @author Wisley Bruno Marques França
  * @since 1
  */
-class Token {
+class TokenDTO {
 
     @SerializedName("type")
     lateinit var type : String

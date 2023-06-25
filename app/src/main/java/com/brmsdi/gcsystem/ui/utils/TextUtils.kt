@@ -68,5 +68,13 @@ class TextUtils {
         fun <T> jsonToObject(value : String, c : Class<T>): T {
              return Gson().fromJson(value, c)
         }
+
+        fun assembleCode(vararg codes: String): StringBuilder {
+            val code = StringBuilder("")
+            codes.forEach {
+                code.append(it)
+            }
+            return code
+        }
     }
 }

@@ -7,33 +7,33 @@ import androidx.lifecycle.MutableLiveData
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.listeners.APIEvent
 import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
-import com.brmsdi.gcsystem.ui.utils.ChangePasswordData
-import com.brmsdi.gcsystem.ui.utils.ResponseRequest
+import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
+import com.brmsdi.gcsystem.data.dto.ResponseRequestDTO
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.jsonToObject
-import com.brmsdi.gcsystem.ui.utils.Token
-import com.brmsdi.gcsystem.ui.utils.ValidationModelWithToken
+import com.brmsdi.gcsystem.data.dto.TokenDTO
+import com.brmsdi.gcsystem.data.dto.ValidationModelWithTokenDTO
 import retrofit2.Response
 import java.net.ConnectException
 
 class SendCodeViewModel(application: Application) : AndroidViewModel(application) {
-    private val _validateModel = MutableLiveData<ValidationModelWithToken>()
-    val validateModel: LiveData<ValidationModelWithToken> = _validateModel
+    private val _validateModel = MutableLiveData<ValidationModelWithTokenDTO>()
+    val validateModel: LiveData<ValidationModelWithTokenDTO> = _validateModel
 
     fun sendCode(
-        changePasswordData: ChangePasswordData,
+        changePasswordDataDTO: ChangePasswordDataDTO,
         authenticableRepository: AuthenticableRepository
     ) {
-        authenticableRepository.sendCode(changePasswordData, object : APIEvent<Token> {
-            override fun onResponse(model: Token) {
-                _validateModel.value = ValidationModelWithToken(token = model)
+        authenticableRepository.sendCode(changePasswordDataDTO, object : APIEvent<TokenDTO> {
+            override fun onResponse(model: TokenDTO) {
+                _validateModel.value = ValidationModelWithTokenDTO(tokenDTO = model)
             }
 
-            override fun onError(response: Response<Token>) {
+            override fun onError(response: Response<TokenDTO>) {
                 response.errorBody()?.string()?.let {
-                    val responseRequest = jsonToObject(it, ResponseRequest::class.java)
-                    _validateModel.value = ValidationModelWithToken(
+                    val responseRequestDTO = jsonToObject(it, ResponseRequestDTO::class.java)
+                    _validateModel.value = ValidationModelWithTokenDTO(
                         null,
-                        responseRequest.errors[0].message
+                        responseRequestDTO.errors[0].message
                     )
                 }
             }
@@ -41,12 +41,12 @@ class SendCodeViewModel(application: Application) : AndroidViewModel(application
             override fun onFailure(throwable: Throwable) {
                 val cause = throwable.cause
                 if (cause is ConnectException) {
-                    _validateModel.value = ValidationModelWithToken(
+                    _validateModel.value = ValidationModelWithTokenDTO(
                         null,
                         getApplication<Application>().getString(R.string.ERROR_CONNECTION)
                     )
                 } else {
-                    _validateModel.value = ValidationModelWithToken(
+                    _validateModel.value = ValidationModelWithTokenDTO(
                         null,
                         getApplication<Application>().getString(R.string.ERROR_UNEXPECTED)
                     )
