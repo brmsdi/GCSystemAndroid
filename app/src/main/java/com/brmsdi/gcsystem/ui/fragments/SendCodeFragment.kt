@@ -60,7 +60,7 @@ class SendCodeFragment : TypedFragment(), View.OnClickListener {
         setTypes(newTypes)
     }
     override fun onClick(view: View) {
-        if (view.id == _binding.buttonSend.id) {
+        if (view.id == _binding.buttonSendCode.id) {
             //replaceFragment(R.id.fragment_container, NewPasswordFragment.newInstance())
             sendCode()
         }
@@ -112,7 +112,7 @@ class SendCodeFragment : TypedFragment(), View.OnClickListener {
     }
 
     private fun addAction() {
-        _binding.buttonSend.setOnClickListener(this)
+        _binding.buttonSendCode.setOnClickListener(this)
     }
 
     private fun sendCode() {

@@ -16,7 +16,6 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import javax.net.ssl.HttpsURLConnection
 
-
 class SendEmailChangePasswordViewModel(application: Application) : AndroidViewModel(application) {
     private val _responseRequest = MutableLiveData<ResponseRequest>()
     val responseRequest: LiveData<ResponseRequest> = _responseRequest

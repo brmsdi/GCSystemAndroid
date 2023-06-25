@@ -10,6 +10,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 import retrofit2.http.Streaming
 
@@ -29,6 +30,7 @@ interface LesseeService {
     @POST(SEND_CODE_LESSEES)
     fun sendCode(@Query("email") email: String, @Query("code") code: String) : Call<Token>
 
-    @POST(CHANGE_PASSWORD_LESSEE)
+    @Streaming
+    @PUT(CHANGE_PASSWORD_LESSEE)
     fun changePassword(@Body tokenChangePasswordDTO: TokenChangePasswordDTO): Call<ResponseBody>
 }

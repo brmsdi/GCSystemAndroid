@@ -17,4 +17,8 @@ open class BaseFragment : Fragment() {
             .addToBackStack(backStack)
             .commit()
     }
+
+    fun endActivity() {
+        this.activity?.finish()
+    }
 }

@@ -38,20 +38,24 @@ class SendEmailChangePasswordFragment private constructor() : BaseFragment(), On
         viewModel = ViewModelProvider(this)[SendEmailChangePasswordViewModel::class.java]
         loadData()
         addAction()
-        val adapter = ArrayAdapter(this.requireContext(), android.R.layout.simple_spinner_dropdown_item, itemList)
+        val adapter = ArrayAdapter(
+            this.requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            itemList
+        )
         _binding.spinnerTypeAuth.adapter = adapter
         observe()
         return _binding.root
     }
 
     override fun onClick(view: View) {
-        if (view.id == _binding.buttonSend.id) {
-            send()
+        when (view.id) {
+            _binding.buttonSendEmail.id -> send()
         }
     }
 
     private fun addAction() {
-        _binding.buttonSend.setOnClickListener(this)
+        _binding.buttonSendEmail.setOnClickListener(this)
     }
 
     private fun loadData() {
@@ -77,7 +81,8 @@ class SendEmailChangePasswordFragment private constructor() : BaseFragment(), On
             } else {
                 val fragment = SendCodeFragment.newInstance()
                 val bundle = Bundle()
-                val changePasswordData = ChangePasswordData(email = this.email, typeAuth = this.typeAuth)
+                val changePasswordData =
+                    ChangePasswordData(email = this.email, typeAuth = this.typeAuth)
                 bundle.putParcelable(CHANGE_PASSWORD_DATA, changePasswordData)
                 initSendCodeFragment(fragment, bundle)
             }

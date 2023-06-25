@@ -10,41 +10,46 @@ import com.brmsdi.gcsystem.data.listeners.APIEventStringAndJSON
 import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
 import com.brmsdi.gcsystem.ui.utils.ResponseRequest
 import com.brmsdi.gcsystem.ui.utils.TextUtils
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 import javax.net.ssl.HttpsURLConnection
 
 class NewPasswordViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _responseRequest = MutableLiveData<ResponseRequest>()
     val responseRequest: LiveData<ResponseRequest> = _responseRequest
-
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
+    private var executor: Executor = Executors.newSingleThreadExecutor()
 
-    fun changePassword(
+    fun save(
         tokenChangePasswordDTO: TokenChangePasswordDTO,
         authenticableRepository: AuthenticableRepository
     ) {
-        authenticableRepository.changePassword(
-            tokenChangePasswordDTO,
-            object : APIEventStringAndJSON {
-                override fun onSuccess() {
-                    val responseRequest = ResponseRequest()
-                    responseRequest.status = HttpsURLConnection.HTTP_OK
-                    _responseRequest.postValue(responseRequest)
-                }
+        executor.execute {
+            authenticableRepository.changePassword(
+                tokenChangePasswordDTO,
+                object : APIEventStringAndJSON {
+                    override fun onSuccess() {
+                        val responseRequest = ResponseRequest()
+                        responseRequest.status = HttpsURLConnection.HTTP_OK
+                        _responseRequest.postValue(responseRequest)
+                    }
 
-                override fun onError(errorString: String) {
-                    _responseRequest.postValue(
-                        TextUtils.jsonToObject(
-                            errorString,
-                            ResponseRequest::class.java
+                    override fun onError(errorString: String) {
+                        _responseRequest.postValue(
+                            TextUtils.jsonToObject(
+                                errorString,
+                                ResponseRequest::class.java
+                            )
                         )
-                    )
-                }
+                    }
 
-                override fun onConnectFailure() {
-                    _errorMessage.postValue(getApplication<Application>().getString(R.string.ERROR_CONNECTION))
-                }
-            })
+                    override fun onConnectFailure() {
+                        _errorMessage.postValue(getApplication<Application>().getString(R.string.ERROR_CONNECTION))
+                    }
+                })
+        }
+
     }
 }

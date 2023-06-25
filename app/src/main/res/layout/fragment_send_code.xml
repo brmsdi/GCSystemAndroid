@@ -67,7 +67,7 @@
         app:layout_constraintStart_toEndOf="@+id/edit_code_5" />
 
     <Button
-        android:id="@+id/button_send"
+        android:id="@+id/button_send_code"
         style="@style/button_colors"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
