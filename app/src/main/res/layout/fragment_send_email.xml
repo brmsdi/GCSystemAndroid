@@ -9,23 +9,23 @@
     tools:context=".ui.fragments.SendEmailFragment">
 
     <TextView
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:textSize="@dimen/text_description_size"
-        android:textColor="@color/white_1"
-        android:gravity="start"
-        android:layout_marginBottom="15dp"
-        android:text="@string/description_screen_send_email_code"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="start"
+        android:text="@string/description_screen_send_email_code"
+        android:textColor="@color/white_1"
+        android:textSize="@dimen/text_description_size"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edit_send_email"
         style="@style/edit_text_colors"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fields_height"
-        android:drawableStart="@drawable/baseline_alternate_email_24"
         android:autofillHints="emailAddress"
+        android:drawableStart="@drawable/baseline_alternate_email_24"
         android:hint="@string/input_email"
         android:inputType="textEmailAddress" />
 
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top_elements"
         android:text="@string/authentication_type"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 
     <Spinner
         android:id="@+id/spinner_type_auth"
@@ -43,6 +43,14 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/fields_height"
         android:popupBackground="@color/blue_black" />
+
+    <ProgressBar
+        android:id="@+id/progress_send_email"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/button_send_email"

@@ -15,7 +15,6 @@ import java.util.concurrent.Executors
 import javax.net.ssl.HttpsURLConnection
 
 class NewPasswordViewModel(application: Application) : AndroidViewModel(application) {
-
     private val _responseRequestDTO = MutableLiveData<ResponseRequestDTO>()
     val responseRequestDTO: LiveData<ResponseRequestDTO> = _responseRequestDTO
     private val _errorMessage = MutableLiveData<String>()
@@ -50,6 +49,5 @@ class NewPasswordViewModel(application: Application) : AndroidViewModel(applicat
                     }
                 })
         }
-
     }
 }

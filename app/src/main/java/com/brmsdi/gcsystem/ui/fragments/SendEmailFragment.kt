@@ -14,12 +14,14 @@ import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
 import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
 import com.brmsdi.gcsystem.databinding.FragmentSendEmailBinding
 import com.brmsdi.gcsystem.ui.utils.AuthType
+import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import com.brmsdi.gcsystem.ui.viewmodels.SendEmailViewModel
+import java.util.TreeMap
 import javax.net.ssl.HttpsURLConnection
 
-class SendEmailFragment private constructor() : TypedFragment(), OnClickListener {
+class SendEmailFragment private constructor() : TypedFragment(), OnClickListener, ProgressBarOnApp {
 
     companion object {
         fun newInstance() = SendEmailFragment()
@@ -63,10 +65,13 @@ class SendEmailFragment private constructor() : TypedFragment(), OnClickListener
                 bundle.putParcelable(CHANGE_PASSWORD_DATA, changePasswordDataDTO)
                 initializeSendCodeFragment(fragment, bundle)
             }
+            postExecution(_binding.progressSendEmail)
+            showOrHideView(_binding.buttonSendEmail, true)
         } // END responseRequest
 
         viewModel.errorMessage.observe(this.viewLifecycleOwner) {
             displayMessage(this.requireContext(), it)
+            showOrHideView(_binding.buttonSendEmail, true)
         } // END errorMessage
     }
 
@@ -80,7 +85,7 @@ class SendEmailFragment private constructor() : TypedFragment(), OnClickListener
     }
 
     private fun addTypes() {
-        val newTypes: HashMap<String, String> = hashMapOf()
+        val newTypes: TreeMap<String, String> = TreeMap()
         newTypes[getString(R.string.employee)] = AuthType.EMPLOYEE.type
         newTypes[getString(R.string.lessee)] = AuthType.LESSEE.type
         setTypes(newTypes)
@@ -98,6 +103,8 @@ class SendEmailFragment private constructor() : TypedFragment(), OnClickListener
 
     private fun send() {
         val repository = getRepositoryTypeAuth(typeAuth)
+        onProgress(_binding.progressSendEmail)
+        showOrHideView(_binding.buttonSendEmail, false)
         requestCode(email, repository)
     }
 

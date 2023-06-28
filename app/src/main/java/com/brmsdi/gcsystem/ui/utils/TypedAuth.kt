@@ -1,6 +1,7 @@
 package com.brmsdi.gcsystem.ui.utils
 
 import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
+import java.util.TreeMap
 
 /**
  *
@@ -11,7 +12,7 @@ import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
 interface TypedAuth {
     fun getRepositoryTypeAuth(typeAuth: String): AuthenticableRepository
 
-    fun setTypes(types: Map<String, String>)
+    fun setTypes(types: TreeMap<String, String>)
 
-    fun getTypes(): Map<String, String>
+    fun getTypes(): TreeMap<String, String>
 }

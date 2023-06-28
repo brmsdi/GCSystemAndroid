@@ -6,6 +6,7 @@ import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
 import com.brmsdi.gcsystem.ui.utils.TypedAuth
 import org.koin.android.ext.android.get
 import org.koin.core.qualifier.named
+import java.util.TreeMap
 
 /**
  *
@@ -13,7 +14,7 @@ import org.koin.core.qualifier.named
  * @since 1
  */
 open class TypedActivity : AppCompatActivity(), TypedAuth {
-    private var _types: Map<String, String> = emptyMap()
+    private var _types: TreeMap<String, String> = TreeMap()
 
     override fun getRepositoryTypeAuth(typeAuth: String): AuthenticableRepository {
         for (type in _types) {
@@ -24,9 +25,9 @@ open class TypedActivity : AppCompatActivity(), TypedAuth {
         throw IllegalArgumentException(getString(R.string.invalide_type_auth) + typeAuth)
     }
 
-    override fun setTypes(types: Map<String, String>) {
+    override fun setTypes(types: TreeMap<String, String>) {
         _types = types
     }
 
-    override fun getTypes(): Map<String, String> = _types
+    override fun getTypes(): TreeMap<String, String> = _types
 }

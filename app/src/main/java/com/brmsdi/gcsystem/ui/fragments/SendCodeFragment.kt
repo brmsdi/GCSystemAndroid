@@ -19,13 +19,15 @@ import com.brmsdi.gcsystem.ui.utils.AuthType.*
 import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
 import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
 import com.brmsdi.gcsystem.ui.utils.LoadChangePasswordData
+import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.assembleCode
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.setMaxLength
 import com.brmsdi.gcsystem.ui.viewmodels.SendCodeViewModel
+import java.util.TreeMap
 
-class SendCodeFragment : TypedFragment(), View.OnClickListener, LoadChangePasswordData {
+class SendCodeFragment : TypedFragment(), View.OnClickListener, LoadChangePasswordData, ProgressBarOnApp {
     companion object {
         fun newInstance() = SendCodeFragment()
     }
@@ -69,6 +71,8 @@ class SendCodeFragment : TypedFragment(), View.OnClickListener, LoadChangePasswo
                     initializeNewPasswordFragment(fragment, bundle)
                 }
             }
+            showOrHideView(_binding.buttonSendCode, true)
+            postExecution(_binding.progressSendCode)
         }
     }
 
@@ -86,7 +90,7 @@ class SendCodeFragment : TypedFragment(), View.OnClickListener, LoadChangePasswo
     }
 
     private fun addTypes() {
-        val newTypes: HashMap<String, String> = hashMapOf()
+        val newTypes: TreeMap<String, String> = TreeMap()
         newTypes[getString(R.string.employee)] = EMPLOYEE.type
         newTypes[getString(R.string.lessee)] = LESSEE.type
         setTypes(newTypes)
@@ -96,6 +100,8 @@ class SendCodeFragment : TypedFragment(), View.OnClickListener, LoadChangePasswo
         changePasswordDataDTO?.let {
             it.code = assembleCode(code1, code2, code3, code4, code5, code6).toString()
             val repository = getRepositoryTypeAuth(it.typeAuth)
+            showOrHideView(_binding.buttonSendCode, false)
+            onProgress(_binding.progressSendCode)
             sendCode(it, repository)
         }
     }

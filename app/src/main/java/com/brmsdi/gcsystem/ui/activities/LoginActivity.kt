@@ -10,11 +10,13 @@ import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
 import com.brmsdi.gcsystem.databinding.ActivityLoginBinding
 import com.brmsdi.gcsystem.ui.utils.AuthType.*
+import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.cpfIsValid
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.setMaxLength
 import com.brmsdi.gcsystem.ui.viewmodels.LoginViewModel
+import java.util.TreeMap
 
 /**
  *
@@ -22,14 +24,13 @@ import com.brmsdi.gcsystem.ui.viewmodels.LoginViewModel
  * @since 1
  */
 
-class LoginActivity : TypedActivity(), OnClickListener {
-    private lateinit var binding : ActivityLoginBinding
+class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
+    private lateinit var binding: ActivityLoginBinding
     private val itemList = mutableListOf<String>()
     private lateinit var loginViewModel: LoginViewModel
     private var cpf = ""
     private var password = ""
     private var typeAuth = ""
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +55,8 @@ class LoginActivity : TypedActivity(), OnClickListener {
             } else {
                 displayMessage(this, it.message())
             }
+            showOrHideView(binding.buttonSend, true)
+            postExecution(binding.progressLogin)
         }
     }
 
@@ -63,6 +66,7 @@ class LoginActivity : TypedActivity(), OnClickListener {
                 getFields()
                 if (fieldsIsCorrect(cpf, password, typeAuth)) loginHandle()
             }
+
             binding.textChangePassword.id -> initializeChangePassword()
         }
     }
@@ -72,7 +76,8 @@ class LoginActivity : TypedActivity(), OnClickListener {
                 cpf,
                 password,
                 typeAuth
-            )) {
+            )
+        ) {
             displayMessage(applicationContext, getString(R.string.fields_empty))
             return false
         }
@@ -93,6 +98,8 @@ class LoginActivity : TypedActivity(), OnClickListener {
 
     private fun loginHandle() {
         val repository = getRepositoryTypeAuth(typeAuth)
+        showOrHideView(binding.buttonSend, false)
+        onProgress(binding.progressLogin)
         authenticate(cpf, password, repository)
     }
 
@@ -102,7 +109,7 @@ class LoginActivity : TypedActivity(), OnClickListener {
     }
 
     private fun addTypes() {
-        val newTypes: HashMap<String, String> = hashMapOf()
+        val newTypes: TreeMap<String, String> = TreeMap()
         newTypes[getString(R.string.employee)] = EMPLOYEE.type
         newTypes[getString(R.string.lessee)] = LESSEE.type
         setTypes(newTypes)
