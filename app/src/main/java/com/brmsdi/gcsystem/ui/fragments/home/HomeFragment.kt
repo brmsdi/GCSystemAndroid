@@ -1,4 +1,4 @@
-package com.brmsdi.gcsystem.ui.fragments
+package com.brmsdi.gcsystem.ui.fragments.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

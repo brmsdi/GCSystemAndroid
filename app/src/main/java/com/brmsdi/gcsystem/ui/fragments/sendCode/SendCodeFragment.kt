@@ -1,4 +1,4 @@
-package com.brmsdi.gcsystem.ui.fragments
+package com.brmsdi.gcsystem.ui.fragments.sendCode
 
 import android.os.Build
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +18,8 @@ import com.brmsdi.gcsystem.databinding.FragmentSendCodeBinding
 import com.brmsdi.gcsystem.ui.utils.AuthType.*
 import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
 import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
+import com.brmsdi.gcsystem.ui.fragments.newPassword.NewPasswordFragment
+import com.brmsdi.gcsystem.ui.fragments.TypedFragment
 import com.brmsdi.gcsystem.ui.utils.LoadChangePasswordData
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.assembleCode

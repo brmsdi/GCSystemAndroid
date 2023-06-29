@@ -15,35 +15,47 @@ import com.brmsdi.gcsystem.data.dto.ValidationModelDTO
 import retrofit2.Response
 import java.net.ConnectException
 
-class LoginViewModel(application : Application) : AndroidViewModel(application) {
+class LoginViewModel(application: Application) : AndroidViewModel(application) {
     private val _login = MutableLiveData<ValidationModelDTO>()
-    val login : LiveData<ValidationModelDTO> = _login
+    val login: LiveData<ValidationModelDTO> = _login
     private val securityPreferences = SecurityPreferences(application.applicationContext)
 
-    fun authenticate(cpf: String, password: String, authenticableRepository : AuthenticableRepository) {
+    fun authenticate(
+        cpf: String,
+        password: String,
+        authenticableRepository: AuthenticableRepository
+    ) {
         authenticableRepository.authenticate(cpf, password, object : APIEvent<TokenDTO> {
             override fun onResponse(model: TokenDTO) {
-                securityPreferences.story(TOKEN, model.token)
-                RetrofitClient.addToken(model.token)
+                addAuth(model.token)
                 _login.value = ValidationModelDTO()
             }
 
             override fun onError(response: Response<TokenDTO>) {
                 if (response.code() == 401) {
-                    _login.value = ValidationModelDTO(getApplication<Application>().getString(R.string.login_error))
+                    _login.value =
+                        ValidationModelDTO(getApplication<Application>().getString(R.string.login_error))
                 }
             }
 
             override fun onFailure(throwable: Throwable) {
-                val cause =  throwable.cause
+                val cause = throwable.cause
                 if (cause is ConnectException) {
-                    _login.value = ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_CONNECTION) )
+                    _login.value =
+                        ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_CONNECTION))
                 } else {
-                    _login.value = ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_UNEXPECTED) )
+                    _login.value =
+                        ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_UNEXPECTED))
                 }
             }
         })
     }
+
+    private fun addAuth(token: String) {
+        securityPreferences.story(TOKEN, token)
+        RetrofitClient.addToken(token)
+    }
+
     fun verifyAuthentication() {
         val token = securityPreferences.get(TOKEN)
         if (token.isNotEmpty()) {

@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.databinding.ActivityChangePasswordBinding
-import com.brmsdi.gcsystem.ui.fragments.SendEmailFragment
+import com.brmsdi.gcsystem.ui.fragments.sendEmail.SendEmailFragment
 
 class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var _binding : ActivityChangePasswordBinding

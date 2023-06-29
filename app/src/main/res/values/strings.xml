@@ -52,4 +52,6 @@
     <string name="password_empty">"Por favor, preencha os campos “senha” e “Repetir senha”."</string>
     <string name="minimum_size_password">"A senha deve conter no mínimo 8 caracteres. "</string>
     <string name="password_update_success">"Senha alterada com sucesso! "</string>
+    <string name="title_activity_main_employee">MainEmployeeActivity</string>
+    <string name="my_account">Minha conta</string>
 </resources>

@@ -51,7 +51,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
     private fun observe() {
         loginViewModel.login.observe(this) {
             if (it.status()) {
-                initMain()
+                initializeMain(typeAuth)
             } else {
                 displayMessage(this, it.message())
             }
@@ -121,16 +121,20 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         }
     }
 
-    private fun initMain() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
-    }
-
     private fun initializeChangePassword() {
         startActivity(Intent(this, ChangePasswordActivity::class.java))
     }
 
     private fun authenticate(cpf: String, password: String, repository: AuthenticableRepository) {
         loginViewModel.authenticate(cpf, password, repository)
+    }
+
+    private fun initializeMain(type: String) {
+        if (getString(R.string.employee) == type) {
+            startActivity(Intent(this, MainEmployeeActivity::class.java))
+        } else if (getString(R.string.lessee) == type) {
+            TODO("CONTINUAR")
+        }
+        finish()
     }
 }
