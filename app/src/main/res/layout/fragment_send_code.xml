@@ -5,9 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shape_background"
     android:padding="16dp"
-    tools:context=".ui.fragments.sendCode.SendCodeFragment">
+    tools:context=".ui.fragment.sendCode.SendCodeFragment">
 
     <TextView
         android:id="@+id/text_description"

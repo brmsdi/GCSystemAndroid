@@ -1,6 +1,6 @@
 package com.brmsdi.gcsystem.ui.utils
 
-import com.brmsdi.gcsystem.data.repositories.AuthenticableRepository
+import com.brmsdi.gcsystem.data.repository.AuthenticableRepository
 import java.util.TreeMap
 
 /**

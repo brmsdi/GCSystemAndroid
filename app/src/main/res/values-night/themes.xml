@@ -1,16 +1,70 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.GCSystem" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/blue_black</item>
+        <item name="colorPrimary">@color/pink_1</item>
+        <item name="colorPrimaryVariant">@color/pink_1</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/blue_1</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/dark_background</item>
     </style>
+
+
+    <style name="Theme.GCSystem.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.GCSystem.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.GCSystem.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="edit_text_colors">
+        <item name="android:textColor">@color/white</item>
+        <!--<item name="android:textColorHint">@color/white</item>-->
+        <!--<item name="android:backgroundTint">@color/white</item> -->
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:drawableTint">#dddd</item>
+    </style>
+
+    <style name="edit_text_dimens">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="button_colors">
+        <item name="android:backgroundTint">@color/pink_1</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="edit_code">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:drawableTint">#dddd</item>
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:inputType">number</item>
+        <item name="android:textSize">25sp</item>
+        <item name="layout_constraintTop_toBottomOf">@id/text_description</item>
+    </style>
+
+    <style name="text_label_form">
+        <item name="android:textSize">@dimen/font_size_label</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="edit_form">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/fields_height</item>
+        <item name="android:layout_marginBottom">@dimen/margin_bottom_form</item>
+    </style>
+
+
 </resources>

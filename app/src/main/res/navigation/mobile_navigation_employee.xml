@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.brmsdi.gcsystem.ui.fragments.home.HomeFragment"
+        android:name="com.brmsdi.gcsystem.ui.fragment.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_my_account_employee"
-        android:name="com.brmsdi.gcsystem.ui.fragments.myAccountEmployee.MyAccountEmployeeFragment"
+        android:name="com.brmsdi.gcsystem.ui.fragment.myAccountEmployee.MyAccountEmployeeFragment"
         android:label="@string/my_account"
         tools:layout="@layout/fragment_my_account_employee" />
 </navigation>

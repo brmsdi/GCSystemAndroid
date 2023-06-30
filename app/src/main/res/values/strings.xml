@@ -54,4 +54,15 @@
     <string name="password_update_success">"Senha alterada com sucesso! "</string>
     <string name="title_activity_main_employee">MainEmployeeActivity</string>
     <string name="my_account">Minha conta</string>
+    <string name="label_id">ID</string>
+    <string name="label_name">Nome completo</string>
+    <string name="label_cpf">CPF</string>
+    <string name="label_birth_date">Data de nascimento</string>
+    <string name="label_email">E-mail</string>
+    <string name="label_role">Cargo</string>
+    <string name="label_hiring_date">Data de contratação</string>
+    <string name="label_contact">Contato</string>
+    <string name="icon_my_account">Icone minha conta</string>
+    <string name="manager_label_rent">Gerenciamento de aluguel</string>
+    <string name="dev_contact_email">srmarquesms@gmail.com</string>
 </resources>

@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shape_background"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".ui.fragments.sendEmail.SendEmailFragment">
+    tools:context=".ui.fragment.sendEmail.SendEmailFragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/fields_height"
         android:autofillHints="emailAddress"
-        android:drawableStart="@drawable/baseline_alternate_email_24"
+        android:drawableStart="@drawable/baseline_email_24"
         android:hint="@string/input_email"
         android:inputType="textEmailAddress" />
 
