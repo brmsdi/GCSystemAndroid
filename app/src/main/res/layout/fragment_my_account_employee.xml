@@ -9,9 +9,7 @@
 
     <ImageView
         android:id="@+id/icon_my_account"
-        android:layout_width="@dimen/icon_width"
-        android:layout_height="@dimen/icon_height"
-        android:layout_gravity="center"
+        style="@style/icon_form"
         android:contentDescription="@string/icon_my_account"
         android:src="@drawable/baseline_assignment_ind_24" />
 

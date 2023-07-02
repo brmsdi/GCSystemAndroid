@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation_lessee"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_repair_request">
 
     <fragment
         android:id="@+id/nav_home"
@@ -17,4 +17,10 @@
         android:name="com.brmsdi.gcsystem.ui.fragment.myAccountLessee.MyAccountLesseeFragment"
         android:label="@string/my_account"
         tools:layout="@layout/fragment_my_account_lessee" />
+
+    <fragment
+        android:id="@+id/nav_repair_request"
+        android:name="com.brmsdi.gcsystem.ui.fragment.repairRequest.RepairRequestFragment"
+        android:label="@string/repair_label"
+        tools:layout="@layout/fragment_repair_request" />
 </navigation>

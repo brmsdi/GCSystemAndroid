@@ -1,5 +1,4 @@
-<resources
-    xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.GCSystem" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
@@ -9,7 +8,7 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/blue_1</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
@@ -43,6 +42,11 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="button_cancel_colors">
+        <item name="android:backgroundTint">@color/white_1</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="edit_code">
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/white</item>
@@ -66,5 +70,54 @@
         <item name="android:layout_marginBottom">@dimen/margin_bottom_form</item>
     </style>
 
+    <style name="description_screen_form">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textSize">10pt</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="icon_form">
+        <item name="android:layout_width">@dimen/icon_width</item>
+        <item name="android:layout_height">@dimen/icon_height</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_margin">@dimen/icon_margin</item>
+    </style>
+
+    <style name="spinner_form">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/fields_height</item>
+        <item name="android:layout_marginBottom">@dimen/margin_bottom_form</item>
+    </style>
+
+    <style name="text_label_list">
+        <item name="android:textSize">@dimen/font_size_label</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_list_data">
+        <item name="android:textSize">@dimen/font_size_label</item>
+        <item name="android:paddingBottom">@dimen/paddingBottom_item_data_list</item>
+        <!--        <item name="android:textStyle">italic</item>-->
+        <item name="android:layout_marginStart">4dp</item>
+    </style>
+
+    <style name="card_list">
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:backgroundTint">@color/dark_background_1</item>
+    </style>
+
+    <style name="floating">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">16dp</item>
+    </style>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.GCSystem" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>
 
 </resources>

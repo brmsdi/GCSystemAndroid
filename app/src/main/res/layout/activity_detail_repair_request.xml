@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_layout"
+    tools:context=".ui.activity.detailRepairRequest.DetailRepairRequestActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/icon_detail_repair_request"
+            style="@style/icon_form"
+            android:contentDescription="@string/icon_my_account"
+            android:src="@drawable/baseline_home_repair_service_24" />
+
+        <TextView
+            android:id="@+id/text_screen_description"
+            style="@style/description_screen_form"
+            android:text="@string/screen_details_repair_request" />
+
+        <TextView
+            android:id="@+id/text_id"
+            style="@style/text_label_form"
+            android:text="@string/label_id" />
+
+        <EditText
+            android:id="@+id/edit_id"
+            style="@style/edit_form"
+            android:autofillHints=""
+            android:enabled="false"
+            android:hint="@string/label_id"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/text_label_condominium"
+            style="@style/text_label_form"
+            android:text="@string/condominium_label" />
+
+        <EditText
+            android:id="@+id/edit_condominium"
+            style="@style/edit_form"
+            android:autofillHints=""
+            android:enabled="false"
+            android:hint="@string/condominium_label"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/edit_apartment_label"
+            style="@style/text_label_form"
+            android:text="@string/hint_number_apartment" />
+
+        <EditText
+            android:id="@+id/edit_apartment"
+            style="@style/edit_form"
+            android:autofillHints=""
+            android:enabled="false"
+            android:hint="@string/hint_number_apartment"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/edit_description_problem_label"
+            style="@style/text_label_form"
+            android:text="@string/description_problem_label" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="NestedScrolling">
+
+            <EditText
+                android:id="@+id/edit_description_problem"
+                style="@style/edit_form"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:enabled="false"
+                android:gravity="top"
+                android:hint="@string/description_problem_label"
+                android:inputType="textMultiLine"
+                android:maxLines="20"
+                android:minLines="1"
+                android:scrollbars="vertical" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/text_label_type_problem"
+            style="@style/text_label_form"
+            android:text="@string/type_of_problem_label" />
+
+        <EditText
+            android:id="@+id/edit_type_problem"
+            style="@style/edit_form"
+            android:autofillHints=""
+            android:enabled="false"
+            android:hint="@string/type_of_problem_label"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/text_label_order_service"
+            style="@style/text_label_form"
+            android:text="@string/order_service_label" />
+
+        <EditText
+            android:id="@+id/edit_order_service"
+            style="@style/edit_form"
+            android:autofillHints=""
+            android:enabled="false"
+            android:hint="@string/order_service_label"
+            android:inputType="text"
+            android:text="@string/order_service_none" />
+
+        <TextView
+            android:id="@+id/text_label_collaborators"
+            style="@style/text_label_form"
+            android:layout_marginBottom="@dimen/margin_bottom_form"
+            android:text="@string/collaborators_label" />
+
+        <Spinner
+            android:id="@+id/spinner_collaborators"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_form"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/text_collaborators_none"
+            style="@style/text_label_form"
+            android:gravity="center"
+            android:text="@string/info_collaborators_none"
+            android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/button_cancel"
+            style="@style/button_cancel_colors"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="16dp"
+            android:text="@string/text_back" />
+    </LinearLayout>
+
+</ScrollView>

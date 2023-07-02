@@ -61,5 +61,10 @@
         <item name="android:layout_height">@dimen/fields_height</item>
         <item name="android:layout_marginBottom">@dimen/margin_bottom_form</item>
     </style>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.GCSystem" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
 
 </resources>

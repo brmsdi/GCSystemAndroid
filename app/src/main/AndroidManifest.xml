@@ -19,30 +19,37 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.detailRepairRequest.DetailRepairRequestActivity"
+            android:exported="false"
+            android:label="@string/title_activity_detail_repair_request"
+            android:theme="@style/Theme.GCSystem.NoActionBar" />
+        <activity
+            android:name=".ui.activity.newRepairRequest.NewRepairRequestActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GCSystem.NoActionBar" />
+        <activity
             android:name=".ui.activity.mainEmployee.MainEmployeeActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="@string/title_activity_main_employee"
+            android:theme="@style/Theme.GCSystem.NoActionBar" />
+        <activity
+            android:name=".ui.activity.changePassword.ChangePasswordActivity"
+            android:exported="false"
+            android:label="@string/change_password_label"
+            android:theme="@style/Theme.GCSystem.NoActionBar" />
+        <activity
+            android:name=".ui.activity.login.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GCSystem.NoActionBar" />
+        <activity
+            android:name=".ui.activity.mainLessee.MainLesseeActivity"
+            android:exported="true"
             android:theme="@style/Theme.GCSystem.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.activity.changePassword.ChangePasswordActivity"
-            android:exported="false"
-            android:theme="@style/Theme.GCSystem.NoActionBar"
-            android:label="@string/change_password_label" />
-        <activity
-            android:name=".ui.activity.login.LoginActivity"
-            android:theme="@style/Theme.GCSystem.NoActionBar"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".ui.activity.mainLessee.MainLesseeActivity"
-            android:exported="false"
-            android:theme="@style/Theme.GCSystem.NoActionBar" />
     </application>
 
 </manifest>

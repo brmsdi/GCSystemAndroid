@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_layout"
+    tools:context=".ui.activity.newRepairRequest.NewRepairRequestActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/icon_new_repair_request"
+            style="@style/icon_form"
+            android:contentDescription="@string/icon_my_account"
+            android:src="@drawable/baseline_home_repair_service_24" />
+
+        <TextView
+            android:id="@+id/text_screen_description"
+            style="@style/description_screen_form"
+            android:text="@string/screen_description_new_repair_request" />
+
+        <TextView
+            android:id="@+id/text_label_condominium"
+            style="@style/text_label_form"
+            android:text="@string/condominium_label" />
+
+        <Spinner
+            android:id="@+id/spinner_condominium"
+            style="@style/spinner_form" />
+
+        <TextView
+            android:id="@+id/edit_apartment_label"
+            style="@style/text_label_form"
+            android:text="@string/hint_number_apartment" />
+
+        <EditText
+            android:id="@+id/edit_apartment"
+            style="@style/edit_form"
+            android:autofillHints=""
+            android:hint="@string/hint_number_apartment"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/edit_description_problem_label"
+            style="@style/text_label_form"
+            android:text="@string/description_problem_label" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="NestedScrolling">
+
+            <EditText
+                android:id="@+id/edit_description_problem"
+                style="@style/edit_form"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:gravity="top"
+                android:hint="@string/description_problem_label"
+                android:inputType="textMultiLine"
+                android:maxLines="20"
+                android:minLines="1"
+                android:scrollbars="vertical" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/text_label_spinner_type_problem"
+            style="@style/text_label_form"
+            android:text="@string/type_of_problem_label" />
+
+        <Spinner
+            android:id="@+id/spinner_type_problem"
+            style="@style/spinner_form" />
+
+        <ProgressBar
+            android:id="@+id/progress_login"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/button_save"
+            style="@style/button_colors"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:text="@string/text_save" />
+
+        <Button
+            android:id="@+id/button_cancel"
+            style="@style/button_cancel_colors"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:text="@string/text_back" />
+
+    </LinearLayout>
+
+</ScrollView>
