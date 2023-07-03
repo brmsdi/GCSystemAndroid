@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/card_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/card_list"
     app:cardCornerRadius="10dp"
     app:cardElevation="4dp">
 
@@ -74,8 +74,8 @@
             style="@style/text_list_data"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxLines="2"
             android:ellipsize="end"
+            android:maxLines="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_condominium_name_label" />
@@ -98,6 +98,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_type_problem_label" />
+
+        <ImageView
+            android:id="@+id/icon_new_repair_request"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@string/icon_repair_request"
+            android:src="@drawable/baseline_home_repair_service_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

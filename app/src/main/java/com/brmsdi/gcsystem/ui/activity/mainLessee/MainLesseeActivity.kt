@@ -42,7 +42,7 @@ class MainLesseeActivity : AppCompatActivity(), OnSearchViewListener {
         menuInflater.inflate(R.menu.main, menu)
         val searchItem = menu.findItem(R.id.action_search)
         searchView = searchItem.actionView as SearchView
-        if (!::onQueryTextListener.isInitialized) throw RuntimeException(this.applicationContext.toString() + " must implement SearchViewListener");
+        if (!::onQueryTextListener.isInitialized) throw RuntimeException(this.applicationContext.toString() + " must implement SearchViewListener")
         searchView.setOnQueryTextListener(onQueryTextListener)
         return true
     }

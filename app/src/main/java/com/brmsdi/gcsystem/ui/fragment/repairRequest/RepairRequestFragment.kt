@@ -8,15 +8,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.adapter.AdapterRepairRequest
+import com.brmsdi.gcsystem.data.constants.Constant
 import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
 import com.brmsdi.gcsystem.data.listeners.RepairRequestListener
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.FragmentRepairRequestBinding
+import com.brmsdi.gcsystem.ui.activity.detailRepairRequest.DetailRepairRequestActivity
 import com.brmsdi.gcsystem.ui.activity.newRepairRequest.NewRepairRequestActivity
 import com.brmsdi.gcsystem.ui.utils.Mock
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
@@ -53,7 +54,7 @@ class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnAp
     }
 
     override fun onClick(repairRequest: RepairRequest) {
-        Toast.makeText(this.requireContext(), "" + repairRequest.id, Toast.LENGTH_LONG).show()
+        detailsRepairRequest(repairRequest)
     }
 
     private fun addAction() {
@@ -64,6 +65,14 @@ class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnAp
 
     private fun newRepairRequest() {
         startActivity(Intent(this.requireContext(), NewRepairRequestActivity::class.java))
+    }
+
+    private fun detailsRepairRequest(repairRequest: RepairRequest) {
+        val bundle = Bundle()
+        bundle.putParcelable(Constant.REPAIR.REPAIR_REQUEST_DATA, repairRequest)
+        val intent = Intent(this.requireContext(), DetailRepairRequestActivity::class.java)
+        intent.putExtras(bundle)
+        startActivity(intent)
     }
 
     private fun loadData(search: String?) {

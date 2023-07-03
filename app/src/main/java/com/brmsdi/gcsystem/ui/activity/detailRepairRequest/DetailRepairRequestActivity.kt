@@ -1,8 +1,10 @@
 package com.brmsdi.gcsystem.ui.activity.detailRepairRequest
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import androidx.annotation.RequiresApi
 import com.brmsdi.gcsystem.data.model.Employee
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.ActivityDetailRepairRequestBinding
@@ -12,10 +14,12 @@ import com.brmsdi.gcsystem.ui.utils.RepairRequestData
 class DetailRepairRequestActivity : AppCompatActivity(), RepairRequestData, ProgressBarOnApp {
     private lateinit var binding: ActivityDetailRepairRequestBinding
     private var repairRequest: RepairRequest? = null
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailRepairRequestBinding.inflate(layoutInflater)
-        repairRequest = loadRepairRequestData(savedInstanceState)
+        repairRequest = loadRepairRequestData(intent.extras)
         loadData(repairRequest)
         addAction()
         setContentView(binding.root)

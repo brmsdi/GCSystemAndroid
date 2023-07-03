@@ -21,14 +21,15 @@ import com.brmsdi.gcsystem.data.repository.AuthenticableRepository
 import com.brmsdi.gcsystem.ui.fragment.newPassword.NewPasswordFragment
 import com.brmsdi.gcsystem.ui.fragment.TypedFragment
 import com.brmsdi.gcsystem.ui.utils.LoadChangePasswordData
+import com.brmsdi.gcsystem.ui.utils.Mock
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
-import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.assembleCode
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.setMaxLength
 import java.util.TreeMap
 
-class SendCodeFragment : TypedFragment(), View.OnClickListener, LoadChangePasswordData, ProgressBarOnApp {
+class SendCodeFragment : TypedFragment(), View.OnClickListener, LoadChangePasswordData,
+    ProgressBarOnApp {
     companion object {
         fun newInstance() = SendCodeFragment()
     }
@@ -79,7 +80,7 @@ class SendCodeFragment : TypedFragment(), View.OnClickListener, LoadChangePasswo
 
     override fun onClick(view: View) {
         when (view.id) {
-            _binding.buttonSendCode.id ->  {
+            _binding.buttonSendCode.id -> {
                 getFields()
                 if (fieldsIsCorrect(code1, code2, code3, code4, code5, code6)) sendCode()
             }
@@ -97,14 +98,22 @@ class SendCodeFragment : TypedFragment(), View.OnClickListener, LoadChangePasswo
         setTypes(newTypes)
     }
 
+//    private fun sendCode() {
+//        changePasswordDataDTO?.let {
+//            it.code = assembleCode(code1, code2, code3, code4, code5, code6).toString()
+//            val repository = getRepositoryTypeAuth(it.typeAuth)
+//            showOrHideView(_binding.buttonSendCode, false)
+//            onProgress(_binding.progressSendCode)
+//            sendCode(it, repository)
+//        }
+//    }
+
     private fun sendCode() {
-        changePasswordDataDTO?.let {
-            it.code = assembleCode(code1, code2, code3, code4, code5, code6).toString()
-            val repository = getRepositoryTypeAuth(it.typeAuth)
-            showOrHideView(_binding.buttonSendCode, false)
-            onProgress(_binding.progressSendCode)
-            sendCode(it, repository)
-        }
+        changePasswordDataDTO?.token = Mock.getTokenDTO().token
+        val fragment = NewPasswordFragment.newInstance()
+        val bundle = Bundle()
+        bundle.putParcelable(CHANGE_PASSWORD_DATA, changePasswordDataDTO)
+        initializeNewPasswordFragment(fragment, bundle)
     }
 
     private fun sendCode(

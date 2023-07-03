@@ -99,11 +99,15 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         typeAuth = binding.spinnerTypeAuth.selectedItem.toString()
     }
 
+//    private fun loginHandle() {
+//        val repository = getRepositoryTypeAuth(typeAuth)
+//        showOrHideView(binding.buttonSend, false)
+//        onProgress(binding.progressLogin)
+//        authenticate(cpf, password, repository)
+//    }
+
     private fun loginHandle() {
-        val repository = getRepositoryTypeAuth(typeAuth)
-        showOrHideView(binding.buttonSend, false)
-        onProgress(binding.progressLogin)
-        authenticate(cpf, password, repository)
+        initializeMain(typeAuth)
     }
 
     private fun addAction() {

@@ -32,7 +32,7 @@ class Constant private constructor() {
         const val CHANGE_PASSWORD_LESSEE = "lessees/password/change"
     }
 
-    object REPAIR_REQUEST {
+    object REPAIR {
         const val REPAIR_REQUEST_DATA = "RP"
     }
 }

@@ -16,7 +16,7 @@
         <ImageView
             android:id="@+id/icon_new_repair_request"
             style="@style/icon_form"
-            android:contentDescription="@string/icon_my_account"
+            android:contentDescription="@string/icon_repair_request"
             android:src="@drawable/baseline_home_repair_service_24" />
 
         <TextView

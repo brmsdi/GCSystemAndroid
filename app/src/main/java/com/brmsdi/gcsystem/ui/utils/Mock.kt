@@ -1,5 +1,8 @@
 package com.brmsdi.gcsystem.ui.utils
 
+import com.brmsdi.gcsystem.data.dto.ResponseRequestDTO
+import com.brmsdi.gcsystem.data.dto.TokenDTO
+import com.brmsdi.gcsystem.data.dto.ValidationModelWithTokenDTO
 import com.brmsdi.gcsystem.data.model.Condominium
 import com.brmsdi.gcsystem.data.model.Employee
 import com.brmsdi.gcsystem.data.model.Lessee
@@ -9,6 +12,7 @@ import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.data.model.Status
 import com.brmsdi.gcsystem.data.model.TypeProblem
 import java.util.Date
+import javax.net.ssl.HttpsURLConnection
 
 /**
  *
@@ -80,6 +84,30 @@ class Mock {
             }
 
             return repairRequests
+        }
+
+        fun responseRequestDTOList(): MutableList<ResponseRequestDTO> {
+            val responseRequestDTO: MutableList<ResponseRequestDTO> = mutableListOf()
+            responseRequestDTO.add(
+                ResponseRequestDTO().apply {
+                    status = HttpsURLConnection.HTTP_OK
+                    code = "123456"
+                }
+            )
+            return responseRequestDTO
+        }
+
+        fun getTokenDTO(): TokenDTO {
+            val tokenDTO = TokenDTO()
+            tokenDTO.apply {
+                type = ""
+                token = "token123456789"
+            }
+            return tokenDTO
+        }
+
+        fun getValidationModelWithTokenDTO(): ValidationModelWithTokenDTO {
+            return ValidationModelWithTokenDTO(getTokenDTO())
         }
     }
 }

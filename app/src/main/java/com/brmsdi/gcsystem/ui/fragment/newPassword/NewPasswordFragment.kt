@@ -119,14 +119,19 @@ class NewPasswordFragment : TypedFragment(), OnClickListener, LoadChangePassword
         return password == repeatPassword
     }
 
+//    private fun save() {
+//        changePasswordDataDTO?.let {
+//            val tokenChangePasswordDTO = prepareToken(it)
+//            val repository = getRepositoryTypeAuth(it.typeAuth)
+//            showOrHideView(_binding.buttonSendNewPassword, false)
+//            onProgress(_binding.progressNewPassword)
+//            save(tokenChangePasswordDTO, repository)
+//        }
+//    }
+
     private fun save() {
-        changePasswordDataDTO?.let {
-            val tokenChangePasswordDTO = prepareToken(it)
-            val repository = getRepositoryTypeAuth(it.typeAuth)
-            showOrHideView(_binding.buttonSendNewPassword, false)
-            onProgress(_binding.progressNewPassword)
-            save(tokenChangePasswordDTO, repository)
-        }
+        displayMessage(this.requireContext(), getString(R.string.password_update_success))
+        endActivity()
     }
 
     private fun save(tokenChangePasswordDTO: TokenChangePasswordDTO, repository: AuthenticableRepository) {
