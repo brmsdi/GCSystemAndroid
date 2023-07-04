@@ -1,5 +1,6 @@
 package com.brmsdi.gcsystem.data.adapter.viewHolder
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.brmsdi.gcsystem.data.listeners.RepairRequestListener
 import com.brmsdi.gcsystem.data.model.RepairRequest
@@ -22,6 +23,10 @@ class RepairRequestViewHolder(private val rowRepairRequestBinding: RowRepairRequ
 
         rowRepairRequestBinding.root.setOnClickListener {
             listener.onClick(repairRequest)
+        }
+
+        rowRepairRequestBinding.root.setOnLongClickListener {
+            listener.onLongClick(repairRequest)
         }
     }
 }

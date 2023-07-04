@@ -51,16 +51,9 @@ class Mock {
                     id = i,
                     problemDescription = "Tomadas da sala e dos quartos não estão funcionando",
                     date = Date(),
-                    typeProblem = TypeProblem(1, "Elétrico"),
+                    typeProblem = typeProblemList()[1],
                     lessee = Lessee(),
-                    condominium = Condominium(
-                        1,
-                        "Vila lobos ksdjskjdksdsfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdjkdjjskdjksjkdsjdaklsdjlajskjkdjasjdkasuyuueyrhjh",
-                        "Desc-1",
-                        50,
-                        Status(1, "Aberto"),
-                        LocalizationCondominium()
-                    ),
+                    condominium = condominiumList()[1],
                     status = Status(1, "Aberto"),
                     items = null,
                     apartmentNumber = "103",

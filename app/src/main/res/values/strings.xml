@@ -126,4 +126,6 @@
     <string name="info_collaborators_none">Nenhum colaborador encontrado</string>
     <string name="order_service_none">Sem ordem de serviço gerada</string>
     <string name="icon_repair_request">icone solicitação de reparo</string>
+    <string name="screen_update_repair_request">Atualizar solicitação de reparo</string>
+    <string name="updated_info_success">"Informações atualizadas com sucesso! "</string>
 </resources>

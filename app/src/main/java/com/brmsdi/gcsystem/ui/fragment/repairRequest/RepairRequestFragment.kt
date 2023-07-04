@@ -19,6 +19,7 @@ import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.FragmentRepairRequestBinding
 import com.brmsdi.gcsystem.ui.activity.detailRepairRequest.DetailRepairRequestActivity
 import com.brmsdi.gcsystem.ui.activity.newRepairRequest.NewRepairRequestActivity
+import com.brmsdi.gcsystem.ui.activity.updateRepairRequest.UpdateRepairRequest
 import com.brmsdi.gcsystem.ui.utils.Mock
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 
@@ -57,6 +58,11 @@ class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnAp
         detailsRepairRequest(repairRequest)
     }
 
+    override fun onLongClick(repairRequest: RepairRequest): Boolean {
+        updateRepairRequest(repairRequest)
+        return true
+    }
+
     private fun addAction() {
         binding.floatingNewRepair.setOnClickListener {
             newRepairRequest()
@@ -75,6 +81,14 @@ class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnAp
         startActivity(intent)
     }
 
+    private fun updateRepairRequest(repairRequest: RepairRequest) {
+        val bundle = Bundle()
+        bundle.putParcelable(Constant.REPAIR.REPAIR_REQUEST_DATA, repairRequest)
+        val intent = Intent(this.requireContext(), UpdateRepairRequest::class.java)
+        intent.putExtras(bundle)
+        startActivity(intent)
+    }
+
     private fun loadData(search: String?) {
         list.clear()
         search?.let { text ->
@@ -86,7 +100,7 @@ class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnAp
         list = Mock.listRepairRequestList()
     }
 
-    private fun addSearchEventListener() :SearchView.OnQueryTextListener {
+    private fun addSearchEventListener(): SearchView.OnQueryTextListener {
         return object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 performSearch(query)

@@ -12,4 +12,6 @@ import com.brmsdi.gcsystem.data.model.RepairRequest
 interface RepairRequestListener {
 
     fun onClick(repairRequest: RepairRequest)
+
+    fun onLongClick(repairRequest: RepairRequest): Boolean
 }
