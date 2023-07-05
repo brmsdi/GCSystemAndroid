@@ -40,6 +40,11 @@ class AdapterRepairRequest : RecyclerView.Adapter<RepairRequestViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun updateRepairRequestAll(newList: List<RepairRequest>, position: Int) {
+        //list = newList
+        notifyItemRemoved(position)
+    }
+
     fun addListener(listener: RepairRequestListener) {
         this.listener = listener
     }

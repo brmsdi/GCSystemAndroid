@@ -30,7 +30,8 @@ class Mock {
 
         fun statusList() = mutableListOf(
             Status(1, "Aberto"),
-            Status(2, "Disponível")
+            Status(2, "Disponível"),
+            Status(3, "Em andamento")
         )
 
         fun condominiumList() = mutableListOf(
@@ -54,7 +55,7 @@ class Mock {
                     typeProblem = typeProblemList()[1],
                     lessee = Lessee(),
                     condominium = condominiumList()[1],
-                    status = Status(1, "Aberto"),
+                    status = statusList()[2],
                     items = null,
                     apartmentNumber = "103",
                     orderService = null

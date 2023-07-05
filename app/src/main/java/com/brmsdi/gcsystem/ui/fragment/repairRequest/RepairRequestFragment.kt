@@ -9,19 +9,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.adapter.AdapterRepairRequest
 import com.brmsdi.gcsystem.data.constants.Constant
+import com.brmsdi.gcsystem.data.listeners.ItemRecyclerViewDragCallback
 import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
 import com.brmsdi.gcsystem.data.listeners.RepairRequestListener
+import com.brmsdi.gcsystem.data.listeners.dialog.DialogConfirmAndCancelListener
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.FragmentRepairRequestBinding
 import com.brmsdi.gcsystem.ui.activity.detailRepairRequest.DetailRepairRequestActivity
 import com.brmsdi.gcsystem.ui.activity.newRepairRequest.NewRepairRequestActivity
 import com.brmsdi.gcsystem.ui.activity.updateRepairRequest.UpdateRepairRequest
+import com.brmsdi.gcsystem.ui.utils.DialogAppUtils
 import com.brmsdi.gcsystem.ui.utils.Mock
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
+import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 
 class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnApp {
     private lateinit var viewModel: RepairRequestViewModel
@@ -39,6 +44,9 @@ class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnAp
         binding.recyclerRepair.adapter = adapter
         adapter.addListener(this)
         addAction()
+        val itemRecyclerViewDragCallback = ItemRecyclerViewDragCallback(this)
+        val itemTouchHelper = ItemTouchHelper(itemRecyclerViewDragCallback)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerRepair)
         return binding.root
     }
 
@@ -63,6 +71,32 @@ class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnAp
         return true
     }
 
+    override fun deleteItem(position: Int) {
+        if (!verifyStatusSolicitation(list[position])) {
+            displayMessage(this.requireContext(), getString(R.string.repair_request_in_progress))
+            adapter.updateRepairRequestAll(list)
+            return
+        }
+        val dialog = DialogAppUtils
+            .createDialog(this.requireContext(),
+                getString(R.string.delete_this_item),
+                getString(R.string.delete_label),
+                getString(R.string.confirm),
+                getString(R.string.cancel),
+                object : DialogConfirmAndCancelListener {
+                    override fun confirm() {
+                        list.removeAt(position)
+                        adapter.updateRepairRequestAll(list, position)
+                        displayMessage(context(), getString(R.string.delete_item_success))
+                    }
+
+                    override fun cancel() {
+                        adapter.updateRepairRequestAll(list)
+                    }
+                })
+        dialog.show()
+    }
+
     private fun addAction() {
         binding.floatingNewRepair.setOnClickListener {
             newRepairRequest()
@@ -82,6 +116,10 @@ class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnAp
     }
 
     private fun updateRepairRequest(repairRequest: RepairRequest) {
+        if (!verifyStatusSolicitation(repairRequest)) {
+            displayMessage(this.requireContext(), getString(R.string.repair_request_in_progress))
+            return
+        }
         val bundle = Bundle()
         bundle.putParcelable(Constant.REPAIR.REPAIR_REQUEST_DATA, repairRequest)
         val intent = Intent(this.requireContext(), UpdateRepairRequest::class.java)
@@ -133,5 +171,14 @@ class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnAp
 
     private fun contains(key: String, text: String): Boolean {
         return text.uppercase().contains(key.uppercase())
+    }
+
+    private fun context(): Context {
+        return this.requireContext()
+    }
+
+    private fun verifyStatusSolicitation(repairRequest: RepairRequest): Boolean {
+        return (repairRequest.status?.name?.uppercase() != "Em andamento".uppercase()
+                && repairRequest.status?.name?.uppercase() != "Concluído".uppercase())
     }
 }

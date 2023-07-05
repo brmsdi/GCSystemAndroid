@@ -128,4 +128,9 @@
     <string name="icon_repair_request">icone solicitação de reparo</string>
     <string name="screen_update_repair_request">Atualizar solicitação de reparo</string>
     <string name="updated_info_success">"Informações atualizadas com sucesso! "</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete_item_success">"Item deletado com sucesso! "</string>
+    <string name="delete_label">Deletar</string>
+    <string name="delete_this_item">Você deseja deletar este item?</string>
+    <string name="repair_request_in_progress">"Serviços em andamento ou concluídos, não podem ser atualizados ou excluídos. "</string>
 </resources>
