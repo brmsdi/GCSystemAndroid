@@ -36,7 +36,7 @@
     <string name="input_email">Digite o seu email</string>
     <string name="_0">0</string>
     <string name="description_screen_send_email_code">Receber código de redefinição de senha</string>
-    <string name="change_password_label">Redefinir senha</string>
+    <string name="label_change_password">Redefinir senha</string>
     <string name="authentication">Autenticação</string>
     <string name="description_screen_send_code">Digite o código de verificação enviado para o seu E-mail.</string>
     <string name="new_password">Nova senha</string>
@@ -65,13 +65,13 @@
     <string name="icon_my_account">Icone minha conta</string>
     <string name="manager_label_rent">Gerenciamento de aluguel</string>
     <string name="dev_contact_email">srmarquesms@gmail.com</string>
-    <string name="repair_label">Reparos</string>
-    <string name="condominium_label">Condomínio</string>
-    <string name="type_of_problem_label">Tipo de problema</string>
-    <string name="status_label">Status</string>
+    <string name="label_repair">Reparos</string>
+    <string name="label_condominium">Condomínio</string>
+    <string name="label_type_of_problem">Tipo de problema</string>
+    <string name="label_status">Status</string>
     <string name="description_button_add_repair_request">Adicionar solicitação de reparo</string>
     <string name="hint_number_apartment">Número do apartamento</string>
-    <string name="description_problem_label">Descrição do problema</string>
+    <string name="label_description_problem">Descrição do problema</string>
     <string name="text_save">Salvar</string>
     <string name="text_back">Voltar</string>
     <string name="screen_description_new_repair_request">Nova solicitação de reparo</string>
@@ -121,8 +121,8 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="screen_details_repair_request">Detalhes da solicitação de reparo</string>
-    <string name="order_service_label">Ordem de serviço</string>
-    <string name="collaborators_label">Colaboradores</string>
+    <string name="label_order_service">Ordem de serviço</string>
+    <string name="label_collaborators">Colaboradores</string>
     <string name="info_collaborators_none">Nenhum colaborador encontrado</string>
     <string name="order_service_none">Sem ordem de serviço gerada</string>
     <string name="icon_repair_request">icone solicitação de reparo</string>
@@ -130,7 +130,29 @@
     <string name="updated_info_success">"Informações atualizadas com sucesso! "</string>
     <string name="cancel">Cancelar</string>
     <string name="delete_item_success">"Item deletado com sucesso! "</string>
-    <string name="delete_label">Deletar</string>
+    <string name="label_delete">Deletar</string>
     <string name="delete_this_item">Você deseja deletar este item?</string>
     <string name="repair_request_in_progress">"Serviços em andamento ou concluídos, não podem ser atualizados ou excluídos. "</string>
+    <string name="label_orders_service">Ordens de serviço</string>
+    <string name="description_button_add_order_service">Adicionar nova ordem de serviço</string>
+    <string name="created_in">Criado em</string>
+    <string name="label_date_reserved">Data reservada</string>
+    <string name="label_date_conclusion">Data de conclusão</string>
+    <string name="hint_trace">-</string>
+    <string name="screen_details_order_service">Detalhes da ordem de serviço</string>
+    <string name="label_description">Descrição</string>
+    <string name="label_quantity">Quantidade</string>
+    <string name="label_money">Valor</string>
+    <string name="label_apartment">Apartamento</string>
+    <string name="label_lessee_name">Nome do locatário</string>
+    <string name="label_item">Item</string>
+    <string name="label_items">Itens</string>
+    <string name="text_remove_item">Remover item</string>
+    <string name="text_add_item">Adicionar item</string>
+    <string name="text_finalize_order_service">Finalizar ordem de serviço</string>
+    <string name="label_back">Voltar</string>
+    <string name="icon_order_service">Icone ordem de serviço</string>
+    <string name="info_not_items">Nenhum item adicionado</string>
+    <string name="label_items_none">Nenhum item adicionado</string>
+    <string name="icon_item">Icone do item</string>
 </resources>

@@ -16,4 +16,10 @@
         android:name="com.brmsdi.gcsystem.ui.fragment.myAccountEmployee.MyAccountEmployeeFragment"
         android:label="@string/my_account"
         tools:layout="@layout/fragment_my_account_employee" />
+
+    <fragment
+        android:id="@+id/nav_order_service"
+        android:name="com.brmsdi.gcsystem.ui.fragment.orderService.OrderServiceFragment"
+        android:label="@string/label_orders_service"
+        tools:layout="@layout/fragment_my_account_employee" />
 </navigation>

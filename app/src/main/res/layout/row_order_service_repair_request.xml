@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/card_colors"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    app:cardCornerRadius="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_layout">
+
+        <TextView
+            android:id="@+id/text_id_label"
+            style="@style/text_label_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_id"
+            style="@style/text_list_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_id_label" />
+
+        <TextView
+            android:id="@+id/text_description_label"
+            style="@style/text_label_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_id" />
+
+        <TextView
+            android:id="@+id/text_description"
+            style="@style/text_list_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_description_label" />
+
+        <TextView
+            android:id="@+id/text_type_problem_label"
+            style="@style/text_label_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_type_of_problem"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_description" />
+
+        <TextView
+            android:id="@+id/text_type_problem"
+            style="@style/text_list_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_type_problem_label" />
+
+        <TextView
+            android:id="@+id/text_condominium_label"
+            style="@style/text_label_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_condominium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_type_problem" />
+
+        <TextView
+            android:id="@+id/text_condominium"
+            style="@style/text_list_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_condominium_label" />
+
+        <TextView
+            android:id="@+id/text_apartment_label"
+            style="@style/text_label_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_apartment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_type_problem" />
+
+        <TextView
+            android:id="@+id/text_apartment"
+            style="@style/text_list_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_apartment_label" />
+
+        <TextView
+            android:id="@+id/text_lessee_name_label"
+            style="@style/text_label_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_lessee_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_condominium" />
+
+        <TextView
+            android:id="@+id/text_lessee_name"
+            style="@style/text_list_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_lessee_name_label" />
+
+        <View
+            android:id="@+id/view_1"
+            android:layout_width="0dp"
+            android:layout_height=".8dp"
+            android:background="#FFFF00"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_lessee_name" />
+
+        <TextView
+            android:id="@+id/text_item_label"
+            style="@style/text_label_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/paddingBottom_item_data_list"
+            android:text="@string/label_items"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_1" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_items_id"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/button_remove_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_item_label" />
+
+        <TextView
+            android:id="@+id/text_item_none"
+            style="@style/text_label_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_items_none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_item_label" />
+
+        <Button
+            android:id="@+id/button_remove_item"
+            style="@style/button_cancel_colors"
+            android:layout_width="135dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="25dp"
+            android:text="@string/text_remove_item"
+            android:textSize="6pt"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recycler_items_id" />
+
+        <Button
+            android:id="@+id/button_add_item"
+            style="@style/button_colors"
+            android:layout_width="135dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="25dp"
+            android:text="@string/text_add_item"
+            android:textSize="6pt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recycler_items_id" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -21,6 +21,6 @@
     <fragment
         android:id="@+id/nav_repair_request"
         android:name="com.brmsdi.gcsystem.ui.fragment.repairRequest.RepairRequestFragment"
-        android:label="@string/repair_label"
+        android:label="@string/label_repair"
         tools:layout="@layout/fragment_repair_request" />
 </navigation>

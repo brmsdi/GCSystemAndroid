@@ -85,7 +85,7 @@ class NewRepairRequestActivity : AppCompatActivity(), OnClickListener {
             problemDescription = binding.editDescriptionProblem.text.toString(),
             date = Date(),
             typeProblem = binding.spinnerTypeProblem.selectedItem as TypeProblem,
-            lessee = null,
+            lessee = Mock.lesseeList()[0],
             condominium = binding.spinnerCondominium.selectedItem as Condominium,
             status = null,
             items = null,

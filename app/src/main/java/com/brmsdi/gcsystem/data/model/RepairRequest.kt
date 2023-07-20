@@ -20,7 +20,7 @@ data class RepairRequest(
     var typeProblem: TypeProblem,
 
     @SerializedName("lessee")
-    var lessee: Lessee?,
+    var lessee: Lessee,
 
     @SerializedName("condominium")
     var condominium: Condominium,

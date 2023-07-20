@@ -49,6 +49,10 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         binding.spinnerTypeAuth.adapter = adapter
         observe()
         addAction()
+        binding.editUsername.setText("12345678909")
+        binding.editPassword.setText("12345678909")
+        getFields()
+        loginHandle()
     }
 
     private fun observe() {

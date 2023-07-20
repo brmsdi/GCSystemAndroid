@@ -40,7 +40,7 @@
         <TextView
             android:id="@+id/text_label_condominium"
             style="@style/text_label_form"
-            android:text="@string/condominium_label" />
+            android:text="@string/label_condominium" />
 
         <Spinner
             android:id="@+id/spinner_condominium"
@@ -61,7 +61,7 @@
         <TextView
             android:id="@+id/edit_description_problem_label"
             style="@style/text_label_form"
-            android:text="@string/description_problem_label" />
+            android:text="@string/label_description_problem" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:gravity="top"
-                android:hint="@string/description_problem_label"
+                android:hint="@string/label_description_problem"
                 android:inputType="textMultiLine"
                 android:maxLines="20"
                 android:minLines="1"
@@ -84,7 +84,7 @@
         <TextView
             android:id="@+id/text_label_spinner_type_problem"
             style="@style/text_label_form"
-            android:text="@string/type_of_problem_label" />
+            android:text="@string/label_type_of_problem" />
 
         <Spinner
             android:id="@+id/spinner_type_problem"

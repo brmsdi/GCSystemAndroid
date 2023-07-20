@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.brmsdi.gcsystem.data.adapter.viewHolder.RepairRequestViewHolder
-import com.brmsdi.gcsystem.data.listeners.RepairRequestListener
+import com.brmsdi.gcsystem.data.listeners.ItemRecyclerListener
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.RowRepairRequestBinding
 
@@ -18,7 +18,7 @@ import com.brmsdi.gcsystem.databinding.RowRepairRequestBinding
 class AdapterRepairRequest : RecyclerView.Adapter<RepairRequestViewHolder>() {
 
     private var list : List<RepairRequest> = arrayListOf()
-    private lateinit var listener: RepairRequestListener
+    private lateinit var listener: ItemRecyclerListener<RepairRequest>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepairRequestViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -26,26 +26,24 @@ class AdapterRepairRequest : RecyclerView.Adapter<RepairRequestViewHolder>() {
         return RepairRequestViewHolder(itemBinding, listener)
     }
 
-    override fun getItemCount(): Int {
-        return list.count()
-    }
+    override fun getItemCount(): Int = list.count()
 
     override fun onBindViewHolder(holder: RepairRequestViewHolder, position: Int) {
         holder.bindData(list[position])
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateRepairRequestAll(newList: List<RepairRequest>) {
+    fun updateAll(newList: List<RepairRequest>) {
         list = newList
         notifyDataSetChanged()
     }
 
-    fun updateRepairRequestAll(newList: List<RepairRequest>, position: Int) {
+    fun updateAll(newList: List<RepairRequest>, position: Int) {
         //list = newList
         notifyItemRemoved(position)
     }
 
-    fun addListener(listener: RepairRequestListener) {
+    fun addListener(listener: ItemRecyclerListener<RepairRequest>) {
         this.listener = listener
     }
 }

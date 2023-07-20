@@ -1,7 +1,7 @@
 package com.brmsdi.gcsystem.data.adapter.viewHolder
 
 import androidx.recyclerview.widget.RecyclerView
-import com.brmsdi.gcsystem.data.listeners.RepairRequestListener
+import com.brmsdi.gcsystem.data.listeners.ItemRecyclerListener
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.RowRepairRequestBinding
 
@@ -10,7 +10,10 @@ import com.brmsdi.gcsystem.databinding.RowRepairRequestBinding
  * @author Wisley Bruno Marques França
  * @since 1
  */
-class RepairRequestViewHolder(private val rowRepairRequestBinding: RowRepairRequestBinding, private val listener: RepairRequestListener) :
+class RepairRequestViewHolder(
+    private val rowRepairRequestBinding: RowRepairRequestBinding,
+    private val listener: ItemRecyclerListener<RepairRequest>
+) :
     RecyclerView.ViewHolder(rowRepairRequestBinding.root) {
     fun bindData(repairRequest: RepairRequest) {
         rowRepairRequestBinding.apply {

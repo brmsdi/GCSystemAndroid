@@ -9,4 +9,8 @@
         android:id="@+id/nav_my_account_employee"
         android:icon="@drawable/baseline_assignment_ind_24"
         android:title="@string/my_account" />
+    <item
+        android:id="@+id/nav_order_service"
+        android:icon="@drawable/baseline_assignment_ind_24"
+        android:title="@string/label_orders_service" />
 </menu>

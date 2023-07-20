@@ -14,7 +14,7 @@
     <dimen name="font_size_label">8pt</dimen>
     <dimen name="font_label_data">7pt</dimen>
     <dimen name="paddingBottom_item_data_list">11dp</dimen>
-    <dimen name="icon_width">90dp</dimen>
-    <dimen name="icon_height">90dp</dimen>
+    <dimen name="icon_width">70dp</dimen>
+    <dimen name="icon_height">70dp</dimen>
     <dimen name="icon_margin">16dp</dimen>
 </resources>

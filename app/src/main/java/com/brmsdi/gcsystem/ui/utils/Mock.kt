@@ -5,6 +5,7 @@ import com.brmsdi.gcsystem.data.dto.TokenDTO
 import com.brmsdi.gcsystem.data.dto.ValidationModelWithTokenDTO
 import com.brmsdi.gcsystem.data.model.Condominium
 import com.brmsdi.gcsystem.data.model.Employee
+import com.brmsdi.gcsystem.data.model.Item
 import com.brmsdi.gcsystem.data.model.Lessee
 import com.brmsdi.gcsystem.data.model.LocalizationCondominium
 import com.brmsdi.gcsystem.data.model.OrderService
@@ -28,10 +29,15 @@ class Mock {
             TypeProblem(3, "Problema 3")
         )
 
-        fun statusList() = mutableListOf(
+        private fun statusList() = mutableListOf(
             Status(1, "Aberto"),
             Status(2, "Disponível"),
             Status(3, "Em andamento")
+        )
+
+        private fun itemList() = mutableListOf(
+            Item(1, "Tomadas", 10, 12.00),
+            Item(2, "Tomadas 2", 1, 50.00)
         )
 
         fun condominiumList() = mutableListOf(
@@ -45,6 +51,20 @@ class Mock {
             )
         )
 
+        fun employeesList(): MutableList<Employee> {
+            return mutableListOf(
+                Employee("Eliza"),
+                Employee("Wisley")
+            )
+        }
+
+        fun lesseeList(): MutableList<Lessee> {
+            return mutableListOf(
+                Lessee("Patrícia"),
+                Lessee("Debora")
+            )
+        }
+
         fun listRepairRequestList(): MutableList<RepairRequest> {
             val list: MutableList<RepairRequest> = mutableListOf()
             for (i in 1000..1010) {
@@ -53,7 +73,7 @@ class Mock {
                     problemDescription = "Tomadas da sala e dos quartos não estão funcionando",
                     date = Date(),
                     typeProblem = typeProblemList()[1],
-                    lessee = Lessee(),
+                    lessee = lesseeList()[0],
                     condominium = condominiumList()[1],
                     status = statusList()[2],
                     items = null,
@@ -69,10 +89,7 @@ class Mock {
             val repairRequests = listRepairRequestList()
             repairRequests.forEach {
                 it.orderService = OrderService(
-                    1, Date(), Date(), Date(), setOf(it), setOf(
-                        Employee("Eliza"),
-                        Employee("Michael")
-                    ),
+                    1, Date(), Date(), Date(), setOf(it), employeesList().toSet(),
                     statusList()[1]
                 )
             }
@@ -103,5 +120,28 @@ class Mock {
         fun getValidationModelWithTokenDTO(): ValidationModelWithTokenDTO {
             return ValidationModelWithTokenDTO(getTokenDTO())
         }
+
+        fun listOrderService(): MutableList<OrderService> {
+            val list: MutableList<OrderService> = mutableListOf();
+            for (i in 2000..2002) {
+                val element = OrderService(
+                    id = i,
+                    generationDate = Date(),
+                    reservedDate = null,
+                    completionDate = null,
+                    setOf(listRepairRequestList()[0], listRepairRequestList()[1]),
+                    setOf(employeesList()[0]),
+                    statusList()[0]
+                )
+                element.repairRequests.forEach { it.items = itemList().toSet() }
+//                element.repairRequests.forEach {
+//                    it.id = i+1
+//                    it.orderService = element
+//                }
+                list.add(element)
+            }
+            return list
+        }
+
     }
 }

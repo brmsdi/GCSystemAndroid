@@ -12,7 +12,7 @@ import java.util.Date
  */
 
 @Parcelize
-data class OrderService (
+data class OrderService(
     @SerializedName("id")
     var id: Int,
 
@@ -20,16 +20,17 @@ data class OrderService (
     var generationDate: Date,
 
     @SerializedName("reservedDate")
-    var reservedDate: Date,
+    var reservedDate: Date?,
 
     @SerializedName("completionDate")
-    var completionDate: Date,
+    var completionDate: Date?,
 
     @SerializedName("repairRequests")
-    var repairRequests : Set<RepairRequest>,
+    var repairRequests: Set<RepairRequest>,
 
     @SerializedName("employees")
-    var employees : Set<Employee>,
+    var employees: Set<Employee>,
 
     @SerializedName("status")
-    var status: Status) : Parcelable {}
+    var status: Status
+) : Parcelable {}

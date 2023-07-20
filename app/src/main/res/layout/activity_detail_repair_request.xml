@@ -40,14 +40,14 @@
         <TextView
             android:id="@+id/text_label_condominium"
             style="@style/text_label_form"
-            android:text="@string/condominium_label" />
+            android:text="@string/label_condominium" />
 
         <EditText
             android:id="@+id/edit_condominium"
             style="@style/edit_form"
             android:autofillHints=""
             android:enabled="false"
-            android:hint="@string/condominium_label"
+            android:hint="@string/label_condominium"
             android:inputType="text" />
 
         <TextView
@@ -66,7 +66,7 @@
         <TextView
             android:id="@+id/edit_description_problem_label"
             style="@style/text_label_form"
-            android:text="@string/description_problem_label" />
+            android:text="@string/label_description_problem" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                 android:autofillHints=""
                 android:enabled="false"
                 android:gravity="top"
-                android:hint="@string/description_problem_label"
+                android:hint="@string/label_description_problem"
                 android:inputType="textMultiLine"
                 android:maxLines="20"
                 android:minLines="1"
@@ -90,27 +90,27 @@
         <TextView
             android:id="@+id/text_label_type_problem"
             style="@style/text_label_form"
-            android:text="@string/type_of_problem_label" />
+            android:text="@string/label_type_of_problem" />
 
         <EditText
             android:id="@+id/edit_type_problem"
             style="@style/edit_form"
             android:autofillHints=""
             android:enabled="false"
-            android:hint="@string/type_of_problem_label"
+            android:hint="@string/label_type_of_problem"
             android:inputType="text" />
 
         <TextView
             android:id="@+id/text_label_order_service"
             style="@style/text_label_form"
-            android:text="@string/order_service_label" />
+            android:text="@string/label_order_service" />
 
         <EditText
             android:id="@+id/edit_order_service"
             style="@style/edit_form"
             android:autofillHints=""
             android:enabled="false"
-            android:hint="@string/order_service_label"
+            android:hint="@string/label_order_service"
             android:inputType="text"
             android:text="@string/order_service_none" />
 
@@ -118,7 +118,7 @@
             android:id="@+id/text_label_collaborators"
             style="@style/text_label_form"
             android:layout_marginBottom="@dimen/margin_bottom_form"
-            android:text="@string/collaborators_label" />
+            android:text="@string/label_collaborators" />
 
         <Spinner
             android:id="@+id/spinner_collaborators"

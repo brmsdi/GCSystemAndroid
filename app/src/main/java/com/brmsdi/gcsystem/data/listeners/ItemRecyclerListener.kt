@@ -8,11 +8,11 @@ import com.brmsdi.gcsystem.data.model.RepairRequest
  * @since 1
  */
 
-interface RepairRequestListener {
+interface ItemRecyclerListener<T> {
 
-    fun onClick(repairRequest: RepairRequest)
+    fun onClick(model: T)
 
-    fun onLongClick(repairRequest: RepairRequest): Boolean
+    fun onLongClick(model: T): Boolean
 
     fun deleteItem(position: Int)
 }

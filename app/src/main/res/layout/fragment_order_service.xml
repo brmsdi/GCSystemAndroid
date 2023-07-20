@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_repair_request"
+    android:id="@+id/fragment_order_service"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".ui.fragment.repairRequest.RepairRequestFragment">
+    tools:context=".ui.fragment.orderService.OrderServiceFragment">
 
     <ProgressBar
-        android:id="@+id/progress_repair_request"
+        android:id="@+id/progress_order_service"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
@@ -31,19 +32,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_repair"
+        android:id="@+id/recycler_order_service"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progress_repair_request" />
+        app:layout_constraintTop_toBottomOf="@id/progress_order_service" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floating_new_repair"
+        android:id="@+id/floating_new_order_service"
         style="@style/floating"
-        android:contentDescription="@string/description_button_add_repair_request"
+        android:contentDescription="@string/description_button_add_order_service"
         android:src="@drawable/baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

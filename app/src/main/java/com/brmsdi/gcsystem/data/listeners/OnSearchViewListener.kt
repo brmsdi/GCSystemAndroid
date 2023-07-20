@@ -1,5 +1,7 @@
 package com.brmsdi.gcsystem.data.listeners
 
+import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 
 
@@ -11,4 +13,10 @@ import androidx.appcompat.widget.SearchView
 
 interface OnSearchViewListener {
     fun addSearchListener(listener : SearchView.OnQueryTextListener)
+
+    fun onFocusSearchView(searchView: SearchView)
+
+    fun isSearchable(menuItem: MenuItem, destinationID: Int, searchable: Set<Int>) {
+        menuItem.isVisible = searchable.contains(destinationID)
+    }
 }

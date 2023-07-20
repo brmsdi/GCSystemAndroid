@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/card_list"
     android:layout_width="match_parent"
@@ -50,65 +49,61 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_status_label" />
 
-        <View
-            android:id="@+id/view_line_1"
-            android:layout_width="match_parent"
-            android:layout_height=".8dp"
-            android:background="#FFFF00"
-            app:layout_constraintEnd_toEndOf="parent"
+        <TextView
+            android:id="@+id/text_created_date_label"
+            style="@style/text_label_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/created_in"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_id" />
 
         <TextView
-            android:id="@+id/text_condominium_name_label"
-            style="@style/text_label_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/paddingBottom_item_data_list"
-            android:text="@string/label_condominium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_line_1" />
-
-        <TextView
-            android:id="@+id/text_condominium_name"
-            style="@style/text_list_data"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_condominium_name_label" />
-
-        <TextView
-            android:id="@+id/text_type_problem_label"
-            style="@style/text_label_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/label_type_of_problem"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_condominium_name" />
-
-        <TextView
-            android:id="@+id/text_type_problem"
+            android:id="@+id/text_created_date"
             style="@style/text_list_data"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_type_problem_label" />
+            app:layout_constraintTop_toBottomOf="@id/text_created_date_label" />
 
-        <ImageView
-            android:id="@+id/icon_new_repair_request"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:contentDescription="@string/icon_repair_request"
-            android:src="@drawable/baseline_home_repair_service_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        <TextView
+            android:id="@+id/text_reserved_date_label"
+            style="@style/text_label_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_date_reserved"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_created_date" />
 
+        <TextView
+            android:id="@+id/text_reserved_date"
+            style="@style/text_list_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_trace"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_reserved_date_label" />
+
+        <TextView
+            android:id="@+id/text_conclusion_date_label"
+            style="@style/text_label_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_date_conclusion"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_reserved_date" />
+
+        <TextView
+            android:id="@+id/text_conclusion_date"
+            style="@style/text_list_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_trace"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_conclusion_date_label" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

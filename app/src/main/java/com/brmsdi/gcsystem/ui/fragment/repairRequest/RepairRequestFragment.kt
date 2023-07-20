@@ -16,7 +16,7 @@ import com.brmsdi.gcsystem.data.adapter.AdapterRepairRequest
 import com.brmsdi.gcsystem.data.constants.Constant
 import com.brmsdi.gcsystem.data.listeners.ItemRecyclerViewDragCallback
 import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
-import com.brmsdi.gcsystem.data.listeners.RepairRequestListener
+import com.brmsdi.gcsystem.data.listeners.ItemRecyclerListener
 import com.brmsdi.gcsystem.data.listeners.dialog.DialogConfirmAndCancelListener
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.FragmentRepairRequestBinding
@@ -28,7 +28,7 @@ import com.brmsdi.gcsystem.ui.utils.Mock
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 
-class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnApp {
+class RepairRequestFragment : Fragment(), ItemRecyclerListener<RepairRequest>, ProgressBarOnApp {
     private lateinit var viewModel: RepairRequestViewModel
     private lateinit var binding: FragmentRepairRequestBinding
     private val adapter = AdapterRepairRequest()
@@ -53,7 +53,7 @@ class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnAp
     override fun onResume() {
         super.onResume()
         loadData(null)
-        adapter.updateRepairRequestAll(list)
+        adapter.updateAll(list)
     }
 
     override fun onAttach(context: Context) {
@@ -62,36 +62,36 @@ class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnAp
         onSearchViewListener.addSearchListener(addSearchEventListener())
     }
 
-    override fun onClick(repairRequest: RepairRequest) {
-        detailsRepairRequest(repairRequest)
+    override fun onClick(model: RepairRequest) {
+        detailsRepairRequest(model)
     }
 
-    override fun onLongClick(repairRequest: RepairRequest): Boolean {
-        updateRepairRequest(repairRequest)
+    override fun onLongClick(model: RepairRequest): Boolean {
+        updateRepairRequest(model)
         return true
     }
 
     override fun deleteItem(position: Int) {
         if (!verifyStatusSolicitation(list[position])) {
             displayMessage(this.requireContext(), getString(R.string.repair_request_in_progress))
-            adapter.updateRepairRequestAll(list)
+            adapter.updateAll(list)
             return
         }
         val dialog = DialogAppUtils
             .createDialog(this.requireContext(),
                 getString(R.string.delete_this_item),
-                getString(R.string.delete_label),
+                getString(R.string.label_delete),
                 getString(R.string.confirm),
                 getString(R.string.cancel),
                 object : DialogConfirmAndCancelListener {
                     override fun confirm() {
                         list.removeAt(position)
-                        adapter.updateRepairRequestAll(list, position)
+                        adapter.updateAll(list, position)
                         displayMessage(context(), getString(R.string.delete_item_success))
                     }
 
                     override fun cancel() {
-                        adapter.updateRepairRequestAll(list)
+                        adapter.updateAll(list)
                     }
                 })
         dialog.show()
@@ -156,7 +156,7 @@ class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnAp
         if (text.isEmpty()) {
             loadData(null)
             showOrHideView(binding.textSearchInfo, false)
-            adapter.updateRepairRequestAll(list)
+            adapter.updateAll(list)
             return
         }
         loadData(text)
@@ -166,7 +166,7 @@ class RepairRequestFragment : Fragment(), RepairRequestListener, ProgressBarOnAp
         } else {
             showOrHideView(binding.textSearchInfo, false)
         }
-        adapter.updateRepairRequestAll(list)
+        adapter.updateAll(list)
     }
 
     private fun contains(key: String, text: String): Boolean {
