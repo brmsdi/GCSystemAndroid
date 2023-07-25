@@ -16,7 +16,7 @@ import com.brmsdi.gcsystem.databinding.RowOrderServiceBinding
  */
 class AdapterOrderService(private val listener: ItemRecyclerListener<OrderService>) :
     RecyclerView.Adapter<OrderServiceViewHolder>() {
-    private var list: MutableList<OrderService> = arrayListOf()
+    private var list: MutableList<OrderService> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderServiceViewHolder {
         val inflater = LayoutInflater.from(parent.context)

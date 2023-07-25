@@ -4,6 +4,8 @@
     style="@style/card_colors"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
     android:layout_marginBottom="20dp"
     app:cardCornerRadius="10dp">
 
@@ -141,7 +143,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/button_remove_item"
+            app:layout_constraintBottom_toTopOf="@+id/button_add_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_item_label" />
@@ -157,26 +159,17 @@
             app:layout_constraintTop_toBottomOf="@+id/text_item_label" />
 
         <Button
-            android:id="@+id/button_remove_item"
-            style="@style/button_cancel_colors"
-            android:layout_width="135dp"
-            android:layout_height="@dimen/button_height"
-            android:layout_marginTop="25dp"
-            android:text="@string/text_remove_item"
-            android:textSize="6pt"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycler_items_id" />
-
-        <Button
             android:id="@+id/button_add_item"
-            style="@style/button_colors"
-            android:layout_width="135dp"
-            android:layout_height="@dimen/button_height"
-            android:layout_marginTop="25dp"
+            style="@style/button_style"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:drawableEnd="@drawable/baseline_add_24"
             android:text="@string/text_add_item"
-            android:textSize="6pt"
+            android:textAlignment="textStart"
+            android:textSize="7pt"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recycler_items_id" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

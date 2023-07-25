@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import com.brmsdi.gcsystem.data.constants.Constant
 import com.brmsdi.gcsystem.data.model.OrderService
-import com.brmsdi.gcsystem.data.model.RepairRequest
 
 /**
  *

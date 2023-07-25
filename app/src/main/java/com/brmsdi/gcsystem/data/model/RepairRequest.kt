@@ -26,10 +26,10 @@ data class RepairRequest(
     var condominium: Condominium,
 
     @SerializedName("status")
-    var status: Status?,
+    var status: Status,
 
     @SerializedName("items")
-    var items: Set<Item>?,
+    var items: MutableList<Item>?,
 
     @SerializedName("apartmentNumber")
     var apartmentNumber: String,

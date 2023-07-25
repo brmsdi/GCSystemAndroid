@@ -26,7 +26,7 @@ data class OrderService(
     var completionDate: Date?,
 
     @SerializedName("repairRequests")
-    var repairRequests: Set<RepairRequest>,
+    var repairRequests: MutableList<RepairRequest>,
 
     @SerializedName("employees")
     var employees: Set<Employee>,

@@ -155,4 +155,12 @@
     <string name="info_not_items">Nenhum item adicionado</string>
     <string name="label_items_none">Nenhum item adicionado</string>
     <string name="icon_item">Icone do item</string>
+    <string name="label_value">Valor</string>
+    <string name="label_add_new_item">Adicionar novo item</string>
+    <string name="icon_tela_add_item_description">Icone tela add item</string>
+    <string name="status_open">Em aberto</string>
+    <string name="status_concluded">Concluído</string>
+    <string name="icon_delete_item">Icone deletar item</string>
+    <string name="status_in_progress">Em andamento</string>
+    <string name="item_add_success">Item adicionado com sucesso!</string>
 </resources>

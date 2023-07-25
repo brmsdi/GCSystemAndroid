@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.adapter.AdapterOrderService
 import com.brmsdi.gcsystem.data.constants.Constant
+import com.brmsdi.gcsystem.data.constants.Constant.OS.ORDER_SERVICE_DATA
 import com.brmsdi.gcsystem.data.listeners.ItemRecyclerListener
 import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
+import com.brmsdi.gcsystem.data.model.Item
 import com.brmsdi.gcsystem.data.model.OrderService
 import com.brmsdi.gcsystem.databinding.FragmentOrderServiceBinding
 import com.brmsdi.gcsystem.ui.activity.detailOrderService.DetailOrderServiceActivity
@@ -45,7 +47,6 @@ class OrderServiceFragment : Fragment(), ItemRecyclerListener<OrderService>, Pro
         val onSearchViewListener = requireActivity() as OnSearchViewListener
         onSearchViewListener.addSearchListener(addSearchEventListener())
     }
-
 
     override fun onClick(model: OrderService) {
         detailsOrderService(model)
@@ -92,9 +93,10 @@ class OrderServiceFragment : Fragment(), ItemRecyclerListener<OrderService>, Pro
 
     private fun detailsOrderService(orderService: OrderService) {
         val bundle = Bundle()
-        bundle.putParcelable(Constant.OS.ORDER_SERVICE_DATA, orderService)
+        bundle.putParcelable(ORDER_SERVICE_DATA, orderService)
+        bundle.putParcelable("item", Item(1, "edd", 2, 20.0))
         val intent = Intent(this.requireContext(), DetailOrderServiceActivity::class.java)
-        intent.putExtras(bundle)
+        intent.putExtra(ORDER_SERVICE_DATA, bundle)
         startActivity(intent)
     }
 }

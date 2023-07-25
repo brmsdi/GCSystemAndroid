@@ -136,7 +136,7 @@
 
         <Button
             android:id="@+id/button_cancel"
-            style="@style/button_cancel_colors"
+            style="@style/button_cancel_style"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             android:layout_marginTop="16dp"

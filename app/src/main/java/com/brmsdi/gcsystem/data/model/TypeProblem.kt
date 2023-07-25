@@ -14,9 +14,4 @@ import kotlinx.parcelize.Parcelize
 data class TypeProblem(
     @SerializedName("id") var id: Int,
     @SerializedName("name") var name: String
-) : Parcelable {
-
-    override fun toString(): String {
-        return this.name
-    }
-}
+) : Parcelable {}

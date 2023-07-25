@@ -77,7 +77,7 @@
 
     <Button
         android:id="@+id/button_send_code"
-        style="@style/button_colors"
+        style="@style/button_style"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
         android:layout_marginTop="@dimen/margin_top_elements"

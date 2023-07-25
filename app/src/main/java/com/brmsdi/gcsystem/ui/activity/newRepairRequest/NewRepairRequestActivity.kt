@@ -7,11 +7,16 @@ import android.view.View.OnClickListener
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.brmsdi.gcsystem.R
+import com.brmsdi.gcsystem.data.dto.CondominiumSpinnerDTO
+import com.brmsdi.gcsystem.data.dto.SpinnerDTO
+import com.brmsdi.gcsystem.data.dto.TypeProblemSpinnerDTO
 import com.brmsdi.gcsystem.data.model.Condominium
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.data.model.TypeProblem
 import com.brmsdi.gcsystem.databinding.ActivityNewRepairRequestBinding
 import com.brmsdi.gcsystem.ui.utils.Mock
+import com.brmsdi.gcsystem.ui.utils.Mock.Companion.lesseeList
+import com.brmsdi.gcsystem.ui.utils.Mock.Companion.statusList
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import java.util.Date
@@ -22,8 +27,8 @@ class NewRepairRequestActivity : AppCompatActivity(), OnClickListener {
     private lateinit var repairRequest: RepairRequest
     private var condominiumList = mutableListOf<Condominium>()
     private var typeProblemList = mutableListOf<TypeProblem>()
-    private lateinit var spinnerAdapterCondominium: ArrayAdapter<Condominium>
-    private lateinit var spinnerAdapterTypeProblem: ArrayAdapter<TypeProblem>
+    private lateinit var spinnerAdapterCondominium: ArrayAdapter<SpinnerDTO<Condominium>>
+    private lateinit var spinnerAdapterTypeProblem: ArrayAdapter<SpinnerDTO<TypeProblem>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +37,12 @@ class NewRepairRequestActivity : AppCompatActivity(), OnClickListener {
         spinnerAdapterCondominium = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_dropdown_item,
-            mutableListOf<Condominium>()
+            mutableListOf<SpinnerDTO<Condominium>>()
         )
         spinnerAdapterTypeProblem = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_dropdown_item,
-            mutableListOf<TypeProblem>()
+            mutableListOf<SpinnerDTO<TypeProblem>>()
         )
         binding.spinnerCondominium.adapter = spinnerAdapterCondominium
         binding.spinnerTypeProblem.adapter = spinnerAdapterTypeProblem
@@ -81,13 +86,15 @@ class NewRepairRequestActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun getFields(): RepairRequest {
+        val typeProblemSpinnerDTO = binding.spinnerTypeProblem.selectedItem as TypeProblemSpinnerDTO
+        val condominiumSpinnerDTO = binding.spinnerCondominium.selectedItem as CondominiumSpinnerDTO
         return RepairRequest(
             problemDescription = binding.editDescriptionProblem.text.toString(),
             date = Date(),
-            typeProblem = binding.spinnerTypeProblem.selectedItem as TypeProblem,
-            lessee = Mock.lesseeList()[0],
-            condominium = binding.spinnerCondominium.selectedItem as Condominium,
-            status = null,
+            typeProblem = typeProblemSpinnerDTO.getModel(),
+            lessee = lesseeList()[0],
+            condominium = condominiumSpinnerDTO.getModel(),
+            status = statusList()[0],
             items = null,
             apartmentNumber = binding.editApartment.text.toString(),
             orderService = null
@@ -100,7 +107,7 @@ class NewRepairRequestActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun loadSpinner() {
-        spinnerAdapterCondominium.addAll(condominiumList)
-        spinnerAdapterTypeProblem.addAll(typeProblemList)
+        spinnerAdapterCondominium.addAll(condominiumList.map { CondominiumSpinnerDTO(it) } )
+        spinnerAdapterTypeProblem.addAll(typeProblemList.map { TypeProblemSpinnerDTO(it) })
     }
 }

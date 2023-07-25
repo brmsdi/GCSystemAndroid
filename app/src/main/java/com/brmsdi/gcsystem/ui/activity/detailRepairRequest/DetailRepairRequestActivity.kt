@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
+import com.brmsdi.gcsystem.data.constants.Constant.REPAIR.REPAIR_REQUEST_DATA
 import com.brmsdi.gcsystem.data.model.Employee
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.ActivityDetailRepairRequestBinding
@@ -19,7 +20,7 @@ class DetailRepairRequestActivity : AppCompatActivity(), RepairRequestData, Prog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailRepairRequestBinding.inflate(layoutInflater)
-        repairRequest = loadRepairRequestData(intent.extras)
+        repairRequest = loadRepairRequestData(intent.getBundleExtra(REPAIR_REQUEST_DATA))
         loadData(repairRequest)
         addAction()
         setContentView(binding.root)

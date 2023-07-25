@@ -1,12 +1,10 @@
 package com.brmsdi.gcsystem.ui.activity.login
 
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ArrayAdapter
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.repository.AuthenticableRepository

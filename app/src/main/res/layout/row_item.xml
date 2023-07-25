@@ -14,12 +14,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/image_icon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:contentDescription="@string/icon_item"
-        android:src="@drawable/baseline_add_shopping_cart_24"
+    <Button
+        android:id="@+id/button_delete"
+        style="@style/icon_list"
+        android:background="@drawable/baseline_delete_24"
+        android:contentDescription="@string/icon_delete_item"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

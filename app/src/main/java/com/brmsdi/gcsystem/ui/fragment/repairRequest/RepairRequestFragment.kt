@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.adapter.AdapterRepairRequest
-import com.brmsdi.gcsystem.data.constants.Constant
+import com.brmsdi.gcsystem.data.constants.Constant.REPAIR.REPAIR_REQUEST_DATA
 import com.brmsdi.gcsystem.data.listeners.ItemRecyclerViewDragCallback
 import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
 import com.brmsdi.gcsystem.data.listeners.ItemRecyclerListener
@@ -31,7 +31,7 @@ import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 class RepairRequestFragment : Fragment(), ItemRecyclerListener<RepairRequest>, ProgressBarOnApp {
     private lateinit var viewModel: RepairRequestViewModel
     private lateinit var binding: FragmentRepairRequestBinding
-    private val adapter = AdapterRepairRequest()
+    private lateinit var adapter : AdapterRepairRequest
     private var list: MutableList<RepairRequest> = mutableListOf()
 
     override fun onCreateView(
@@ -41,8 +41,8 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListener<RepairRequest>, P
         binding = FragmentRepairRequestBinding.inflate(layoutInflater, container, false)
         viewModel = ViewModelProvider(this)[RepairRequestViewModel::class.java]
         binding.recyclerRepair.layoutManager = LinearLayoutManager(context)
+        adapter = AdapterRepairRequest(this)
         binding.recyclerRepair.adapter = adapter
-        adapter.addListener(this)
         addAction()
         val itemRecyclerViewDragCallback = ItemRecyclerViewDragCallback(this)
         val itemTouchHelper = ItemTouchHelper(itemRecyclerViewDragCallback)
@@ -86,7 +86,7 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListener<RepairRequest>, P
                 object : DialogConfirmAndCancelListener {
                     override fun confirm() {
                         list.removeAt(position)
-                        adapter.updateAll(list, position)
+                        adapter.notifyItemRemoved(position)
                         displayMessage(context(), getString(R.string.delete_item_success))
                     }
 
@@ -109,9 +109,9 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListener<RepairRequest>, P
 
     private fun detailsRepairRequest(repairRequest: RepairRequest) {
         val bundle = Bundle()
-        bundle.putParcelable(Constant.REPAIR.REPAIR_REQUEST_DATA, repairRequest)
+        bundle.putParcelable(REPAIR_REQUEST_DATA, repairRequest)
         val intent = Intent(this.requireContext(), DetailRepairRequestActivity::class.java)
-        intent.putExtras(bundle)
+        intent.putExtra(REPAIR_REQUEST_DATA, bundle)
         startActivity(intent)
     }
 
@@ -121,9 +121,9 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListener<RepairRequest>, P
             return
         }
         val bundle = Bundle()
-        bundle.putParcelable(Constant.REPAIR.REPAIR_REQUEST_DATA, repairRequest)
+        bundle.putParcelable(REPAIR_REQUEST_DATA, repairRequest)
         val intent = Intent(this.requireContext(), UpdateRepairRequest::class.java)
-        intent.putExtras(bundle)
+        intent.putExtra(REPAIR_REQUEST_DATA, bundle)
         startActivity(intent)
     }
 
@@ -178,7 +178,7 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListener<RepairRequest>, P
     }
 
     private fun verifyStatusSolicitation(repairRequest: RepairRequest): Boolean {
-        return (repairRequest.status?.name?.uppercase() != "Em andamento".uppercase()
-                && repairRequest.status?.name?.uppercase() != "Concluído".uppercase())
+        return (repairRequest.status.name.uppercase() != getString(R.string.status_in_progress).uppercase()
+                && repairRequest.status.name.uppercase() != getString(R.string.status_concluded).uppercase())
     }
 }

@@ -29,10 +29,11 @@ class Mock {
             TypeProblem(3, "Problema 3")
         )
 
-        private fun statusList() = mutableListOf(
-            Status(1, "Aberto"),
+        fun statusList() = mutableListOf(
+            Status(1, "Em aberto"),
             Status(2, "Disponível"),
-            Status(3, "Em andamento")
+            Status(3, "Em andamento"),
+            Status(4, "Concluído")
         )
 
         private fun itemList() = mutableListOf(
@@ -43,15 +44,15 @@ class Mock {
         fun condominiumList() = mutableListOf(
             Condominium(
                 1, "Vila Lobos 1", "xxxxxxxxxxxxxx", 20,
-                statusList()[1], LocalizationCondominium()
+                statusList()[1], LocalizationCondominium(1)
             ),
             Condominium(
                 2, "Vila Lobos 2", "yyyyyyyyyyyyyyyyy", 15,
-                statusList()[1], LocalizationCondominium()
+                statusList()[1], LocalizationCondominium(1)
             )
         )
 
-        fun employeesList(): MutableList<Employee> {
+        private fun employeesList(): MutableList<Employee> {
             return mutableListOf(
                 Employee("Eliza"),
                 Employee("Wisley")
@@ -89,7 +90,7 @@ class Mock {
             val repairRequests = listRepairRequestList()
             repairRequests.forEach {
                 it.orderService = OrderService(
-                    1, Date(), Date(), Date(), setOf(it), employeesList().toSet(),
+                    1, Date(), Date(), Date(), mutableListOf(it), employeesList().toSet(),
                     statusList()[1]
                 )
             }
@@ -129,15 +130,18 @@ class Mock {
                     generationDate = Date(),
                     reservedDate = null,
                     completionDate = null,
-                    setOf(listRepairRequestList()[0], listRepairRequestList()[1]),
+                    mutableListOf(listRepairRequestList()[0], listRepairRequestList()[1], listRepairRequestList()[2]),
                     setOf(employeesList()[0]),
                     statusList()[0]
                 )
-                element.repairRequests.forEach { it.items = itemList().toSet() }
-//                element.repairRequests.forEach {
-//                    it.id = i+1
-//                    it.orderService = element
-//                }
+                element.repairRequests.forEach {repair ->
+                    repair.items = itemList().map { item -> Item(item.id + repair.id, item.description, item.quantity, item.value ) }.toMutableList()
+                }
+                if (element.id == 2000) {
+                    val concluded = statusList()[3]
+                    element.status = concluded
+                    element.repairRequests.forEach { it.status = concluded }
+                }
                 list.add(element)
             }
             return list

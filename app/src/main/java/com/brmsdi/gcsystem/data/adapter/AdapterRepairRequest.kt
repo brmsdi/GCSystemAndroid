@@ -9,16 +9,13 @@ import com.brmsdi.gcsystem.data.listeners.ItemRecyclerListener
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.RowRepairRequestBinding
 
-
 /**
  *
  * @author Wisley Bruno Marques França
  * @since 1
  */
-class AdapterRepairRequest : RecyclerView.Adapter<RepairRequestViewHolder>() {
-
-    private var list : List<RepairRequest> = arrayListOf()
-    private lateinit var listener: ItemRecyclerListener<RepairRequest>
+class AdapterRepairRequest(private val listener : ItemRecyclerListener<RepairRequest>) : RecyclerView.Adapter<RepairRequestViewHolder>() {
+    private var list : MutableList<RepairRequest> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepairRequestViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -33,17 +30,8 @@ class AdapterRepairRequest : RecyclerView.Adapter<RepairRequestViewHolder>() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateAll(newList: List<RepairRequest>) {
+    fun updateAll(newList: MutableList<RepairRequest>) {
         list = newList
         notifyDataSetChanged()
-    }
-
-    fun updateAll(newList: List<RepairRequest>, position: Int) {
-        //list = newList
-        notifyItemRemoved(position)
-    }
-
-    fun addListener(listener: ItemRecyclerListener<RepairRequest>) {
-        this.listener = listener
     }
 }

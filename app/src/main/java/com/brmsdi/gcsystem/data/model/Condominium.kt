@@ -24,9 +24,4 @@ data class Condominium(
 
     @SerializedName("localization")
     var localization: LocalizationCondominium
-) : Parcelable {
-
-    override fun toString(): String {
-        return this.name
-    }
-}
+) : Parcelable {}

@@ -3,6 +3,7 @@ package com.brmsdi.gcsystem.data.model
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import java.util.Date
 
 /**
  *
@@ -22,4 +23,9 @@ data class Item(
 
     @SerializedName("value")
     var value: Double
-) : Parcelable {}
+) : Parcelable {
+
+    @SerializedName("date")
+    var date : Date = Date()
+
+}

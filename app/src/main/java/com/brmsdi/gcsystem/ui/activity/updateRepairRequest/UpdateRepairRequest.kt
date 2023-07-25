@@ -6,6 +6,11 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ArrayAdapter
 import com.brmsdi.gcsystem.R
+import com.brmsdi.gcsystem.data.constants.Constant
+import com.brmsdi.gcsystem.data.constants.Constant.REPAIR.REPAIR_REQUEST_DATA
+import com.brmsdi.gcsystem.data.dto.CondominiumSpinnerDTO
+import com.brmsdi.gcsystem.data.dto.SpinnerDTO
+import com.brmsdi.gcsystem.data.dto.TypeProblemSpinnerDTO
 import com.brmsdi.gcsystem.data.model.Condominium
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.data.model.TypeProblem
@@ -20,23 +25,23 @@ class UpdateRepairRequest : AppCompatActivity(), RepairRequestData, OnClickListe
     private var repairRequest: RepairRequest? = null
     private var condominiumList = mutableListOf<Condominium>()
     private var typeProblemList = mutableListOf<TypeProblem>()
-    private lateinit var spinnerAdapterCondominium: ArrayAdapter<Condominium>
-    private lateinit var spinnerAdapterTypeProblem: ArrayAdapter<TypeProblem>
+    private lateinit var spinnerAdapterCondominium: ArrayAdapter<SpinnerDTO<Condominium>>
+    private lateinit var spinnerAdapterTypeProblem: ArrayAdapter<SpinnerDTO<TypeProblem>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateRepairRequestBinding.inflate(layoutInflater)
-        //repairRequest = loadRepairRequestData(intent.extras)
+        //repairRequest = loadRepairRequestData(intent.getBundleExtra(REPAIR_REQUEST_DATA))
         repairRequest = Mock.listRepairRequestList()[0]
         spinnerAdapterCondominium = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_dropdown_item,
-            mutableListOf<Condominium>()
+            mutableListOf<SpinnerDTO<Condominium>>()
         )
         spinnerAdapterTypeProblem = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_dropdown_item,
-            mutableListOf<TypeProblem>()
+            mutableListOf<SpinnerDTO<TypeProblem>>()
         )
         binding.spinnerCondominium.adapter = spinnerAdapterCondominium
         binding.spinnerTypeProblem.adapter = spinnerAdapterTypeProblem
@@ -116,7 +121,7 @@ class UpdateRepairRequest : AppCompatActivity(), RepairRequestData, OnClickListe
     }
 
     private fun loadSpinner() {
-        spinnerAdapterCondominium.addAll(condominiumList)
-        spinnerAdapterTypeProblem.addAll(typeProblemList)
+        spinnerAdapterCondominium.addAll(condominiumList.map { CondominiumSpinnerDTO(it) })
+        spinnerAdapterTypeProblem.addAll(typeProblemList.map { TypeProblemSpinnerDTO(it) })
     }
 }

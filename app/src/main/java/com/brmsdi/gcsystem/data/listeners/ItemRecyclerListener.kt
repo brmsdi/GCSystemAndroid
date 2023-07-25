@@ -1,7 +1,5 @@
 package com.brmsdi.gcsystem.data.listeners
 
-import com.brmsdi.gcsystem.data.model.RepairRequest
-
 /**
  *
  * @author Wisley Bruno Marques França
