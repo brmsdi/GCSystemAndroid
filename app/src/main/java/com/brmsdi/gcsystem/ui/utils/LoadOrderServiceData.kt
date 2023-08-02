@@ -11,7 +11,7 @@ import com.brmsdi.gcsystem.data.model.OrderService
  * @since 1
  */
 
-interface OrderServiceData {
+interface LoadOrderServiceData {
 
     fun loadIOrderServiceData(arguments: Bundle?) : OrderService? {
         arguments.let {

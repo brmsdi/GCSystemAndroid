@@ -7,7 +7,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/baseline_home_24"
             android:title="@string/menu_home" />
 
         <item
@@ -17,8 +17,18 @@
 
         <item
             android:id="@+id/nav_repair_request"
-            android:icon="@drawable/baseline_assignment_ind_24"
+            android:icon="@drawable/baseline_home_repair_service_24"
             android:title="@string/label_repair" />
+
+        <item
+            android:id="@+id/nav_debts"
+            android:icon="@drawable/baseline_monetization_on_24"
+            android:title="@string/label_debts" />
+
+        <item
+            android:id="@+id/nav_contracts"
+            android:icon="@drawable/baseline_note_alt_24"
+            android:title="@string/label_contracts" />
 
     </group>
 </menu>

@@ -11,7 +11,7 @@ import com.brmsdi.gcsystem.data.model.RepairRequest
  * @since 1
  */
 
-interface RepairRequestData {
+interface LoadRepairRequestData {
 
     fun loadRepairRequestData(arguments: Bundle?) : RepairRequest? {
         arguments.let {

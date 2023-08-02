@@ -19,10 +19,9 @@ import com.brmsdi.gcsystem.databinding.ActivityMainLesseeBinding
 class MainLesseeActivity : AppCompatActivity(), OnSearchViewListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainLesseeBinding
-    private lateinit var onQueryTextListener : SearchView.OnQueryTextListener
-    private lateinit var navController : NavController
+    private lateinit var onQueryTextListener: SearchView.OnQueryTextListener
+    private lateinit var navController: NavController
     private lateinit var searchView: SearchView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainLesseeBinding.inflate(layoutInflater)
@@ -33,7 +32,11 @@ class MainLesseeActivity : AppCompatActivity(), OnSearchViewListener {
         navController = findNavController(R.id.nav_host_fragment_content_main_lessee)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_my_account_lessee, R.id.nav_repair_request
+                R.id.nav_home,
+                R.id.nav_my_account_lessee,
+                R.id.nav_repair_request,
+                R.id.nav_debts,
+                R.id.nav_contracts
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -56,7 +59,7 @@ class MainLesseeActivity : AppCompatActivity(), OnSearchViewListener {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    override fun addSearchListener(listener : SearchView.OnQueryTextListener) {
+    override fun addSearchListener(listener: SearchView.OnQueryTextListener) {
         this.onQueryTextListener = listener
     }
 

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.brmsdi.gcsystem.data.adapter.viewHolder.RepairRequestViewHolder
-import com.brmsdi.gcsystem.data.listeners.ItemRecyclerListener
+import com.brmsdi.gcsystem.data.listeners.ItemRecyclerListenerListener
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.RowRepairRequestBinding
 
@@ -14,7 +14,7 @@ import com.brmsdi.gcsystem.databinding.RowRepairRequestBinding
  * @author Wisley Bruno Marques França
  * @since 1
  */
-class AdapterRepairRequest(private val listener : ItemRecyclerListener<RepairRequest>) : RecyclerView.Adapter<RepairRequestViewHolder>() {
+class AdapterRepairRequest(private val listener : ItemRecyclerListenerListener<RepairRequest>) : RecyclerView.Adapter<RepairRequestViewHolder>() {
     private var list : MutableList<RepairRequest> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepairRequestViewHolder {

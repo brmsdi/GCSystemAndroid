@@ -9,7 +9,7 @@ import com.brmsdi.gcsystem.data.model.RepairRequest
  * @author Wisley Bruno Marques França
  * @since 1
  */
-class ItemRecyclerViewDragCallback(private val listener: ItemRecyclerListener<RepairRequest>) : ItemTouchHelper.Callback() {
+class ItemRecyclerViewDragCallback(private val listener: ItemRecyclerListenerListener<RepairRequest>) : ItemTouchHelper.Callback() {
 
     override fun getMovementFlags(
         recyclerView: RecyclerView,

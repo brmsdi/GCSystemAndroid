@@ -7,5 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class Lessee(
     @SerializedName("name")
-    var name: String
+    var name: String,
+    @SerializedName("debts")
+    var debts: MutableList<Debt>
 ) : Parcelable {}

@@ -45,11 +45,16 @@ class AdapterOrderServiceRepairRequests(
         holder: OrderServiceDetailRepairRequestsViewHolder,
         position: Int
     ) {
-        val adapter = AdapterItem(context, NumberUtils.getSystemLocale(context), orderService, removeItemListener)
+        val adapter = AdapterItem(
+            context,
+            NumberUtils.getSystemLocale(context),
+            orderService,
+            removeItemListener
+        )
         holder.bindData(list[position], adapter)
     }
 
-    fun getList() : MutableList<RepairRequest> = list
+    fun getList(): MutableList<RepairRequest> = list
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateAll(newList: MutableList<RepairRequest>) {
@@ -57,7 +62,7 @@ class AdapterOrderServiceRepairRequests(
         notifyDataSetChanged()
     }
 
-    fun addItem(repairRequest: RepairRequest, item: Item, notify: Boolean = true) : Boolean {
+    fun addItem(repairRequest: RepairRequest, item: Item, notify: Boolean = true): Boolean {
         list.forEach {
             if (it.id == repairRequest.id) {
                 if (it.items == null) it.items = mutableListOf()
@@ -69,15 +74,14 @@ class AdapterOrderServiceRepairRequests(
         return false
     }
 
-    fun removeItem(repairRequest: RepairRequest, item: Item, notify: Boolean = true) : Boolean {
-        for (index in list.count() - 1  downTo 0) {
-            if (list[index].id == repairRequest.id) {
-                val position = list[index].items?.indexOf(item)
-                if (position != null) {
-                    list[index].items!!.removeAt(position)
-                    if (notify) notifyItemChanged(index)
-                    return true
-                }
+    fun removeItem(repairRequest: RepairRequest, item: Item, notify: Boolean = true): Boolean {
+        val repairPosition = list.indexOf(repairRequest)
+        if (repairPosition >= 0) {
+            val itemPosition = list[repairPosition].items?.indexOf(item)
+            if (itemPosition != null && itemPosition >= 0) {
+                list[repairPosition].items!!.removeAt(itemPosition)
+                if (notify) notifyItemChanged(repairPosition)
+                return true
             }
         }
         return false

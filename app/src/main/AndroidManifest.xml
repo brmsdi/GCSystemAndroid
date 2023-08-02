@@ -19,6 +19,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.detailContract.DetailContractActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GCSystem.NoActionBar" />
+        <activity
             android:name=".ui.activity.detailOrderService.DetailOrderServiceActivity"
             android:exported="false"
             android:theme="@style/Theme.GCSystem.NoActionBar" />

@@ -6,9 +6,7 @@ package com.brmsdi.gcsystem.data.listeners
  * @since 1
  */
 
-interface ItemRecyclerListener<T> {
-
-    fun onClick(model: T)
+interface ItemRecyclerListenerListener<T> : ItemRecyclerClickListener<T> {
 
     fun onLongClick(model: T): Boolean
 

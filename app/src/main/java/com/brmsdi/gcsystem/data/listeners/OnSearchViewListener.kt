@@ -1,9 +1,7 @@
 package com.brmsdi.gcsystem.data.listeners
 
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
-
 
 /**
  *

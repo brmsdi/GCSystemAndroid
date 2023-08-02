@@ -11,7 +11,7 @@ class OrderServiceViewModel : ViewModel() {
     val list: LiveData<MutableList<OrderService>> = _list
 
     fun getAll(search: String?) {
-        var temp = Mock.listOrderService()
+        var temp = Mock.orderServiceList()
         search?.let { text ->
             temp = temp.filter { orderService -> orderService.id.toString() == text }.toMutableList()
         }

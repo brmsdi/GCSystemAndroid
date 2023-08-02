@@ -6,8 +6,6 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ArrayAdapter
 import com.brmsdi.gcsystem.R
-import com.brmsdi.gcsystem.data.constants.Constant
-import com.brmsdi.gcsystem.data.constants.Constant.REPAIR.REPAIR_REQUEST_DATA
 import com.brmsdi.gcsystem.data.dto.CondominiumSpinnerDTO
 import com.brmsdi.gcsystem.data.dto.SpinnerDTO
 import com.brmsdi.gcsystem.data.dto.TypeProblemSpinnerDTO
@@ -15,12 +13,12 @@ import com.brmsdi.gcsystem.data.model.Condominium
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.data.model.TypeProblem
 import com.brmsdi.gcsystem.databinding.ActivityUpdateRepairRequestBinding
+import com.brmsdi.gcsystem.ui.utils.LoadData
 import com.brmsdi.gcsystem.ui.utils.Mock
-import com.brmsdi.gcsystem.ui.utils.RepairRequestData
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 
-class UpdateRepairRequest : AppCompatActivity(), RepairRequestData, OnClickListener {
+class UpdateRepairRequest : AppCompatActivity(), LoadData, OnClickListener {
     private lateinit var binding: ActivityUpdateRepairRequestBinding
     private var repairRequest: RepairRequest? = null
     private var condominiumList = mutableListOf<Condominium>()
@@ -31,7 +29,7 @@ class UpdateRepairRequest : AppCompatActivity(), RepairRequestData, OnClickListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateRepairRequestBinding.inflate(layoutInflater)
-        //repairRequest = loadRepairRequestData(intent.getBundleExtra(REPAIR_REQUEST_DATA))
+        //repairRequest = load(intent.getBundleExtra(REPAIR_REQUEST_DATA), REPAIR_REQUEST_DATA, RepairRequest::class.java)
         repairRequest = Mock.listRepairRequestList()[0]
         spinnerAdapterCondominium = ArrayAdapter(
             this,

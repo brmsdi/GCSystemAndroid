@@ -11,9 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SnapHelper
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.adapter.AdapterOrderServiceRepairRequests
 import com.brmsdi.gcsystem.data.constants.Constant.OS.ORDER_SERVICE_DATA
@@ -32,12 +30,13 @@ import com.brmsdi.gcsystem.ui.utils.DateUtils.Companion.dateFormattedToView
 import com.brmsdi.gcsystem.ui.utils.DialogAppUtils.Companion.addItemDialog
 import com.brmsdi.gcsystem.ui.utils.DialogAppUtils.Companion.closeDialog
 import com.brmsdi.gcsystem.ui.utils.DialogAppUtils.Companion.createDialog
-import com.brmsdi.gcsystem.ui.utils.OrderServiceData
+import com.brmsdi.gcsystem.ui.utils.LoadData
+import com.brmsdi.gcsystem.ui.utils.Mock.Companion.statusList
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import java.lang.NumberFormatException
 
-class DetailOrderServiceActivity : AppCompatActivity(), OrderServiceData, AddItemListener,
+class DetailOrderServiceActivity : AppCompatActivity(), LoadData, AddItemListener,
     OnClickListener, RemoveItemListener {
     private lateinit var binding: ActivityDetailOrderServiceBinding
     private var orderService: OrderService? = null
@@ -45,13 +44,14 @@ class DetailOrderServiceActivity : AppCompatActivity(), OrderServiceData, AddIte
     private lateinit var recyclerOrderServiceRepairRequests: RecyclerView
     private lateinit var addItemDialog: AlertDialog
     private lateinit var removeItemDialog: AlertDialog
+    private lateinit var finalizeOrderServiceDialog: AlertDialog
     private lateinit var adapterRepair: AdapterOrderServiceRepairRequests
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailOrderServiceBinding.inflate(layoutInflater)
-        orderService = loadIOrderServiceData(intent.getBundleExtra(ORDER_SERVICE_DATA))
+        orderService = load(intent.getBundleExtra(ORDER_SERVICE_DATA), ORDER_SERVICE_DATA, OrderService::class.java)
         loadData(orderService)
         addAction()
         setContentView(binding.root)
@@ -67,7 +67,7 @@ class DetailOrderServiceActivity : AppCompatActivity(), OrderServiceData, AddIte
             binding.editStatus.setText(orderService.status.name)
             if (orderService.employees.isNotEmpty()) {
                 val employees =
-                    orderService.employees.map { employee ->  EmployeeSpinnerDTO(employee) }
+                    orderService.employees.map { employee -> EmployeeSpinnerDTO(employee) }
                         .toMutableList()
                 spinnerAdapterCollaborators = ArrayAdapter(
                     this,
@@ -89,8 +89,8 @@ class DetailOrderServiceActivity : AppCompatActivity(), OrderServiceData, AddIte
                 )
             recyclerOrderServiceRepairRequests = binding.recyclerOrderServiceRepairRequests
             recyclerOrderServiceRepairRequests.layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-            addSnapHelper(recyclerOrderServiceRepairRequests, LinearSnapHelper())
+                LinearLayoutManager(this)
+            // addSnapHelper(recyclerOrderServiceRepairRequests, LinearSnapHelper())
             adapterRepair.updateAll(repair.toMutableList())
             recyclerOrderServiceRepairRequests.adapter = adapterRepair
 
@@ -103,7 +103,27 @@ class DetailOrderServiceActivity : AppCompatActivity(), OrderServiceData, AddIte
     override fun onClick(view: View) {
         when (view.id) {
             binding.buttonFinalizeOrderService.id -> {
-                TODO("CONTINUAR")
+                finalizeOrderServiceDialog = createDialog(
+                    getContext(),
+                    getString(R.string.finalize_order_service),
+                    getString(R.string.finalize),
+                    getString(R.string.confirm),
+                    getString(R.string.cancel),
+                    object : DialogConfirmAndCancelListener {
+                        override fun confirm() {
+                            orderService?.let {
+                                finalizeOrderService(it)
+                                displayMessage(getContext(), getString(R.string.finished_os_success))
+                                finish()
+                            }
+                        }
+
+                        override fun cancel() {
+                            closeDialog(finalizeOrderServiceDialog)
+                        }
+                    }
+                )
+                finalizeOrderServiceDialog.show()
             }
 
             binding.buttonBack.id -> finish()
@@ -141,8 +161,10 @@ class DetailOrderServiceActivity : AppCompatActivity(), OrderServiceData, AddIte
                     val itemID =
                         if (repairRequestMock.items != null && repairRequestMock.items!!.isNotEmpty()) repairRequestMock.items!!.count() + 1 else 1
                     val item = Item(itemID, description, quantityParsed, valueParsed)
-                    if (adapterRepair.addItem(repairRequest, item))
+                    if (adapterRepair.addItem(repairRequest, item)) {
                         displayMessage(getContext(), getString(R.string.item_add_success))
+                        orderService!!.repairRequests = adapterRepair.getList()
+                    }
                     closeDialog(addItemDialog)
                 }
 
@@ -166,10 +188,13 @@ class DetailOrderServiceActivity : AppCompatActivity(), OrderServiceData, AddIte
                         !it.items.isNullOrEmpty() && it.items!!.contains(item)
                     }
                     if (repair != null) {
-                        if (adapterRepair.removeItem(repair, item)) displayMessage(
-                            getContext(),
-                            getString(R.string.delete_item_success)
-                        )
+                        if (adapterRepair.removeItem(repair, item)) {
+                            displayMessage(
+                                getContext(),
+                                getString(R.string.delete_item_success)
+                            )
+                            orderService!!.repairRequests = adapterRepair.getList()
+                        }
                     }
                     closeDialog(removeItemDialog)
                 }
@@ -183,14 +208,13 @@ class DetailOrderServiceActivity : AppCompatActivity(), OrderServiceData, AddIte
         removeItemDialog.show()
     }
 
-    private fun addSnapHelper(recyclerView: RecyclerView, snapHelper: SnapHelper) {
-        // Adicionar o SnapHelper para a rolagem suave e encaixe do próximo item na tela
-        snapHelper.attachToRecyclerView(recyclerView)
-    }
-
     private fun getContext() = this
 
     private fun isCompleted(orderService: OrderService): Boolean {
         return orderService.status.name == getString(R.string.status_concluded)
+    }
+
+    fun finalizeOrderService(orderService: OrderService) {
+        orderService.status = statusList()[3]
     }
 }

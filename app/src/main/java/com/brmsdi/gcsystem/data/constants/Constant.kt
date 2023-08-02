@@ -39,4 +39,8 @@ class Constant private constructor() {
     object OS {
         const val ORDER_SERVICE_DATA = "OS"
     }
+
+    object CONTRACT {
+        const val CONTRACT_DATA = "CD"
+    }
 }

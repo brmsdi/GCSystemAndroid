@@ -50,6 +50,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         binding.editUsername.setText("12345678909")
         binding.editPassword.setText("12345678909")
         getFields()
+        typeAuth = getString(R.string.lessee)
         loginHandle()
     }
 

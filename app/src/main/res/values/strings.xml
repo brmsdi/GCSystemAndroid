@@ -7,9 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_home">Inicio</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -163,4 +161,17 @@
     <string name="icon_delete_item">Icone deletar item</string>
     <string name="status_in_progress">Em andamento</string>
     <string name="item_add_success">Item adicionado com sucesso!</string>
+    <string name="finalize_order_service">Você deseja finalizar a ordem de serviço?</string>
+    <string name="finalize">Finalizar</string>
+    <string name="finished_os_success">Ordem de serviço finalizada com sucesso!</string>
+    <string name="label_debts">Débitos</string>
+    <string name="label_due_date">Data de validade</string>
+    <string name="label_debtor">Devedor</string>
+    <string name="icon_debt">Icone débitos</string>
+    <string name="label_contracts">Contratos</string>
+    <string name="label_date_contract">Data de contrato</string>
+    <string name="label_date_expiration_contract">Data de expiração</string>
+    <string name="label_contractor">Contratante</string>
+    <string name="icon_contract">Icone de contrato</string>
+    <string name="text_printout">Imprimir</string>
 </resources>

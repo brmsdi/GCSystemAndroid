@@ -16,7 +16,7 @@ import com.brmsdi.gcsystem.data.adapter.AdapterRepairRequest
 import com.brmsdi.gcsystem.data.constants.Constant.REPAIR.REPAIR_REQUEST_DATA
 import com.brmsdi.gcsystem.data.listeners.ItemRecyclerViewDragCallback
 import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
-import com.brmsdi.gcsystem.data.listeners.ItemRecyclerListener
+import com.brmsdi.gcsystem.data.listeners.ItemRecyclerListenerListener
 import com.brmsdi.gcsystem.data.listeners.dialog.DialogConfirmAndCancelListener
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.FragmentRepairRequestBinding
@@ -28,7 +28,7 @@ import com.brmsdi.gcsystem.ui.utils.Mock
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 
-class RepairRequestFragment : Fragment(), ItemRecyclerListener<RepairRequest>, ProgressBarOnApp {
+class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairRequest>, ProgressBarOnApp {
     private lateinit var viewModel: RepairRequestViewModel
     private lateinit var binding: FragmentRepairRequestBinding
     private lateinit var adapter : AdapterRepairRequest

@@ -9,10 +9,10 @@ import com.brmsdi.gcsystem.data.constants.Constant.REPAIR.REPAIR_REQUEST_DATA
 import com.brmsdi.gcsystem.data.model.Employee
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.ActivityDetailRepairRequestBinding
+import com.brmsdi.gcsystem.ui.utils.LoadData
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
-import com.brmsdi.gcsystem.ui.utils.RepairRequestData
 
-class DetailRepairRequestActivity : AppCompatActivity(), RepairRequestData, ProgressBarOnApp {
+class DetailRepairRequestActivity : AppCompatActivity(), LoadData, ProgressBarOnApp {
     private lateinit var binding: ActivityDetailRepairRequestBinding
     private var repairRequest: RepairRequest? = null
 
@@ -20,7 +20,7 @@ class DetailRepairRequestActivity : AppCompatActivity(), RepairRequestData, Prog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailRepairRequestBinding.inflate(layoutInflater)
-        repairRequest = loadRepairRequestData(intent.getBundleExtra(REPAIR_REQUEST_DATA))
+        repairRequest = load(intent.getBundleExtra(REPAIR_REQUEST_DATA), REPAIR_REQUEST_DATA, RepairRequest::class.java)
         loadData(repairRequest)
         addAction()
         setContentView(binding.root)

@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="@dimen/padding_layout">
 
         <TextView
             android:id="@+id/text_id_label"
@@ -50,54 +50,64 @@
             app:layout_constraintTop_toBottomOf="@id/text_status_label" />
 
         <TextView
-            android:id="@+id/text_condominium_name_label"
+            android:id="@+id/text_value_label"
             style="@style/text_label_list"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_condominium"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/label_value"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_status" />
+            app:layout_constraintTop_toBottomOf="@id/text_id" />
 
         <TextView
-            android:id="@+id/text_condominium_name"
+            android:id="@+id/text_value"
+            style="@style/text_list_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_value_label" />
+
+        <TextView
+            android:id="@+id/text_due_date_label"
+            style="@style/text_label_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_due_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_id" />
+
+        <TextView
+            android:id="@+id/text_due_date"
+            style="@style/text_list_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_due_date_label" />
+
+        <TextView
+            android:id="@+id/text_debtor_label"
+            style="@style/text_label_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_debtor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_value" />
+
+        <TextView
+            android:id="@+id/text_debtor"
             style="@style/text_list_data"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_condominium_name_label" />
-
-        <TextView
-            android:id="@+id/text_type_problem_label"
-            style="@style/text_label_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/label_type_of_problem"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_condominium_name" />
-
-        <TextView
-            android:id="@+id/text_type_problem"
-            style="@style/text_list_data"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_type_problem_label" />
+            app:layout_constraintTop_toBottomOf="@id/text_debtor_label" />
 
         <ImageView
-            android:id="@+id/icon_new_repair_request"
+            android:id="@+id/icon_order_service"
             style="@style/icon_list"
-            android:contentDescription="@string/icon_repair_request"
-            android:src="@drawable/baseline_home_repair_service_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:contentDescription="@string/icon_debt"
+            android:src="@drawable/baseline_monetization_on_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.cardview.widget.CardView>

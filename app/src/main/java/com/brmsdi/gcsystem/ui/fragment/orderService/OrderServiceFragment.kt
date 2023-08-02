@@ -12,9 +12,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.adapter.AdapterOrderService
-import com.brmsdi.gcsystem.data.constants.Constant
 import com.brmsdi.gcsystem.data.constants.Constant.OS.ORDER_SERVICE_DATA
-import com.brmsdi.gcsystem.data.listeners.ItemRecyclerListener
+import com.brmsdi.gcsystem.data.listeners.ItemRecyclerClickListener
 import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
 import com.brmsdi.gcsystem.data.model.Item
 import com.brmsdi.gcsystem.data.model.OrderService
@@ -22,7 +21,7 @@ import com.brmsdi.gcsystem.databinding.FragmentOrderServiceBinding
 import com.brmsdi.gcsystem.ui.activity.detailOrderService.DetailOrderServiceActivity
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 
-class OrderServiceFragment : Fragment(), ItemRecyclerListener<OrderService>, ProgressBarOnApp {
+class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>, ProgressBarOnApp {
     private lateinit var binding: FragmentOrderServiceBinding
     private lateinit var viewModel: OrderServiceViewModel
     private var list: MutableList<OrderService> = mutableListOf()
@@ -50,14 +49,6 @@ class OrderServiceFragment : Fragment(), ItemRecyclerListener<OrderService>, Pro
 
     override fun onClick(model: OrderService) {
         detailsOrderService(model)
-    }
-
-    override fun onLongClick(model: OrderService): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun deleteItem(position: Int) {
-        TODO("Not yet implemented")
     }
 
     private fun observe() {
