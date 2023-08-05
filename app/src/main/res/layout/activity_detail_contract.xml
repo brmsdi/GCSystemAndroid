@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_printout"
-        style="@style/floating"
+        style="@style/floating_pdf"
         android:contentDescription="@string/text_printout"
         android:src="@drawable/baseline_picture_as_pdf_24"
         app:layout_constraintBottom_toBottomOf="parent"

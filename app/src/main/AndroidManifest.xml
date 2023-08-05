@@ -3,8 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"
+        tools:ignore="ScopedStorage" />
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
+    <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".AppApplication"
@@ -21,48 +24,47 @@
         <activity
             android:name=".ui.activity.detailContract.DetailContractActivity"
             android:exported="false"
-            android:theme="@style/Theme.GCSystem.NoActionBar" />
+            android:theme="@style/Theme.GCSystem" />
         <activity
             android:name=".ui.activity.detailOrderService.DetailOrderServiceActivity"
             android:exported="false"
-            android:theme="@style/Theme.GCSystem.NoActionBar" />
+            android:theme="@style/Theme.GCSystem" />
         <activity
             android:name=".ui.activity.updateRepairRequest.UpdateRepairRequest"
             android:exported="false"
-            android:theme="@style/Theme.GCSystem.NoActionBar" />
+            android:theme="@style/Theme.GCSystem" />
         <activity
             android:name=".ui.activity.detailRepairRequest.DetailRepairRequestActivity"
             android:exported="false"
             android:label="@string/title_activity_detail_repair_request"
-            android:theme="@style/Theme.GCSystem.NoActionBar" />
+            android:theme="@style/Theme.GCSystem" />
         <activity
             android:name=".ui.activity.newRepairRequest.NewRepairRequestActivity"
             android:exported="false"
-            android:theme="@style/Theme.GCSystem.NoActionBar" />
+            android:theme="@style/Theme.GCSystem" />
         <activity
             android:name=".ui.activity.mainEmployee.MainEmployeeActivity"
             android:exported="false"
             android:label="@string/title_activity_main_employee"
-            android:theme="@style/Theme.GCSystem.NoActionBar" />
+            android:theme="@style/Theme.GCSystem" />
         <activity
             android:name=".ui.activity.changePassword.ChangePasswordActivity"
             android:exported="false"
             android:label="@string/label_change_password"
-            android:theme="@style/Theme.GCSystem.NoActionBar" />
+            android:theme="@style/Theme.GCSystem" />
         <activity
             android:name=".ui.activity.login.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.GCSystem.NoActionBar">
+            android:theme="@style/Theme.GCSystem">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.mainLessee.MainLesseeActivity"
             android:exported="false"
-            android:theme="@style/Theme.GCSystem.NoActionBar" />
+            android:theme="@style/Theme.GCSystem" />
     </application>
 
 </manifest>

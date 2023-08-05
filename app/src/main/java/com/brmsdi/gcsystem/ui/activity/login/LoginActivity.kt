@@ -38,6 +38,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        supportActionBar?.hide()
         setContentView(binding.root)
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         setMaxLength(binding.editUsername, 11)
@@ -51,7 +52,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         binding.editPassword.setText("12345678909")
         getFields()
         typeAuth = getString(R.string.lessee)
-        loginHandle()
+       // loginHandle()
     }
 
     private fun observe() {

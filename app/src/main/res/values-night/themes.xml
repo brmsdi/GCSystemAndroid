@@ -13,21 +13,22 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/dark_background</item>
-    </style>
-
-    <style name="Theme.GCSystem.NoActionBar">
+        <item name="actionOverflowMenuStyle">@style/Theme.GCSystem.PopupOverlay3</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.GCSystem.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.GCSystem.PopupOverlay3" parent="@style/Widget.MaterialComponents.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/dark_background</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
-    <style name="Theme.GCSystem.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/pink_1</item>
+    </style>
 
     <style name="edit_text_colors">
         <item name="android:textColor">@color/white</item>
-        <!--<item name="android:textColorHint">@color/white</item>-->
-        <!--<item name="android:backgroundTint">@color/white</item> -->
         <item name="android:drawablePadding">8dp</item>
         <item name="android:drawableTint">#dddd</item>
     </style>
@@ -131,4 +132,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">16dp</item>
     </style>
+    <style name="floating_pdf">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:backgroundTint">?attr/colorPrimaryVariant</item>
+    </style>
+
+
 </resources>
