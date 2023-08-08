@@ -16,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/Theme.GCSystem.PopupOverlay3" />
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main_employee" />

@@ -75,7 +75,7 @@
             android:id="@+id/spinner_type_auth"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fields_height"
-            android:popupBackground="@color/blue_black" />
+            android:popupBackground="?android:windowBackground" />
 
         <ProgressBar
             android:id="@+id/progress_login"

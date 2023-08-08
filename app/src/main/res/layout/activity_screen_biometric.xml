@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_layout"
+    tools:context=".ui.activity.screenBiometric.ScreenAuthenticationActivity">
+
+    <ImageView
+        android:id="@+id/icon_fingerprint"
+        style="@style/icon_form"
+        android:contentDescription="@string/icon_fingerprint"
+        android:src="@drawable/baseline_fingerprint_24" />
+
+    <TextView
+        style="@style/description_screen_form"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/action_auth_biometric" />
+
+    <TextView
+        android:id="@+id/text_error_biometric"
+        style="@style/text_label_form"
+        android:layout_marginTop="6dp"
+        android:text="@string/error_hardware_biometric"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone" />
+
+    <Switch
+        android:id="@+id/switch_biometric"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="@string/label_active_disable"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+</LinearLayout>

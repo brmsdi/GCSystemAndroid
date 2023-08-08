@@ -5,7 +5,6 @@ import android.os.Build
 import java.text.NumberFormat
 import java.util.Locale
 
-
 /**
  *
  * @author Wisley Bruno Marques França
@@ -22,7 +21,6 @@ class NumberUtils private constructor() {
             return String.format("%s %s", symbol, numberFormat.format(value))
         }
 
-        @Suppress("DEPRECATION")
         fun getSystemLocale(context: Context) : Locale {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) context.resources.configuration.locales[0]
             else context.resources.configuration.locale

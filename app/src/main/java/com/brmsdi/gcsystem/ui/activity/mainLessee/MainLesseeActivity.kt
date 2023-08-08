@@ -1,7 +1,9 @@
 package com.brmsdi.gcsystem.ui.activity.mainLessee
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,6 +17,7 @@ import androidx.navigation.NavController
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
 import com.brmsdi.gcsystem.databinding.ActivityMainLesseeBinding
+import com.brmsdi.gcsystem.ui.activity.screenBiometric.ScreenAuthenticationActivity
 
 class MainLesseeActivity : AppCompatActivity(), OnSearchViewListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -55,6 +58,16 @@ class MainLesseeActivity : AppCompatActivity(), OnSearchViewListener {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_settings_biometric -> {
+                initSettingsBiometric()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
@@ -69,5 +82,9 @@ class MainLesseeActivity : AppCompatActivity(), OnSearchViewListener {
                 searchView.setOnQueryTextListener(onQueryTextListener)
             }
         }
+    }
+
+    private fun initSettingsBiometric() {
+        startActivity(Intent(this, ScreenAuthenticationActivity::class.java))
     }
 }

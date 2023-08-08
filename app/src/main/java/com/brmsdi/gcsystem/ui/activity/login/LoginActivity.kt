@@ -7,7 +7,12 @@ import android.view.View.OnClickListener
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.brmsdi.gcsystem.R
+import com.brmsdi.gcsystem.data.constants.Constant
+import com.brmsdi.gcsystem.data.helper.BiometricHelper
+import com.brmsdi.gcsystem.data.helper.BiometricHelper.Companion.isBiometricAvailable
+import com.brmsdi.gcsystem.data.listeners.AuthenticationListener
 import com.brmsdi.gcsystem.data.repository.AuthenticableRepository
+import com.brmsdi.gcsystem.data.security.SecurityPreferences
 import com.brmsdi.gcsystem.databinding.ActivityLoginBinding
 import com.brmsdi.gcsystem.ui.activity.changePassword.ChangePasswordActivity
 import com.brmsdi.gcsystem.ui.activity.mainEmployee.MainEmployeeActivity
@@ -31,6 +36,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
     private lateinit var binding: ActivityLoginBinding
     private val itemList = mutableListOf<String>()
     private lateinit var loginViewModel: LoginViewModel
+    private lateinit var securityPreferences: SecurityPreferences
     private var cpf = ""
     private var password = ""
     private var typeAuth = ""
@@ -41,6 +47,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         supportActionBar?.hide()
         setContentView(binding.root)
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        securityPreferences = SecurityPreferences(this)
         setMaxLength(binding.editUsername, 11)
         addTypes()
         loadData()
@@ -48,11 +55,12 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         binding.spinnerTypeAuth.adapter = adapter
         observe()
         addAction()
+        // TESTE
         binding.editUsername.setText("12345678909")
         binding.editPassword.setText("12345678909")
         getFields()
         typeAuth = getString(R.string.lessee)
-       // loginHandle()
+        authHandler()
     }
 
     private fun observe() {
@@ -73,7 +81,6 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
                 getFields()
                 if (fieldsIsCorrect(cpf, password, typeAuth)) loginHandle()
             }
-
             binding.textChangePassword.id -> initializeChangePassword()
         }
     }
@@ -147,5 +154,36 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
             startActivity(Intent(this, MainLesseeActivity::class.java))
         }
         finish()
+    }
+
+    private fun authHandler() {
+        val token = securityPreferences.get(Constant.AUTH.TOKEN)
+        val finger = securityPreferences.get(Constant.AUTH.FINGERPRINT)
+        if (token.isEmpty()) {
+            securityPreferences.story(Constant.AUTH.TOKEN, "12345678sdfkjkdjflkjsdkljfksjdf")
+        }
+        if (finger == Constant.AUTH.FINGERPRINT_ON) {
+            if (!isBiometricAvailable(this)) {
+                securityPreferences.remove(Constant.AUTH.TOKEN)
+                securityPreferences.remove(Constant.AUTH.FINGERPRINT)
+            } else {
+                val authenticationListener = object : AuthenticationListener {
+                    override fun onSuccess() {
+                        loginHandle()
+                    }
+
+                    override fun error() {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun failed() {
+                        TODO("Not yet implemented")
+                    }
+                }
+                BiometricHelper.biometric(this, this, authenticationListener)
+            }
+        } else if (token.isNotEmpty()) {
+            loginHandle()
+        }
     }
 }

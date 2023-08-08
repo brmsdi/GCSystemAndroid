@@ -174,4 +174,11 @@
     <string name="icon_contract">Icone de contrato</string>
     <string name="text_printout">Imprimir</string>
     <string name="action_exit">Sair</string>
+    <string name="action_settings_biometric">Configurar Autenticação Biométrica</string>
+    <string name="action_auth_biometric">Autenticação Biométrica</string>
+    <string name="label_active_disable">Ativar/desativar</string>
+    <string name="icon_fingerprint">Icone biometria</string>
+    <string name="error_hardware_biometric">Infelizmente este dispositivo não possui suporte para biometria</string>
+    <string name="info_biometric">Toque no sensor biometrico para configurar</string>
+    <string name="title_settings_biometric">Configurar biometria</string>
 </resources>

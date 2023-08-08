@@ -3,11 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"
         tools:ignore="ScopedStorage" />
+
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:name=".AppApplication"
@@ -21,6 +26,12 @@
         android:theme="@style/Theme.GCSystem"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.activity.screenAuthenticationPassword.ScreenAuthenticationPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.screenBiometric.ScreenAuthenticationActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.activity.detailContract.DetailContractActivity"
             android:exported="false"
@@ -58,6 +69,7 @@
             android:theme="@style/Theme.GCSystem">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -100,6 +100,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/fields_height</item>
         <item name="android:layout_marginBottom">@dimen/margin_bottom_form</item>
+        <item name="android:popupBackground">?android:windowBackground</item>
     </style>
 
     <style name="text_label_list">
@@ -132,6 +133,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">16dp</item>
     </style>
+
     <style name="floating_pdf">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

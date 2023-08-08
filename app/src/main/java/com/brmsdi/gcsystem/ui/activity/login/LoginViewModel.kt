@@ -56,10 +56,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         RetrofitClient.addToken(token)
     }
 
-    fun verifyAuthentication() {
+    fun verifyAuthentication(): Boolean {
         val token = securityPreferences.get(TOKEN)
-        if (token.isNotEmpty()) {
+        return if (token.isNotEmpty()) {
             RetrofitClient.addToken(token)
-        }
+            true
+        } else false
     }
 }

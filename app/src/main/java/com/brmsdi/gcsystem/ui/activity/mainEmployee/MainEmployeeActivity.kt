@@ -1,7 +1,9 @@
 package com.brmsdi.gcsystem.ui.activity.mainEmployee
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -16,6 +18,7 @@ import androidx.navigation.NavController
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
 import com.brmsdi.gcsystem.databinding.ActivityMainEmployeeBinding
+import com.brmsdi.gcsystem.ui.activity.screenBiometric.ScreenAuthenticationActivity
 
 class MainEmployeeActivity : AppCompatActivity(), OnSearchViewListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -23,7 +26,7 @@ class MainEmployeeActivity : AppCompatActivity(), OnSearchViewListener {
     private lateinit var onQueryTextListener: OnQueryTextListener
     private lateinit var navController: NavController
     private lateinit var searchView: SearchView
-    private lateinit var searchable : HashSet<Int>
+    private lateinit var searchable: HashSet<Int>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainEmployeeBinding.inflate(layoutInflater)
@@ -53,6 +56,17 @@ class MainEmployeeActivity : AppCompatActivity(), OnSearchViewListener {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_settings_biometric -> {
+                initSettingsBiometric()
+                return true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         //val navController = findNavController(R.id.nav_host_fragment_content_main_employee)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
@@ -70,4 +84,7 @@ class MainEmployeeActivity : AppCompatActivity(), OnSearchViewListener {
         }
     }
 
+    private fun initSettingsBiometric() {
+        startActivity(Intent(this, ScreenAuthenticationActivity::class.java))
+    }
 }
