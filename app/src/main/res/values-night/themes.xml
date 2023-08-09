@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.GCSystem" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.GCSystem" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/pink_1</item>
         <item name="colorPrimaryVariant">@color/pink_1</item>
@@ -10,12 +10,10 @@
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/pink_1</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/dark_background</item>
         <item name="actionOverflowMenuStyle">@style/Theme.GCSystem.PopupOverlay3</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Theme.GCSystem.PopupOverlay3" parent="@style/Widget.MaterialComponents.PopupMenu.Overflow">
@@ -25,6 +23,7 @@
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">@color/pink_1</item>
+        <item name="titleTextColor">@color/white</item>
     </style>
 
     <style name="edit_text_colors">
@@ -86,13 +85,14 @@
         <item name="android:layout_height">@dimen/icon_height</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_margin">@dimen/icon_margin</item>
+        <item name="android:tint">@color/white</item>
     </style>
 
     <style name="icon_list">
         <item name="android:layout_width">@dimen/icon_list_width</item>
         <item name="android:layout_height">@dimen/icon_list_height</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:tint">@color/pink_1</item>
+        <item name="android:tint">@color/soft_yellow</item>
     </style>
 
     <style name="spinner_form">
@@ -140,6 +140,5 @@
         <item name="android:layout_margin">16dp</item>
         <item name="android:backgroundTint">?attr/colorPrimaryVariant</item>
     </style>
-
 
 </resources>

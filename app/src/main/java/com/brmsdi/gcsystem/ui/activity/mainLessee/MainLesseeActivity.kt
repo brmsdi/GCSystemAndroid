@@ -29,7 +29,7 @@ class MainLesseeActivity : AppCompatActivity(), OnSearchViewListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainLesseeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.appBarMain.toolbar)
+        setSupportActionBar(findViewById(R.id.toolbar))
         val drawerLayout: DrawerLayout = binding.drawerLayoutLessee
         val navView: NavigationView = binding.navViewLessee
         navController = findNavController(R.id.nav_host_fragment_content_main_lessee)

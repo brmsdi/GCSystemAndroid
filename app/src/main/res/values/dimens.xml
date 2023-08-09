@@ -11,7 +11,7 @@
     <dimen name="text_description_size">15sp</dimen>
     <dimen name="padding_layout">16dp</dimen>
     <dimen name="margin_bottom_form">16dp</dimen>
-    <dimen name="font_size_label">7pt</dimen>
+    <dimen name="font_size_label">7.5pt</dimen>
     <dimen name="font_label_data">6pt</dimen>
     <dimen name="paddingBottom_item_data_list">11dp</dimen>
     <dimen name="icon_width">60dp</dimen>

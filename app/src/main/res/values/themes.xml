@@ -1,36 +1,36 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.GCSystem" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.GCSystem" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/pink_1</item>
         <item name="colorPrimaryVariant">@color/pink_1</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/white_1</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/blue_1</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/pink_1</item>
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/dark_background</item>
+        <item name="android:windowBackground">@color/light_background</item>
         <item name="actionOverflowMenuStyle">@style/Theme.GCSystem.PopupOverlay3</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Theme.GCSystem.PopupOverlay3" parent="@style/Widget.MaterialComponents.PopupMenu.Overflow">
-        <item name="android:popupBackground">@color/dark_background</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:popupBackground">@color/light_background</item>
+        <item name="android:textColor">@color/dark_background</item>
     </style>
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">@color/pink_1</item>
+        <item name="titleTextColor">@color/white</item>
     </style>
 
     <style name="edit_text_colors">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/dark_background</item>
         <item name="android:drawablePadding">8dp</item>
-        <item name="android:drawableTint">#dddd</item>
+        <item name="android:drawableTint">@color/dark_background</item>
     </style>
 
     <style name="edit_text_dimens">
@@ -38,7 +38,7 @@
     </style>
 
     <style name="button_style">
-        <item name="android:backgroundTint">@color/pink_1</item>
+        <item name="android:backgroundTint">@color/dark_background</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textAllCaps">false</item>
     </style>
@@ -70,6 +70,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/fields_height</item>
         <item name="android:layout_marginBottom">@dimen/margin_bottom_form</item>
+        <item name="android:textColor">@color/dark_background</item>
     </style>
 
     <style name="description_screen_form">
@@ -86,13 +87,14 @@
         <item name="android:layout_height">@dimen/icon_height</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_margin">@dimen/icon_margin</item>
+        <item name="android:tint">@color/dark_background</item>
     </style>
 
     <style name="icon_list">
         <item name="android:layout_width">@dimen/icon_list_width</item>
         <item name="android:layout_height">@dimen/icon_list_height</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:tint">@color/pink_1</item>
+        <item name="android:tint">@color/soft_yellow</item>
     </style>
 
     <style name="spinner_form">
@@ -100,6 +102,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/fields_height</item>
         <item name="android:layout_marginBottom">@dimen/margin_bottom_form</item>
+        <item name="android:popupBackground">?android:windowBackground</item>
     </style>
 
     <style name="text_label_list">
@@ -110,17 +113,17 @@
     <style name="text_list_data">
         <item name="android:textSize">@dimen/font_size_label</item>
         <item name="android:paddingBottom">@dimen/paddingBottom_item_data_list</item>
-        <!--        <item name="android:textStyle">italic</item>-->
         <item name="android:layout_marginStart">4dp</item>
+        <item name="android:textColor">@color/dark_background</item>
     </style>
 
     <style name="card_list">
         <item name="android:layout_marginBottom">16dp</item>
-        <item name="android:backgroundTint">@color/dark_background_1</item>
+        <item name="android:backgroundTint">@color/white</item>
     </style>
 
     <style name="card_colors">
-        <item name="android:backgroundTint">@color/dark_background_1</item>
+        <item name="android:backgroundTint">@color/white</item>
     </style>
 
     <style name="repair_colors">
@@ -132,10 +135,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">16dp</item>
     </style>
+
     <style name="floating_pdf">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">16dp</item>
         <item name="android:backgroundTint">?attr/colorPrimaryVariant</item>
     </style>
+
 </resources>

@@ -32,7 +32,7 @@ class MainEmployeeActivity : AppCompatActivity(), OnSearchViewListener {
         binding = ActivityMainEmployeeBinding.inflate(layoutInflater)
         searchable = hashSetOf(R.id.nav_order_service)
         setContentView(binding.root)
-        setSupportActionBar(binding.appBarMainEmployee.toolbar)
+        setSupportActionBar(findViewById(R.id.toolbar))
         val drawerLayout: DrawerLayout = binding.drawerLayoutEmployee
         val navView: NavigationView = binding.navViewEmployee
         navController = findNavController(R.id.nav_host_fragment_content_main_employee)

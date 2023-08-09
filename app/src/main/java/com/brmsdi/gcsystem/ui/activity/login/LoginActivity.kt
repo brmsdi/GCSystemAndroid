@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ArrayAdapter
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.constants.Constant
@@ -44,8 +45,10 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        supportActionBar?.hide()
         setContentView(binding.root)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar.setTitle(R.string.authentication)
+        setSupportActionBar(toolbar)
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         securityPreferences = SecurityPreferences(this)
         setMaxLength(binding.editUsername, 11)
@@ -60,7 +63,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         binding.editPassword.setText("12345678909")
         getFields()
         typeAuth = getString(R.string.lessee)
-        authHandler()
+       // authHandler()
     }
 
     private fun observe() {

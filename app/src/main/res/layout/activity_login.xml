@@ -6,24 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.login.LoginActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/ToolbarStyle"
-        android:theme="@style/Theme.GCSystem.PopupOverlay3"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/authentication" />
+    <include layout="@layout/toolbar_app" />
 
     <ImageView
         android:id="@+id/image_logo_id"
+        style="@style/icon_form"
         android:layout_width="@dimen/icon_width"
         android:layout_height="@dimen/icon_height"
         android:layout_marginTop="30dp"
         android:contentDescription="@string/gcsystem_logo"
-        android:drawableTint="@color/white"
         android:src="@drawable/baseline_apartment_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +32,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_logo_id">
 
+        <TextView
+            android:id="@+id/text_label_username"
+            style="@style/text_label_form"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_username"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/edit_username"
@@ -52,12 +50,20 @@
             android:hint="@string/input_cpf_text"
             android:inputType="number" />
 
+        <TextView
+            android:id="@+id/text_label_password"
+            style="@style/text_label_form"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_elements"
+            android:text="@string/label_password"
+            android:textSize="16sp" />
+
         <EditText
             android:id="@+id/edit_password"
             style="@style/edit_text_colors"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fields_height"
-            android:layout_marginTop="@dimen/margin_top_elements"
             android:autofillHints=""
             android:drawableStart="@drawable/ic_lock_24"
             android:hint="@string/input_password_text"
@@ -72,10 +78,10 @@
             android:textSize="16sp" />
 
         <Spinner
+            style="@style/spinner_form"
             android:id="@+id/spinner_type_auth"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/fields_height"
-            android:popupBackground="?android:windowBackground" />
+            android:layout_height="@dimen/fields_height" />
 
         <ProgressBar
             android:id="@+id/progress_login"

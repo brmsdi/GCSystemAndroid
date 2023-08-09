@@ -1,9 +1,8 @@
 package com.brmsdi.gcsystem.ui.activity.changePassword
 
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.databinding.ActivityChangePasswordBinding
@@ -14,10 +13,12 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.pink_1)))
         _binding = ActivityChangePasswordBinding.inflate(layoutInflater)
-        replaceFragment(SendEmailFragment.newInstance())
         setContentView(_binding.root)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar.setTitle(R.string.label_change_password)
+        setSupportActionBar(toolbar)
+        replaceFragment(SendEmailFragment.newInstance())
     }
 
     private fun replaceFragment(fragment: Fragment) {
