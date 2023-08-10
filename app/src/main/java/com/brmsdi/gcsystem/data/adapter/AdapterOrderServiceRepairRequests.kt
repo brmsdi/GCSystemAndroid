@@ -67,7 +67,9 @@ class AdapterOrderServiceRepairRequests(
             if (it.id == repairRequest.id) {
                 if (it.items == null) it.items = mutableListOf()
                 it.items!!.add(item)
-                if (notify) notifyItemChanged(list.indexOf(repairRequest))
+                if (notify) {
+                    notifyItemChanged(list.indexOf(repairRequest))
+                }
                 return true
             }
         }

@@ -5,4 +5,4 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class LocalizationCondominium(@SerializedName("id") var id: Int) : Parcelable {}
+data class LocalizationCondominium(@SerializedName("id") var id: Int) : Parcelable

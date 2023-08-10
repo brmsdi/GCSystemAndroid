@@ -1,8 +1,6 @@
 package com.brmsdi.gcsystem.ui.utils
 
 import android.view.View
-import android.widget.ProgressBar
-
 
 /**
  *
@@ -11,10 +9,6 @@ import android.widget.ProgressBar
  */
 
 interface ProgressBarOnApp {
-
-    fun onProgress(view: View) {
-        view.visibility = View.VISIBLE
-    }
 
     fun postExecution(view: View) {
         view.visibility = View.GONE

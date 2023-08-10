@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.GCSystem" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
@@ -15,6 +15,7 @@
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/light_background</item>
         <item name="actionOverflowMenuStyle">@style/Theme.GCSystem.PopupOverlay3</item>
+        <item name="android:editTextColor">@color/white</item>
     </style>
 
     <style name="Theme.GCSystem.PopupOverlay3" parent="@style/Widget.MaterialComponents.PopupMenu.Overflow">
@@ -31,10 +32,6 @@
         <item name="android:textColor">@color/dark_background</item>
         <item name="android:drawablePadding">8dp</item>
         <item name="android:drawableTint">@color/dark_background</item>
-    </style>
-
-    <style name="edit_text_dimens">
-        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="button_style">
@@ -124,10 +121,6 @@
 
     <style name="card_colors">
         <item name="android:backgroundTint">@color/white</item>
-    </style>
-
-    <style name="repair_colors">
-        <item name="android:background">@color/dark_background_1</item>
     </style>
 
     <style name="floating">

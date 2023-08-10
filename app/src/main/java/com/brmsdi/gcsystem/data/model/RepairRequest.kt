@@ -35,4 +35,5 @@ data class RepairRequest(
     var apartmentNumber: String,
 
     @SerializedName("orderService")
-    var orderService: OrderService?) : Parcelable {}
+    var orderService: OrderService?
+) : Parcelable

@@ -10,7 +10,6 @@ import com.brmsdi.gcsystem.databinding.FragmentMyAccountEmployeeBinding
 
 class MyAccountEmployeeFragment : Fragment() {
 
-    private lateinit var viewModel: MyAccountEmployeeViewModel
     private lateinit var binding: FragmentMyAccountEmployeeBinding
 
     override fun onCreateView(
@@ -18,7 +17,6 @@ class MyAccountEmployeeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMyAccountEmployeeBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[MyAccountEmployeeViewModel::class.java]
         mockData()
         return binding.root
     }

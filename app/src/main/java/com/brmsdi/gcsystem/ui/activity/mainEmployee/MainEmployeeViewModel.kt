@@ -1,0 +1,20 @@
+package com.brmsdi.gcsystem.ui.activity.mainEmployee
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import com.brmsdi.gcsystem.data.constants.Constant
+import com.brmsdi.gcsystem.data.security.SecurityPreferences
+
+/**
+ *
+ * @author Wisley Bruno Marques França
+ * @since 1
+ */
+class MainEmployeeViewModel(application: Application) : AndroidViewModel(application) {
+    private val securityPreferences = SecurityPreferences(application.applicationContext)
+
+    fun logout() {
+        securityPreferences.remove(Constant.AUTH.TOKEN)
+        securityPreferences.remove(Constant.AUTH.FINGERPRINT)
+    }
+}

@@ -24,4 +24,4 @@ data class Condominium(
 
     @SerializedName("localization")
     var localization: LocalizationCondominium
-) : Parcelable {}
+) : Parcelable

@@ -38,10 +38,9 @@
 
     <Spinner
         android:id="@+id/spinner_type_auth"
-        style="@style/edit_text_colors"
+        style="@style/spinner_form"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fields_height"
-        android:popupBackground="@color/blue_black" />
+        android:layout_height="@dimen/fields_height" />
 
     <ProgressBar
         android:id="@+id/progress_send_email"

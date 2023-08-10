@@ -63,7 +63,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         binding.editPassword.setText("12345678909")
         getFields()
         typeAuth = getString(R.string.lessee)
-       // authHandler()
+        authHandler()
     }
 
     private fun observe() {
@@ -121,6 +121,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
 //    }
 
     private fun loginHandle() {
+        securityPreferences.story(Constant.AUTH.TOKEN, "12345678sdfkjkdjflkjsdkljfksjdf")
         initializeMain(typeAuth)
     }
 
@@ -163,8 +164,9 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         val token = securityPreferences.get(Constant.AUTH.TOKEN)
         val finger = securityPreferences.get(Constant.AUTH.FINGERPRINT)
         if (token.isEmpty()) {
-            securityPreferences.story(Constant.AUTH.TOKEN, "12345678sdfkjkdjflkjsdkljfksjdf")
+            return
         }
+
         if (finger == Constant.AUTH.FINGERPRINT_ON) {
             if (!isBiometricAvailable(this)) {
                 securityPreferences.remove(Constant.AUTH.TOKEN)
@@ -185,7 +187,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
                 }
                 BiometricHelper.biometric(this, this, authenticationListener)
             }
-        } else if (token.isNotEmpty()) {
+        } else {
             loginHandle()
         }
     }

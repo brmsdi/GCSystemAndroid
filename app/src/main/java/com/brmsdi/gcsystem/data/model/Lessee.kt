@@ -10,4 +10,4 @@ class Lessee(
     var name: String,
     @SerializedName("debts")
     var debts: MutableList<Debt>
-) : Parcelable {}
+) : Parcelable

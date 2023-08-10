@@ -8,4 +8,4 @@ import kotlinx.parcelize.Parcelize
 data class Employee(
     @SerializedName("name")
     var name: String
-) : Parcelable {}
+) : Parcelable

@@ -78,8 +78,8 @@
             android:textSize="16sp" />
 
         <Spinner
-            style="@style/spinner_form"
             android:id="@+id/spinner_type_auth"
+            style="@style/spinner_form"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fields_height" />
 

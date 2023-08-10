@@ -21,7 +21,6 @@ class Constant private constructor() {
         const val CHANGE_PASSWORD_DATA = "CHANGE_PASSWORD_DATA"
         const val FINGERPRINT = "FINGER"
         const val FINGERPRINT_ON = "1"
-        const val REQUEST_CODE_CONFIRM_DEVICE_CREDENTIAL = 5
     }
 
     object ENDPOINT {

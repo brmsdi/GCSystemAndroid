@@ -33,4 +33,4 @@ data class Contract(
     var condominium: Condominium,
     @SerializedName("lessee")
     var lessee: Lessee,
-) : Parcelable {}
+) : Parcelable

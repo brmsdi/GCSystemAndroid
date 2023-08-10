@@ -3,7 +3,6 @@ package com.brmsdi.gcsystem.data.security
 import android.content.Context
 import android.content.SharedPreferences
 
-
 /**
  *
  * @author Wisley Bruno Marques França

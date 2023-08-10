@@ -33,4 +33,4 @@ data class OrderService(
 
     @SerializedName("status")
     var status: Status
-) : Parcelable {}
+) : Parcelable

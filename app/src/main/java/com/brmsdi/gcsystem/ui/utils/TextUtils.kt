@@ -61,10 +61,6 @@ class TextUtils {
             return value.length == 11
         }
 
-        fun jsonToString(value: String): String {
-            return Gson().fromJson(value, String::class.java)
-        }
-
         fun <T> jsonToObject(value : String, c : Class<T>): T {
              return Gson().fromJson(value, c)
         }

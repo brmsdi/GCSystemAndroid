@@ -6,4 +6,4 @@ package com.brmsdi.gcsystem.data.listeners.dialog
  * @since 1
  */
 
-interface DialogConfirmAndCancelListener : DialogConfirmListener, DialogCancelListener {}
+interface DialogConfirmAndCancelListener : DialogConfirmListener, DialogCancelListener

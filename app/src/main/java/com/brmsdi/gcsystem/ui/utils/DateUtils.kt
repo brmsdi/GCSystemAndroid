@@ -1,9 +1,7 @@
 package com.brmsdi.gcsystem.ui.utils
 
 import android.os.Build
-import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Date

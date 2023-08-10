@@ -1,27 +1,12 @@
 <resources>
     <string name="app_name">GCS</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Configurações</string>
     <string name="menu_home">Inicio</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="input_cpf_text">Digite o seu cpf</string>
     <string name="input_password_text">Digite a sua senha</string>
     <string name="authentication_type">Tipo de autenticação</string>
     <string name="text_send">ENVIAR</string>
     <string name="text_change_password">Esqueci minha senha…</string>
-    <string name="icon_user_description">icon user</string>
     <string name="gcsystem_logo">GCSystem logo</string>
     <string name="fields_empty">Por favor, preencha todos os campos!</string>
     <string name="cpf_invalid">CPF invalido!</string>
@@ -42,9 +27,7 @@
     <string name="button_save">Salvar</string>
     <string name="update_password">Atualizar senha de acesso</string>
     <string name="field_email_empty">"Preencha o campo E-mail! "</string>
-    <string name="MESSAGE_EMAIL_NOT_EXISTS">"Nenhum registro encontrado com esse E-mail. "</string>
     <string name="invalide_type_auth">"Tipo de autenticação inválido: "</string>
-    <string name="types_empty">Sem tipos definidos</string>
     <string name="passwords_not_equals">"As senhas digitadas não correspondem. Tente novamente! "</string>
     <string name="password_empty">"Por favor, preencha os campos “senha” e “Repetir senha”."</string>
     <string name="minimum_size_password">"A senha deve conter no mínimo 8 caracteres. "</string>
@@ -61,7 +44,7 @@
     <string name="label_contact">Contato</string>
     <string name="icon_my_account">Icone minha conta</string>
     <string name="manager_label_rent">Gerenciamento de aluguel</string>
-    <string name="dev_contact_email">srmarquesms@gmail.com</string>
+    <string name="dev_contact_email">srwisley.dev@gmail.com</string>
     <string name="label_repair">Reparos</string>
     <string name="label_condominium">Condomínio</string>
     <string name="label_type_of_problem">Tipo de problema</string>
@@ -76,10 +59,6 @@
     <string name="search_is_empty">"Nenhuma informação encontrada. "</string>
     <string name="title_activity_detail_repair_request">DetailRepairRequestActivity</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
     <string name="screen_details_repair_request">Detalhes da solicitação de reparo</string>
     <string name="label_order_service">Ordem de serviço</string>
     <string name="label_collaborators">Colaboradores</string>
@@ -94,7 +73,6 @@
     <string name="delete_this_item">Você deseja deletar este item?</string>
     <string name="repair_request_in_progress">"Serviços em andamento ou concluídos, não podem ser atualizados ou excluídos. "</string>
     <string name="label_orders_service">Ordens de serviço</string>
-    <string name="description_button_add_order_service">Adicionar nova ordem de serviço</string>
     <string name="created_in">Criado em</string>
     <string name="label_date_reserved">Data reservada</string>
     <string name="label_date_conclusion">Data de conclusão</string>
@@ -105,20 +83,14 @@
     <string name="label_money">Valor</string>
     <string name="label_apartment">Apartamento</string>
     <string name="label_lessee_name">Nome do locatário</string>
-    <string name="label_item">Item</string>
     <string name="label_items">Itens</string>
-    <string name="text_remove_item">Remover item</string>
     <string name="text_add_item">Adicionar item</string>
     <string name="text_finalize_order_service">Finalizar ordem de serviço</string>
     <string name="label_back">Voltar</string>
     <string name="icon_order_service">Icone ordem de serviço</string>
-    <string name="info_not_items">Nenhum item adicionado</string>
     <string name="label_items_none">Nenhum item adicionado</string>
-    <string name="icon_item">Icone do item</string>
     <string name="label_value">Valor</string>
-    <string name="label_add_new_item">Adicionar novo item</string>
     <string name="icon_tela_add_item_description">Icone tela add item</string>
-    <string name="status_open">Em aberto</string>
     <string name="status_concluded">Concluído</string>
     <string name="icon_delete_item">Icone deletar item</string>
     <string name="status_in_progress">Em andamento</string>
@@ -146,4 +118,5 @@
     <string name="title_settings_biometric">GCS</string>
     <string name="label_username">CPF</string>
     <string name="label_password">Senha</string>
+    <string name="label_exit">Sair</string>
 </resources>

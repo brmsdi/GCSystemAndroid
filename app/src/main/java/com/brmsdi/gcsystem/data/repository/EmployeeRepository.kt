@@ -7,5 +7,4 @@ package com.brmsdi.gcsystem.data.repository
  * @since 1
  */
 
-interface EmployeeRepository : CallRepository, AuthenticableRepository {
-}
+interface EmployeeRepository : CallRepository, AuthenticableRepository

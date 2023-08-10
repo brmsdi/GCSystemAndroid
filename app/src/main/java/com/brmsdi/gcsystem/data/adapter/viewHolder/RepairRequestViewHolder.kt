@@ -20,7 +20,7 @@ class RepairRequestViewHolder(
             textId.text = repairRequest.id.toString()
             textCondominiumName.text = repairRequest.condominium.name
             textTypeProblem.text = repairRequest.typeProblem.name
-            textStatus.text = repairRequest.status?.name
+            textStatus.text = repairRequest.status.name
         }
 
         rowRepairRequestBinding.root.setOnClickListener {

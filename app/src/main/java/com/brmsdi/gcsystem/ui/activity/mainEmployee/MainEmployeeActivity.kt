@@ -14,10 +14,14 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.ui.NavigationUI
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
 import com.brmsdi.gcsystem.databinding.ActivityMainEmployeeBinding
+import com.brmsdi.gcsystem.ui.activity.login.LoginActivity
 import com.brmsdi.gcsystem.ui.activity.screenBiometric.ScreenAuthenticationActivity
 
 class MainEmployeeActivity : AppCompatActivity(), OnSearchViewListener {
@@ -27,9 +31,11 @@ class MainEmployeeActivity : AppCompatActivity(), OnSearchViewListener {
     private lateinit var navController: NavController
     private lateinit var searchView: SearchView
     private lateinit var searchable: HashSet<Int>
+    private lateinit var viewModel : MainEmployeeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainEmployeeBinding.inflate(layoutInflater)
+        viewModel = ViewModelProvider(this)[MainEmployeeViewModel::class.java]
         searchable = hashSetOf(R.id.nav_order_service)
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.toolbar))
@@ -43,6 +49,17 @@ class MainEmployeeActivity : AppCompatActivity(), OnSearchViewListener {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navView.setNavigationItemSelectedListener {
+            if (it.itemId == R.id.nav_logout) {
+                viewModel.logout()
+                initLogin()
+                finish()
+            } else {
+                NavigationUI.onNavDestinationSelected(it, navController)
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
+            true
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -86,5 +103,9 @@ class MainEmployeeActivity : AppCompatActivity(), OnSearchViewListener {
 
     private fun initSettingsBiometric() {
         startActivity(Intent(this, ScreenAuthenticationActivity::class.java))
+    }
+
+    private fun initLogin() {
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 }

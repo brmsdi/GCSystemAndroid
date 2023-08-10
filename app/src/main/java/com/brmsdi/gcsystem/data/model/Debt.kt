@@ -21,4 +21,4 @@ data class Debt(
     var value: Double,
     @SerializedName("status")
     var status: Status
-) : Parcelable{}
+) : Parcelable

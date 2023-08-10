@@ -6,4 +6,4 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Status(@SerializedName("id") var id: Int, @SerializedName("name") var name: String) :
-    Parcelable {}
+    Parcelable

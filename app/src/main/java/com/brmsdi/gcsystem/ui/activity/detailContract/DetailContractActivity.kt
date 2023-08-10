@@ -1,8 +1,6 @@
 package com.brmsdi.gcsystem.ui.activity.detailContract
 
-import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,8 +11,6 @@ import android.view.View.OnClickListener
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.constants.Constant.CONTRACT.CONTRACT_DATA
 import com.brmsdi.gcsystem.data.model.Contract

@@ -1,7 +1,6 @@
 package com.brmsdi.gcsystem.ui.fragment.contract
 
 import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,7 +18,6 @@ import com.brmsdi.gcsystem.ui.utils.NumberUtils.Companion.getSystemLocale
 
 class ContractFragment : Fragment(), ItemRecyclerClickListener<Contract> {
     private lateinit var binding: FragmentContractBinding
-    private lateinit var viewModel: ContractViewModel
     private lateinit var adapter: AdapterContract
 
     override fun onCreateView(
@@ -27,7 +25,6 @@ class ContractFragment : Fragment(), ItemRecyclerClickListener<Contract> {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentContractBinding.inflate(layoutInflater, container, false)
-        viewModel = ViewModelProvider(this)[ContractViewModel::class.java]
         adapter = AdapterContract(locale = getSystemLocale(this.requireContext()), listener = this)
         binding.recyclerContracts.layoutManager = LinearLayoutManager(this.requireContext())
         binding.recyclerContracts.adapter = adapter
