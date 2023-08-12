@@ -45,4 +45,13 @@ class Constant private constructor() {
     object CONTRACT {
         const val CONTRACT_DATA = "CD"
     }
+
+    object PERMISSION {
+        const val ALL = 1
+    }
+
+    object NOTIFICATION {
+        const val CHANNEL1 = "com.brmsdi.gcsystem"
+        const val CHANNEL1_ID = "OS"
+    }
 }

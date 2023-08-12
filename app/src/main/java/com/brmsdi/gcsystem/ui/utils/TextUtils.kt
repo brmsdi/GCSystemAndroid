@@ -1,9 +1,11 @@
 package com.brmsdi.gcsystem.ui.utils
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.text.InputFilter
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.google.gson.Gson
 
 /**
@@ -71,6 +73,10 @@ class TextUtils {
                 code.append(it)
             }
             return code
+        }
+
+        fun permissionsNotGranted(context: Context, list: List<String>): Array<out String> {
+            return list.filter { ActivityCompat.checkSelfPermission(context, it) != PackageManager.PERMISSION_GRANTED }.toTypedArray()
         }
     }
 }

@@ -2,8 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
-
 
 android {
     namespace 'com.brmsdi.gcsystem'
@@ -55,7 +55,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.itextpdf/itextpdf
     //implementation 'com.itextpdf:itextpdf:5.5.13.3'
     implementation 'androidx.print:print:1.0.0'
-
+    implementation platform("com.google.firebase:firebase-bom:32.2.2")
+    implementation 'com.google.firebase:firebase-common-ktx:20.3.3'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.2.1'
 
     // TEST
     testImplementation 'junit:junit:4.13.2'
@@ -68,4 +70,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.1'
     androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.5.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+
 }

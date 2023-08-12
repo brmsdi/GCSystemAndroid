@@ -32,6 +32,7 @@ class MainEmployeeActivity : AppCompatActivity(), OnSearchViewListener {
     private lateinit var searchView: SearchView
     private lateinit var searchable: HashSet<Int>
     private lateinit var viewModel : MainEmployeeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainEmployeeBinding.inflate(layoutInflater)

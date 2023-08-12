@@ -1,11 +1,16 @@
 package com.brmsdi.gcsystem.ui.activity.login
 
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ArrayAdapter
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.constants.Constant
@@ -24,7 +29,9 @@ import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.cpfIsValid
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
+import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.permissionsNotGranted
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.setMaxLength
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.TreeMap
 
 /**
@@ -42,6 +49,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
     private var password = ""
     private var typeAuth = ""
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -63,7 +71,17 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         binding.editPassword.setText("12345678909")
         getFields()
         typeAuth = getString(R.string.lessee)
-        authHandler()
+        //authHandler()
+        checkPermissions()
+        fire()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     private fun observe() {
@@ -84,6 +102,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
                 getFields()
                 if (fieldsIsCorrect(cpf, password, typeAuth)) loginHandle()
             }
+
             binding.textChangePassword.id -> initializeChangePassword()
         }
     }
@@ -189,6 +208,40 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
             }
         } else {
             loginHandle()
+        }
+    }
+
+    private fun fire() {
+        FirebaseMessaging
+            .getInstance()
+            .token
+            .addOnSuccessListener { token ->
+                Log.i("TOKEN success:", token)
+            }.addOnFailureListener {
+                Log.i("TOKEN fail:", it.toString())
+            }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun checkPermissions() {
+
+        val permissionsNotGranted = permissionsNotGranted(
+            this, listOf(
+                Manifest.permission.INTERNET,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.USE_BIOMETRIC,
+                Manifest.permission.USE_FINGERPRINT,
+                Manifest.permission.POST_NOTIFICATIONS,
+                Manifest.permission.VIBRATE
+            )
+        )
+
+        if (permissionsNotGranted.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                permissionsNotGranted,
+                Constant.PERMISSION.ALL
+            )
         }
     }
 }
