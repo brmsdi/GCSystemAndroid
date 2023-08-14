@@ -16,5 +16,6 @@ class MainLesseeViewModel(application: Application) : AndroidViewModel(applicati
     fun logout() {
         securityPreferences.remove(Constant.AUTH.TOKEN)
         securityPreferences.remove(Constant.AUTH.FINGERPRINT)
+        securityPreferences.remove(Constant.AUTH.TYPE_AUTH)
     }
 }

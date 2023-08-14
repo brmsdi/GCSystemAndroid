@@ -119,4 +119,7 @@
     <string name="label_username">CPF</string>
     <string name="label_password">Senha</string>
     <string name="label_exit">Sair</string>
+    <string name="unlock_device">Desbloquear dispositivo</string>
+    <string name="input_password">Insira a senha de desbloqueio</string>
+    <string name="new_repair_request_success">Solicitação de reparo realizada com sucesso</string>
 </resources>

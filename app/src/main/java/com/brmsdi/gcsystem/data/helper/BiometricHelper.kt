@@ -1,5 +1,6 @@
 package com.brmsdi.gcsystem.data.helper
 
+import android.app.KeyguardManager
 import android.content.Context
 import android.os.Build
 import androidx.biometric.BiometricManager
@@ -11,6 +12,7 @@ import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.brmsdi.gcsystem.R
+import com.brmsdi.gcsystem.data.constants.Constant.AUTH.REQUEST_CODE_UNLOCK
 import com.brmsdi.gcsystem.data.listeners.AuthenticationListener
 
 /**
@@ -21,7 +23,10 @@ import com.brmsdi.gcsystem.data.listeners.AuthenticationListener
 class BiometricHelper private constructor() {
     companion object {
         fun isBiometricAvailable(context: Context): Boolean {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return false
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+                val keyguardManager = ContextCompat.getSystemService(context, KeyguardManager::class.java) as KeyguardManager
+                return keyguardManager.isKeyguardSecure
+            }
             return BiometricManager.from(context).canAuthenticate(BIOMETRIC_STRONG) == BIOMETRIC_SUCCESS
         }
 
@@ -54,6 +59,18 @@ class BiometricHelper private constructor() {
                 .setNegativeButtonText(context.getString(R.string.cancel))
                 .build()
             biometricPrompt.authenticate(promptInfo)
+        }
+
+        fun authPassword(context: Context, fragmentActivity: FragmentActivity) {
+            val keyguardManager = ContextCompat.getSystemService(context, KeyguardManager::class.java) as KeyguardManager
+            val intent = keyguardManager.createConfirmDeviceCredentialIntent(
+                context.getString(R.string.unlock_device),
+                context.getString(R.string.input_password)
+            )
+
+            if (intent != null) {
+                fragmentActivity.startActivityForResult(intent, REQUEST_CODE_UNLOCK)
+            }
         }
     }
 }

@@ -73,7 +73,8 @@ class NewRepairRequestActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun save(repairRequest: RepairRequest) {
-        viewModel.save(repairRequest)
+        //viewModel.save(repairRequest)
+        displayMessage(this, getString(R.string.new_repair_request_success))
     }
 
     private fun addAction() {

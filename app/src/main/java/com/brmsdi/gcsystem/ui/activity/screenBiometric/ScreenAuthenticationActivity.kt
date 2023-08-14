@@ -1,13 +1,17 @@
 package com.brmsdi.gcsystem.ui.activity.screenBiometric
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
+import com.brmsdi.gcsystem.data.constants.Constant
 import com.brmsdi.gcsystem.data.constants.Constant.AUTH.FINGERPRINT
 import com.brmsdi.gcsystem.data.constants.Constant.AUTH.FINGERPRINT_ON
+import com.brmsdi.gcsystem.data.helper.BiometricHelper
 import com.brmsdi.gcsystem.data.helper.BiometricHelper.Companion.biometric
 import com.brmsdi.gcsystem.data.helper.BiometricHelper.Companion.isBiometricAvailable
 import com.brmsdi.gcsystem.data.listeners.AuthenticationListener
@@ -52,31 +56,49 @@ class ScreenAuthenticationActivity : AppCompatActivity(), OnClickListener{
     }
 
     private fun toggle() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            BiometricHelper.authPassword(this, this)
+            return
+        }
         val authenticationListener = object : AuthenticationListener {
+            val isChecked = binding.switchBiometric.isChecked
             override fun onSuccess() {
-                if (binding.switchBiometric.isChecked) {
-                    securityPreferences.story(FINGERPRINT, FINGERPRINT_ON)
-                    return
-                }
-                securityPreferences.remove(FINGERPRINT)
+                toggle(isChecked)
             }
 
             override fun error() {
-                binding.switchBiometric.isChecked = !binding.switchBiometric.isChecked
+                binding.switchBiometric.isChecked = !isChecked
             }
 
             override fun failed() {
-                binding.switchBiometric.isChecked = !binding.switchBiometric.isChecked
+                binding.switchBiometric.isChecked = !isChecked
             }
         }
+        biometric(this, this, authenticationListener)
+    }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            biometric(this, this, authenticationListener)
+    private fun toggle(isChecked: Boolean) {
+        if (isChecked) {
+            securityPreferences.story(FINGERPRINT, FINGERPRINT_ON)
+            return
         }
+        securityPreferences.remove(FINGERPRINT)
     }
 
     private fun verifyStateSwitch() {
         val fingerprint = securityPreferences.get(FINGERPRINT)
         binding.switchBiometric.isChecked = fingerprint.isNotEmpty() && fingerprint == FINGERPRINT_ON
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constant.AUTH.REQUEST_CODE_UNLOCK) {
+            val isChecked = binding.switchBiometric.isChecked
+            if (resultCode == Activity.RESULT_OK) {
+                toggle(isChecked)
+            } else {
+                binding.switchBiometric.isChecked = !isChecked
+            }
+        }
     }
 }

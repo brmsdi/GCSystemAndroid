@@ -9,16 +9,9 @@
     android:padding="16dp"
     tools:context=".ui.fragment.repairRequest.RepairRequestFragment">
 
-    <ProgressBar
+    <include
         android:id="@+id/progress_repair_request"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        layout="@layout/app_progressbar" />
 
     <TextView
         android:id="@+id/text_search_info"

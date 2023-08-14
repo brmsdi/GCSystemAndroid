@@ -81,7 +81,7 @@ class Mock {
                     typeProblem = typeProblemList()[1],
                     lessee = lesseeList()[0],
                     condominium = condominiumList()[1],
-                    status = statusList()[2],
+                    status = statusList()[0],
                     items = null,
                     apartmentNumber = "103",
                     orderService = null

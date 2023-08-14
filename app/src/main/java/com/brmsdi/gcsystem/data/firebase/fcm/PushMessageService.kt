@@ -14,7 +14,6 @@ class PushMessageService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        TODO("ADICIONAR TOKEN AO BACKEND")
     }
 
     override fun onMessageReceived(message: RemoteMessage) {

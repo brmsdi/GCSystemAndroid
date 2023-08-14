@@ -1,10 +1,10 @@
 package com.brmsdi.gcsystem.ui.activity.login
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ArrayAdapter
@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.constants.Constant
+import com.brmsdi.gcsystem.data.firebase.fcm.TokenService
 import com.brmsdi.gcsystem.data.helper.BiometricHelper
 import com.brmsdi.gcsystem.data.helper.BiometricHelper.Companion.isBiometricAvailable
 import com.brmsdi.gcsystem.data.listeners.AuthenticationListener
@@ -31,7 +32,6 @@ import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.permissionsNotGranted
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.setMaxLength
-import com.google.firebase.messaging.FirebaseMessaging
 import java.util.TreeMap
 
 /**
@@ -71,9 +71,9 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         binding.editPassword.setText("12345678909")
         getFields()
         typeAuth = getString(R.string.lessee)
-        //authHandler()
         checkPermissions()
-        fire()
+        authHandler()
+        TokenService.getToken() // Tratar exceção
     }
 
     override fun onRequestPermissionsResult(
@@ -100,9 +100,8 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         when (view.id) {
             binding.buttonSend.id -> {
                 getFields()
-                if (fieldsIsCorrect(cpf, password, typeAuth)) loginHandle()
+                if (fieldsIsCorrect(cpf, password, typeAuth)) loginHandle(typeAuth)
             }
-
             binding.textChangePassword.id -> initializeChangePassword()
         }
     }
@@ -139,8 +138,9 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
 //        authenticate(cpf, password, repository)
 //    }
 
-    private fun loginHandle() {
+    private fun loginHandle(typeAuth: String) {
         securityPreferences.story(Constant.AUTH.TOKEN, "12345678sdfkjkdjflkjsdkljfksjdf")
+        securityPreferences.story(Constant.AUTH.TYPE_AUTH, typeAuth)
         initializeMain(typeAuth)
     }
 
@@ -190,41 +190,39 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
             if (!isBiometricAvailable(this)) {
                 securityPreferences.remove(Constant.AUTH.TOKEN)
                 securityPreferences.remove(Constant.AUTH.FINGERPRINT)
+                securityPreferences.remove(Constant.AUTH.TYPE_AUTH)
             } else {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+                    BiometricHelper.authPassword(this, this)
+                    return
+                }
                 val authenticationListener = object : AuthenticationListener {
                     override fun onSuccess() {
-                        loginHandle()
+                        loginHandle(typeAuth = securityPreferences.get(Constant.AUTH.TYPE_AUTH))
                     }
 
-                    override fun error() {
-                        TODO("Not yet implemented")
-                    }
+                    override fun error() {}
 
-                    override fun failed() {
-                        TODO("Not yet implemented")
-                    }
+                    override fun failed() {}
                 }
                 BiometricHelper.biometric(this, this, authenticationListener)
             }
         } else {
-            loginHandle()
+            loginHandle(typeAuth = securityPreferences.get(Constant.AUTH.TYPE_AUTH))
         }
     }
 
-    private fun fire() {
-        FirebaseMessaging
-            .getInstance()
-            .token
-            .addOnSuccessListener { token ->
-                Log.i("TOKEN success:", token)
-            }.addOnFailureListener {
-                Log.i("TOKEN fail:", it.toString())
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constant.AUTH.REQUEST_CODE_UNLOCK) {
+            if (resultCode == Activity.RESULT_OK) {
+                loginHandle(typeAuth = securityPreferences.get(Constant.AUTH.TYPE_AUTH))
             }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun checkPermissions() {
-
         val permissionsNotGranted = permissionsNotGranted(
             this, listOf(
                 Manifest.permission.INTERNET,
