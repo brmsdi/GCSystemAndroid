@@ -13,7 +13,7 @@ class Constant private constructor() {
     }
 
     object API {
-        const val BASE_URL = "http://192.168.15.2:8080/"
+        const val BASE_URL = "http://192.168.15.2:8080/api/v1/mobile/"
     }
 
     object AUTH {
