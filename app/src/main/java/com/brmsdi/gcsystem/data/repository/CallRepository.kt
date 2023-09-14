@@ -1,11 +1,9 @@
 package com.brmsdi.gcsystem.data.repository
 
 import com.brmsdi.gcsystem.data.listeners.APIEvent
-import com.brmsdi.gcsystem.data.listeners.APIEventStringAndJSON
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.net.ConnectException
 import javax.net.ssl.HttpsURLConnection
 
 /**
@@ -35,19 +33,5 @@ interface CallRepository {
                 apiEvent.onFailure(throwable)
             }
         })
-    }
-
-    fun <T> callStringAndJson(call: Call<T>, event: APIEventStringAndJSON) {
-        try {
-            val response  = call.execute()
-            if (response.isSuccessful) {
-                event.onSuccess()
-
-            } else {
-                response.errorBody()?.string()?.let { event.onError(it) }
-            }
-        } catch (exception : ConnectException) {
-            event.onConnectFailure()
-        }
     }
 }
