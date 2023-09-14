@@ -21,8 +21,8 @@ import com.brmsdi.gcsystem.data.repository.AuthenticableRepository
 import com.brmsdi.gcsystem.ui.fragment.newPassword.NewPasswordFragment
 import com.brmsdi.gcsystem.ui.fragment.TypedFragment
 import com.brmsdi.gcsystem.ui.utils.LoadChangePasswordData
-import com.brmsdi.gcsystem.ui.utils.Mock
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
+import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.assembleCode
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.setMaxLength
@@ -73,8 +73,8 @@ class SendCodeFragment : TypedFragment(), View.OnClickListener, LoadChangePasswo
                     initializeNewPasswordFragment(fragment, bundle)
                 }
             }
+            showOrHideView(_binding.progressSendCode, false)
             showOrHideView(_binding.buttonSendCode, true)
-            postExecution(_binding.progressSendCode)
         }
     }
 
@@ -98,22 +98,14 @@ class SendCodeFragment : TypedFragment(), View.OnClickListener, LoadChangePasswo
         setTypes(newTypes)
     }
 
-//    private fun sendCode() {
-//        changePasswordDataDTO?.let {
-//            it.code = assembleCode(code1, code2, code3, code4, code5, code6).toString()
-//            val repository = getRepositoryTypeAuth(it.typeAuth)
-//            showOrHideView(_binding.buttonSendCode, false)
-//            onProgress(_binding.progressSendCode)
-//            sendCode(it, repository)
-//        }
-//    }
-
     private fun sendCode() {
-        changePasswordDataDTO?.token = Mock.getTokenDTO().token
-        val fragment = NewPasswordFragment.newInstance()
-        val bundle = Bundle()
-        bundle.putParcelable(CHANGE_PASSWORD_DATA, changePasswordDataDTO)
-        initializeNewPasswordFragment(fragment, bundle)
+        changePasswordDataDTO?.let {
+            it.code = assembleCode(code1, code2, code3, code4, code5, code6).toString()
+            val repository = getRepositoryTypeAuth(it.typeAuth)
+            showOrHideView(_binding.buttonSendCode, false)
+            showOrHideView(_binding.progressSendCode, true)
+            sendCode(it, repository)
+        }
     }
 
     private fun sendCode(

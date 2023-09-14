@@ -52,14 +52,14 @@ class NewPasswordFragment : TypedFragment(), OnClickListener, LoadChangePassword
                 displayMessage(this.requireContext(), getString(R.string.password_update_success))
                 endActivity()
             }
+            showOrHideView(_binding.progressNewPassword, false)
             showOrHideView(_binding.buttonSendNewPassword, true)
-            postExecution(_binding.progressNewPassword)
         }
 
         viewModel.errorMessage.observe(this.viewLifecycleOwner) {
             displayMessage(this.requireContext(), it)
             showOrHideView(_binding.buttonSendNewPassword, true)
-            postExecution(_binding.progressNewPassword)
+            showOrHideView(_binding.progressNewPassword, false)
         } // END errorMessage
     }
 
@@ -119,19 +119,14 @@ class NewPasswordFragment : TypedFragment(), OnClickListener, LoadChangePassword
         return password == repeatPassword
     }
 
-//    private fun save() {
-//        changePasswordDataDTO?.let {
-//            val tokenChangePasswordDTO = prepareToken(it)
-//            val repository = getRepositoryTypeAuth(it.typeAuth)
-//            showOrHideView(_binding.buttonSendNewPassword, false)
-//            onProgress(_binding.progressNewPassword)
-//            save(tokenChangePasswordDTO, repository)
-//        }
-//    }
-
     private fun save() {
-        displayMessage(this.requireContext(), getString(R.string.password_update_success))
-        endActivity()
+        changePasswordDataDTO?.let {
+            val tokenChangePasswordDTO = prepareToken(it)
+            val repository = getRepositoryTypeAuth(it.typeAuth)
+            showOrHideView(_binding.buttonSendNewPassword, false)
+            showOrHideView(_binding.progressNewPassword, true)
+            save(tokenChangePasswordDTO, repository)
+        }
     }
 
     private fun save(tokenChangePasswordDTO: TokenChangePasswordDTO, repository: AuthenticableRepository) {

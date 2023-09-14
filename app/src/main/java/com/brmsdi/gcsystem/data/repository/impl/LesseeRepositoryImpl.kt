@@ -2,12 +2,12 @@ package com.brmsdi.gcsystem.data.repository.impl
 
 import com.brmsdi.gcsystem.data.dto.TokenChangePasswordDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
-import com.brmsdi.gcsystem.data.listeners.APIEventStringAndJSON
 import com.brmsdi.gcsystem.data.remote.retrofit.RetrofitClient
 import com.brmsdi.gcsystem.data.repository.LesseeRepository
 import com.brmsdi.gcsystem.data.service.LesseeService
 import com.brmsdi.gcsystem.data.service.LoginService
 import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
+import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.dto.TokenDTO
 
 /**
@@ -21,8 +21,8 @@ class LesseeRepositoryImpl : LesseeRepository {
     override fun authenticate(cpf: String, password: String, apiEvent: APIEvent<TokenDTO>) {
         call(loginService.loginLessee(cpf, password), apiEvent)
     }
-    override fun requestCode(email: String, event: APIEventStringAndJSON) {
-        callStringAndJson(lesseeService.requestCode(email), event)
+    override fun requestCode(email: String, event: APIEvent<ResponseDTO>) {
+        call(lesseeService.requestCode(email), event)
     }
 
     override fun sendCode(changePasswordDataDTO: ChangePasswordDataDTO, apiEvent: APIEvent<TokenDTO>) {
@@ -31,8 +31,8 @@ class LesseeRepositoryImpl : LesseeRepository {
 
     override fun changePassword(
         tokenChangePasswordDTO: TokenChangePasswordDTO,
-        event: APIEventStringAndJSON
+        event: APIEvent<ResponseDTO>
     ) {
-        callStringAndJson(lesseeService.changePassword(tokenChangePasswordDTO), event)
+        call(lesseeService.changePassword(tokenChangePasswordDTO), event)
     }
 }

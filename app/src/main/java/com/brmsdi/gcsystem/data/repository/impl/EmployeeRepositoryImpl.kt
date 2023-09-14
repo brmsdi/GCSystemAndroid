@@ -2,12 +2,12 @@ package com.brmsdi.gcsystem.data.repository.impl
 
 import com.brmsdi.gcsystem.data.dto.TokenChangePasswordDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
-import com.brmsdi.gcsystem.data.listeners.APIEventStringAndJSON
 import com.brmsdi.gcsystem.data.remote.retrofit.RetrofitClient
 import com.brmsdi.gcsystem.data.repository.EmployeeRepository
 import com.brmsdi.gcsystem.data.service.EmployeeService
 import com.brmsdi.gcsystem.data.service.LoginService
 import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
+import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.dto.TokenDTO
 
 /**
@@ -23,8 +23,8 @@ class EmployeeRepositoryImpl : EmployeeRepository {
         call(loginService.loginEmployee(cpf, password), apiEvent)
     }
 
-    override fun requestCode(email : String, event: APIEventStringAndJSON) {
-        callStringAndJson(employeeService.requestCode(email), event)
+    override fun requestCode(email : String, event: APIEvent<ResponseDTO>) {
+        call(employeeService.requestCode(email), event)
     }
 
     override fun sendCode(changePasswordDataDTO: ChangePasswordDataDTO, apiEvent: APIEvent<TokenDTO>) {
@@ -33,8 +33,8 @@ class EmployeeRepositoryImpl : EmployeeRepository {
 
     override fun changePassword(
         tokenChangePasswordDTO: TokenChangePasswordDTO,
-        event: APIEventStringAndJSON
+        event: APIEvent<ResponseDTO>
     ) {
-        callStringAndJson(employeeService.changePassword(tokenChangePasswordDTO), event)
+        call(employeeService.changePassword(tokenChangePasswordDTO), event)
     }
 }

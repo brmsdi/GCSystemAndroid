@@ -66,13 +66,13 @@ class SendEmailFragment private constructor() : TypedFragment(), OnClickListener
                 bundle.putParcelable(CHANGE_PASSWORD_DATA, changePasswordDataDTO)
                 initializeSendCodeFragment(fragment, bundle)
             }
-            postExecution(_binding.progressSendEmail)
+            showOrHideView(_binding.progressSendEmail, false)
             showOrHideView(_binding.buttonSendEmail, true)
         } // END responseRequest
 
         viewModel.errorMessage.observe(this.viewLifecycleOwner) {
             displayMessage(this.requireContext(), it)
-            postExecution(_binding.progressSendEmail)
+            showOrHideView(_binding.progressSendEmail, false)
             showOrHideView(_binding.buttonSendEmail, true)
         } // END errorMessage
     }
@@ -103,21 +103,11 @@ class SendEmailFragment private constructor() : TypedFragment(), OnClickListener
         }
     }
 
-//    private fun send() {
-//        val repository = getRepositoryTypeAuth(typeAuth)
-//        onProgress(_binding.progressSendEmail)
-//        showOrHideView(_binding.buttonSendEmail, false)
-//        requestCode(email, repository)
-//    }
-
     private fun send() {
-        //Mock.responseRequestDTOList()
-        val fragment = SendCodeFragment.newInstance()
-        val bundle = Bundle()
-        val changePasswordDataDTO =
-            ChangePasswordDataDTO(email = this.email, typeAuth = this.typeAuth)
-        bundle.putParcelable(CHANGE_PASSWORD_DATA, changePasswordDataDTO)
-        initializeSendCodeFragment(fragment, bundle)
+        val repository = getRepositoryTypeAuth(typeAuth)
+        showOrHideView(_binding.buttonSendEmail, false)
+        showOrHideView(_binding.progressSendEmail, true)
+        requestCode(email, repository)
     }
 
     private fun requestCode(email: String, repository: AuthenticableRepository) {

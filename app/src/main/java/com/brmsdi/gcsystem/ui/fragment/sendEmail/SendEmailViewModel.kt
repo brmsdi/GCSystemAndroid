@@ -5,12 +5,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.brmsdi.gcsystem.R
-import com.brmsdi.gcsystem.data.listeners.APIEventStringAndJSON
+import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.dto.ResponseRequestDTO
+import com.brmsdi.gcsystem.data.listeners.APIEvent
 import com.brmsdi.gcsystem.data.repository.AuthenticableRepository
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.jsonToObject
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
+import retrofit2.Response
+import java.net.ConnectException
 import javax.net.ssl.HttpsURLConnection
 
 class SendEmailViewModel(application: Application) : AndroidViewModel(application) {
@@ -18,25 +19,36 @@ class SendEmailViewModel(application: Application) : AndroidViewModel(applicatio
     val responseRequestDTO: LiveData<ResponseRequestDTO> = _responseRequestDTO
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
-    private var executor: Executor = Executors.newSingleThreadExecutor()
 
     fun requestCode(email: String, authenticableRepository: AuthenticableRepository) {
-        executor.execute {
-            authenticableRepository.requestCode(email, object : APIEventStringAndJSON {
-                override fun onSuccess() {
-                    val responseRequestDTO = ResponseRequestDTO()
-                    responseRequestDTO.status = HttpsURLConnection.HTTP_OK
-                    _responseRequestDTO.postValue(responseRequestDTO)
-                }
+        authenticableRepository.requestCode(email, object : APIEvent<ResponseDTO> {
+            override fun onResponse(model: ResponseDTO) {
+                val responseRequestDTO = ResponseRequestDTO()
+                responseRequestDTO.status = HttpsURLConnection.HTTP_OK
+                _responseRequestDTO.postValue(responseRequestDTO)
+            }
 
-                override fun onError(errorString: String) {
-                    _responseRequestDTO.postValue(jsonToObject(errorString, ResponseRequestDTO::class.java))
+            override fun onError(response: Response<ResponseDTO>) {
+                response.errorBody()?.string()?.let {
+                    _responseRequestDTO.postValue(
+                        jsonToObject(
+                            it,
+                            ResponseRequestDTO::class.java
+                        )
+                    )
                 }
+            }
 
-                override fun onConnectFailure() {
-                    _errorMessage.postValue(getApplication<Application>().getString(R.string.ERROR_CONNECTION))
+            override fun onFailure(throwable: Throwable) {
+                val cause = throwable.cause
+                if (cause is ConnectException) {
+                    _errorMessage.value =
+                        getApplication<Application>().getString(R.string.ERROR_CONNECTION)
+                } else {
+                    _errorMessage.value =
+                        getApplication<Application>().getString(R.string.ERROR_UNEXPECTED)
                 }
-            })
-        }
+            }
+        })
     }
 }
