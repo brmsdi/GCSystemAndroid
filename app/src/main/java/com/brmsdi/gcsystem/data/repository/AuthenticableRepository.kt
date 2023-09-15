@@ -5,6 +5,7 @@ import com.brmsdi.gcsystem.data.listeners.APIEvent
 import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
 import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.dto.TokenDTO
+import com.brmsdi.gcsystem.data.dto.UserAuthenticatedDTO
 
 /**
  *
@@ -14,11 +15,14 @@ import com.brmsdi.gcsystem.data.dto.TokenDTO
 
 interface AuthenticableRepository : CallRepository {
 
-    fun authenticate(cpf: String, password: String, apiEvent: APIEvent<TokenDTO>)
+    fun authenticate(cpf: String, password: String, typeAuth: String, apiEvent: APIEvent<TokenDTO>)
 
     fun requestCode(email: String, event: APIEvent<ResponseDTO>)
 
     fun sendCode(changePasswordDataDTO: ChangePasswordDataDTO, apiEvent: APIEvent<TokenDTO>)
 
     fun changePassword(tokenChangePasswordDTO: TokenChangePasswordDTO, event: APIEvent<ResponseDTO>)
+
+    fun verifyToken(event : APIEvent<UserAuthenticatedDTO>)
+
 }
