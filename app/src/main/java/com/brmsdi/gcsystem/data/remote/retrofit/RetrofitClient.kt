@@ -16,14 +16,14 @@ class RetrofitClient private constructor() {
 
     companion object {
         @Volatile
-        private lateinit var INSTANCE : Retrofit
+        private var INSTANCE : Retrofit? = null
         private var token = ""
 
         @Synchronized
         private fun getRetrofitInstance() : Retrofit {
             val httpClient = OkHttpClient.Builder()
-            addInterceptor(httpClient)
-            if (!::INSTANCE.isInitialized) {
+            if (INSTANCE == null) {
+                if (token.isNotEmpty()) addInterceptor(httpClient)
                 INSTANCE = Retrofit
                     .Builder()
                     .baseUrl(BASE_URL)
@@ -31,7 +31,7 @@ class RetrofitClient private constructor() {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             }
-            return INSTANCE
+            return INSTANCE!!
         }
 
         private fun addInterceptor(httpClient: OkHttpClient.Builder) {
@@ -47,7 +47,14 @@ class RetrofitClient private constructor() {
         } // END addInterceptor
 
         fun addToken(token : String) {
+            if (token.isEmpty()) return
             this.token = String.format("%s %s", Bearer, token)
+            INSTANCE = null
+        }
+
+        fun removeToken() {
+            this.token = ""
+            INSTANCE = null
         }
 
         fun <S> createService(service : Class<S>): S {
