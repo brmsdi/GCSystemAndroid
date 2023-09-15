@@ -1,5 +1,8 @@
 package com.brmsdi.gcsystem.data.constants
 
+import com.brmsdi.gcsystem.data.constants.Constant.API.DEFAULT_API
+import com.brmsdi.gcsystem.data.constants.Constant.API.TYPE_AND_VERSION
+
 
 /**
  *
@@ -13,7 +16,12 @@ class Constant private constructor() {
     }
 
     object API {
-        const val BASE_URL = "http://192.168.15.2:8080/api/v1/mobile/"
+        private const val TYPE = "api"
+        private const val VERSION = "v1"
+        private const val AGENT = "mobile"
+        const val BASE_URL = "http://192.168.15.2:8080/"
+        const val TYPE_AND_VERSION = "$TYPE/$VERSION"
+        const val DEFAULT_API = "$TYPE_AND_VERSION/$AGENT"
     }
 
     object AUTH {
@@ -26,14 +34,15 @@ class Constant private constructor() {
     }
 
     object ENDPOINT {
-        const val LOGIN_EMPLOYEES = "login/employees"
-        const val LOGIN_LESSEES = "login/lessees"
-        const val REQUEST_CODE_EMPLOYEE = "employees/password/request-code"
-        const val REQUEST_CODE_LESSEE = "lessees/password/request-code"
-        const val SEND_CODE_EMPLOYEE = "employees/password/receive-code"
-        const val SEND_CODE_LESSEES = "lessees/password/receive-code"
-        const val CHANGE_PASSWORD_EMPLOYEE = "employees/password/change"
-        const val CHANGE_PASSWORD_LESSEE = "lessees/password/change"
+        const val LOGIN_EMPLOYEES = "$TYPE_AND_VERSION/login/employees"
+        const val LOGIN_LESSEES = "$TYPE_AND_VERSION/login/lessees"
+        const val REQUEST_CODE_EMPLOYEE = "$DEFAULT_API/employees/password/request-code"
+        const val REQUEST_CODE_LESSEE = "$DEFAULT_API/lessees/password/request-code"
+        const val SEND_CODE_EMPLOYEE = "$DEFAULT_API/employees/password/receive-code"
+        const val SEND_CODE_LESSEES = "$DEFAULT_API/lessees/password/receive-code"
+        const val CHANGE_PASSWORD_EMPLOYEE = "$DEFAULT_API/employees/password/change"
+        const val CHANGE_PASSWORD_LESSEE = "$DEFAULT_API/lessees/password/change"
+        const val VALIDATE_TOKEN = "$DEFAULT_API/validate/token"
     }
 
     object REPAIR {
