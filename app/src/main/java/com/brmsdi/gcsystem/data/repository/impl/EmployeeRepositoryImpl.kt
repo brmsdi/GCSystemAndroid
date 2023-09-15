@@ -9,6 +9,7 @@ import com.brmsdi.gcsystem.data.service.LoginService
 import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
 import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.dto.TokenDTO
+import com.brmsdi.gcsystem.data.dto.UserAuthenticatedDTO
 
 /**
  *
@@ -16,18 +17,21 @@ import com.brmsdi.gcsystem.data.dto.TokenDTO
  * @since 1
  */
 class EmployeeRepositoryImpl : EmployeeRepository {
-    private val employeeService = RetrofitClient.createService(EmployeeService::class.java)
-    private val loginService = RetrofitClient.createService(LoginService::class.java)
+    private lateinit var employeeService : EmployeeService
+    private lateinit var loginService : LoginService
 
-    override fun authenticate(cpf: String, password: String, apiEvent: APIEvent<TokenDTO>) {
+    override fun authenticate(cpf: String, password: String, typeAuth: String, apiEvent: APIEvent<TokenDTO>) {
+        loginService = RetrofitClient.createService(LoginService::class.java)
         call(loginService.loginEmployee(cpf, password), apiEvent)
     }
 
     override fun requestCode(email : String, event: APIEvent<ResponseDTO>) {
+        employeeService = RetrofitClient.createService(EmployeeService::class.java)
         call(employeeService.requestCode(email), event)
     }
 
     override fun sendCode(changePasswordDataDTO: ChangePasswordDataDTO, apiEvent: APIEvent<TokenDTO>) {
+        employeeService = RetrofitClient.createService(EmployeeService::class.java)
         call(employeeService.sendCode(changePasswordDataDTO.email, changePasswordDataDTO.code), apiEvent)
     }
 
@@ -35,6 +39,12 @@ class EmployeeRepositoryImpl : EmployeeRepository {
         tokenChangePasswordDTO: TokenChangePasswordDTO,
         event: APIEvent<ResponseDTO>
     ) {
+        employeeService = RetrofitClient.createService(EmployeeService::class.java)
         call(employeeService.changePassword(tokenChangePasswordDTO), event)
+    }
+
+    override fun verifyToken(event: APIEvent<UserAuthenticatedDTO>) {
+        employeeService = RetrofitClient.createService(EmployeeService::class.java)
+        call(employeeService.verifyToken(), event)
     }
 }

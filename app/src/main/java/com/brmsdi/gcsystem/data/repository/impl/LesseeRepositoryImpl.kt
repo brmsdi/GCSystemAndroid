@@ -9,6 +9,7 @@ import com.brmsdi.gcsystem.data.service.LoginService
 import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
 import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.dto.TokenDTO
+import com.brmsdi.gcsystem.data.dto.UserAuthenticatedDTO
 
 /**
  *
@@ -16,23 +17,44 @@ import com.brmsdi.gcsystem.data.dto.TokenDTO
  * @since 1
  */
 class LesseeRepositoryImpl : LesseeRepository {
-    private val lesseeService = RetrofitClient.createService(LesseeService::class.java)
-    private val loginService = RetrofitClient.createService(LoginService::class.java)
-    override fun authenticate(cpf: String, password: String, apiEvent: APIEvent<TokenDTO>) {
+    private lateinit var lesseeService: LesseeService
+    private lateinit var loginService: LoginService
+    override fun authenticate(
+        cpf: String,
+        password: String,
+        typeAuth: String,
+        apiEvent: APIEvent<TokenDTO>
+    ) {
+        loginService = RetrofitClient.createService(LoginService::class.java)
         call(loginService.loginLessee(cpf, password), apiEvent)
     }
+
     override fun requestCode(email: String, event: APIEvent<ResponseDTO>) {
+        lesseeService = RetrofitClient.createService(LesseeService::class.java)
         call(lesseeService.requestCode(email), event)
     }
 
-    override fun sendCode(changePasswordDataDTO: ChangePasswordDataDTO, apiEvent: APIEvent<TokenDTO>) {
-        call(lesseeService.sendCode(changePasswordDataDTO.email, changePasswordDataDTO.code), apiEvent)
+    override fun sendCode(
+        changePasswordDataDTO: ChangePasswordDataDTO,
+        apiEvent: APIEvent<TokenDTO>
+    ) {
+        lesseeService = RetrofitClient.createService(LesseeService::class.java)
+        call(
+            lesseeService.sendCode(changePasswordDataDTO.email, changePasswordDataDTO.code),
+            apiEvent
+        )
     }
 
     override fun changePassword(
         tokenChangePasswordDTO: TokenChangePasswordDTO,
         event: APIEvent<ResponseDTO>
     ) {
+        lesseeService = RetrofitClient.createService(LesseeService::class.java)
         call(lesseeService.changePassword(tokenChangePasswordDTO), event)
+    }
+
+    override fun verifyToken(event: APIEvent<UserAuthenticatedDTO>) {
+        lesseeService = RetrofitClient.createService(LesseeService::class.java)
+        call(lesseeService.verifyToken(), event)
     }
 }
