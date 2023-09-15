@@ -10,10 +10,6 @@ import android.view.View
 
 interface ProgressBarOnApp {
 
-    fun postExecution(view: View) {
-        view.visibility = View.GONE
-    }
-
     fun showOrHideView(view: View, visibility: Boolean) {
         view.visibility = if (visibility) View.VISIBLE else View.GONE
     }
