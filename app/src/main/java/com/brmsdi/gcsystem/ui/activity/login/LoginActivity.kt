@@ -80,6 +80,25 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+    override fun onClick(view: View) {
+        when (view.id) {
+            binding.buttonSend.id -> {
+                getFields()
+                if (fieldsIsCorrect(cpf, password, typeAuth)) loginHandle(typeAuth)
+            }
+            binding.textChangePassword.id -> initializeChangePassword()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AUTH.REQUEST_CODE_UNLOCK) {
+            if (resultCode == Activity.RESULT_OK) {
+                authHandler()
+            }
+        }
+    }
+
     private fun observe() {
         loginViewModel.login.observe(this) {
             if (it.status()) {
@@ -93,16 +112,6 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
 
         loginViewModel.isAuthenticated.observe(this) {
             if (it) authHandler()
-        }
-    }
-
-    override fun onClick(view: View) {
-        when (view.id) {
-            binding.buttonSend.id -> {
-                getFields()
-                if (fieldsIsCorrect(cpf, password, typeAuth)) loginHandle(typeAuth)
-            }
-            binding.textChangePassword.id -> initializeChangePassword()
         }
     }
 
@@ -138,47 +147,8 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         authenticate(cpf, password, typeAuth, repository)
     }
 
-    private fun verifyAuthentication() {
-        val typeAuth = securityPreferences.get(AUTH.TYPE_AUTH)
-        if (typeAuth.isNotEmpty()) {
-            val repository = getRepositoryTypeAuth(typeAuth)
-            loginViewModel.verifyTokenAuthentication(repository)
-        }
-    }
-
-    private fun addAction() {
-        binding.buttonSend.setOnClickListener(this)
-        binding.textChangePassword.setOnClickListener(this)
-    }
-
-    private fun addTypes() {
-        val newTypes: TreeMap<String, String> = TreeMap()
-        newTypes[getString(R.string.employee)] = EMPLOYEE.type
-        newTypes[getString(R.string.lessee)] = LESSEE.type
-        setTypes(newTypes)
-    }
-
-    private fun loadData() {
-        getTypes().forEach {
-            itemList.add(it.key)
-        }
-    }
-
-    private fun initializeChangePassword() {
-        startActivity(Intent(this, ChangePasswordActivity::class.java))
-    }
-
     private fun authenticate(cpf: String, password: String, typeAuth: String,repository: AuthenticableRepository) {
         loginViewModel.authenticate(cpf, password, typeAuth, repository)
-    }
-
-    private fun initializeMain(type: String) {
-        if (getString(R.string.employee) == type) {
-            startActivity(Intent(this, MainEmployeeActivity::class.java))
-        } else if (getString(R.string.lessee)== type) {
-            startActivity(Intent(this, MainLesseeActivity::class.java))
-        }
-        finish()
     }
 
     private fun authHandler() {
@@ -213,13 +183,43 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == AUTH.REQUEST_CODE_UNLOCK) {
-            if (resultCode == Activity.RESULT_OK) {
-                authHandler()
-            }
+    private fun verifyAuthentication() {
+        val typeAuth = securityPreferences.get(AUTH.TYPE_AUTH)
+        if (typeAuth.isNotEmpty()) {
+            val repository = getRepositoryTypeAuth(typeAuth)
+            loginViewModel.verifyTokenAuthentication(repository)
         }
+    }
+
+    private fun addAction() {
+        binding.buttonSend.setOnClickListener(this)
+        binding.textChangePassword.setOnClickListener(this)
+    }
+
+    private fun addTypes() {
+        val newTypes: TreeMap<String, String> = TreeMap()
+        newTypes[getString(R.string.employee)] = EMPLOYEE.type
+        newTypes[getString(R.string.lessee)] = LESSEE.type
+        setTypes(newTypes)
+    }
+
+    private fun loadData() {
+        getTypes().forEach {
+            itemList.add(it.key)
+        }
+    }
+
+    private fun initializeChangePassword() {
+        startActivity(Intent(this, ChangePasswordActivity::class.java))
+    }
+
+    private fun initializeMain(type: String) {
+        if (getString(R.string.employee) == type) {
+            startActivity(Intent(this, MainEmployeeActivity::class.java))
+        } else if (getString(R.string.lessee)== type) {
+            startActivity(Intent(this, MainLesseeActivity::class.java))
+        }
+        finish()
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
