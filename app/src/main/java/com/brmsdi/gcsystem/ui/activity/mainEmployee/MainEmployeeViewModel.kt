@@ -3,6 +3,7 @@ package com.brmsdi.gcsystem.ui.activity.mainEmployee
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.brmsdi.gcsystem.data.constants.Constant
+import com.brmsdi.gcsystem.data.remote.retrofit.RetrofitClient
 import com.brmsdi.gcsystem.data.security.SecurityPreferences
 
 /**
@@ -17,5 +18,6 @@ class MainEmployeeViewModel(application: Application) : AndroidViewModel(applica
         securityPreferences.remove(Constant.AUTH.TOKEN)
         securityPreferences.remove(Constant.AUTH.FINGERPRINT)
         securityPreferences.remove(Constant.AUTH.TYPE_AUTH)
+        RetrofitClient.removeToken()
     }
 }
