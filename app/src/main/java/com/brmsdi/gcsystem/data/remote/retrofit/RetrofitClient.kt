@@ -16,11 +16,11 @@ class RetrofitClient private constructor() {
 
     companion object {
         @Volatile
-        private var INSTANCE : Retrofit? = null
+        private var INSTANCE: Retrofit? = null
         private var token = ""
 
         @Synchronized
-        private fun getRetrofitInstance() : Retrofit {
+        private fun getRetrofitInstance(): Retrofit {
             val httpClient = OkHttpClient.Builder()
             if (INSTANCE == null) {
                 if (token.isNotEmpty()) addInterceptor(httpClient)
@@ -35,18 +35,17 @@ class RetrofitClient private constructor() {
         }
 
         private fun addInterceptor(httpClient: OkHttpClient.Builder) {
-            if (token.isEmpty()) return
             httpClient.addInterceptor {
-               val request = it
-                   .request()
-                   .newBuilder()
-                   .header(HEADER_AUTHORIZATION, token)
-                   .build()
+                val request = it
+                    .request()
+                    .newBuilder()
+                    .header(HEADER_AUTHORIZATION, token)
+                    .build()
                 it.proceed(request)
             }
         } // END addInterceptor
 
-        fun addToken(token : String) {
+        fun addToken(token: String) {
             if (token.isEmpty()) return
             this.token = String.format("%s %s", Bearer, token)
             INSTANCE = null
@@ -57,7 +56,7 @@ class RetrofitClient private constructor() {
             INSTANCE = null
         }
 
-        fun <S> createService(service : Class<S>): S {
+        fun <S> createService(service: Class<S>): S {
             return getRetrofitInstance().create(service)
         }
     }

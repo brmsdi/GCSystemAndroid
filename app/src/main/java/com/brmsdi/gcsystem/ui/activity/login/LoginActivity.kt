@@ -94,7 +94,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AUTH.REQUEST_CODE_UNLOCK) {
             if (resultCode == Activity.RESULT_OK) {
-                authHandler()
+                initializeMain(securityPreferences.get(AUTH.TYPE_AUTH))
             }
         }
     }
@@ -169,7 +169,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
                 }
                 val authenticationListener = object : AuthenticationListener {
                     override fun onSuccess() {
-                        loginHandle(typeAuth = securityPreferences.get(AUTH.TYPE_AUTH))
+                        initializeMain(type)
                     }
 
                     override fun error() {}
@@ -179,7 +179,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
                 BiometricHelper.biometric(this, this, authenticationListener)
             }
         } else {
-            loginHandle(typeAuth = securityPreferences.get(AUTH.TYPE_AUTH))
+            initializeMain(type)
         }
     }
 
@@ -188,6 +188,8 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         if (typeAuth.isNotEmpty()) {
             val repository = getRepositoryTypeAuth(typeAuth)
             loginViewModel.verifyTokenAuthentication(repository)
+            showOrHideView(binding.buttonSend, false)
+            showOrHideView(binding.progressLogin, true)
         }
     }
 
