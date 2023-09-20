@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.constants.Constant.PERMISSION
 import com.brmsdi.gcsystem.data.constants.Constant.AUTH
-import com.brmsdi.gcsystem.data.firebase.fcm.TokenService
 import com.brmsdi.gcsystem.data.helper.BiometricHelper
 import com.brmsdi.gcsystem.data.helper.BiometricHelper.Companion.isBiometricAvailable
 import com.brmsdi.gcsystem.data.listeners.AuthenticationListener
@@ -67,9 +66,14 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         binding.spinnerTypeAuth.adapter = adapter
         observe()
         addAction()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun onResume() {
+        super.onResume()
         checkPermissions()
         verifyAuthentication()
-        TokenService.getToken() // Tratar exceção
+        //TokenService.getToken()
     }
 
     override fun onRequestPermissionsResult(
@@ -105,13 +109,18 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
                 initializeMain(typeAuth)
             } else {
                 displayMessage(this, it.message())
+                showOrHideView(binding.buttonSend, true)
+                showOrHideView(binding.progressLogin, false)
             }
-            showOrHideView(binding.buttonSend, true)
-            showOrHideView(binding.progressLogin, false)
         }
 
         loginViewModel.isAuthenticated.observe(this) {
-            if (it) authHandler()
+            if (it) {
+                authHandler()
+            } else {
+                showOrHideView(binding.buttonSend, true)
+                showOrHideView(binding.progressLogin, false)
+            }
         }
     }
 
@@ -147,7 +156,12 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         authenticate(cpf, password, typeAuth, repository)
     }
 
-    private fun authenticate(cpf: String, password: String, typeAuth: String,repository: AuthenticableRepository) {
+    private fun authenticate(
+        cpf: String,
+        password: String,
+        typeAuth: String,
+        repository: AuthenticableRepository
+    ) {
         loginViewModel.authenticate(cpf, password, typeAuth, repository)
     }
 
@@ -187,9 +201,9 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         val typeAuth = securityPreferences.get(AUTH.TYPE_AUTH)
         if (typeAuth.isNotEmpty()) {
             val repository = getRepositoryTypeAuth(typeAuth)
-            loginViewModel.verifyTokenAuthentication(repository)
             showOrHideView(binding.buttonSend, false)
             showOrHideView(binding.progressLogin, true)
+            loginViewModel.verifyTokenAuthentication(repository)
         }
     }
 
@@ -218,7 +232,7 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
     private fun initializeMain(type: String) {
         if (getString(R.string.employee) == type) {
             startActivity(Intent(this, MainEmployeeActivity::class.java))
-        } else if (getString(R.string.lessee)== type) {
+        } else if (getString(R.string.lessee) == type) {
             startActivity(Intent(this, MainLesseeActivity::class.java))
         }
         finish()

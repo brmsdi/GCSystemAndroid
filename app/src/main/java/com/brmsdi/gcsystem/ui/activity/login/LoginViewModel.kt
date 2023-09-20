@@ -76,6 +76,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
             override fun onError(response: Response<UserAuthenticatedDTO>) {
                 removeAuth()
+                _isAuthenticated.value = false
             }
 
             override fun onFailure(throwable: Throwable) {

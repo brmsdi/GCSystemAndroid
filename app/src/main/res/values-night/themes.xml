@@ -132,5 +132,4 @@
         <item name="android:layout_margin">16dp</item>
         <item name="android:backgroundTint">?attr/colorPrimaryVariant</item>
     </style>
-
 </resources>

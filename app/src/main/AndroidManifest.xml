@@ -76,7 +76,6 @@
             android:name=".ui.activity.mainLessee.MainLesseeActivity"
             android:exported="false"
             android:theme="@style/Theme.GCSystem" />
-
         <service
             android:name=".data.firebase.fcm.PushMessageService"
             android:exported="false"
@@ -86,5 +85,4 @@
             </intent-filter>
         </service>
     </application>
-
 </manifest>
