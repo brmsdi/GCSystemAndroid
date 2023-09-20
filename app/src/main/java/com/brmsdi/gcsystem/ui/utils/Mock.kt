@@ -10,8 +10,10 @@ import com.brmsdi.gcsystem.data.model.Lessee
 import com.brmsdi.gcsystem.data.model.LocalizationCondominium
 import com.brmsdi.gcsystem.data.model.OrderService
 import com.brmsdi.gcsystem.data.model.RepairRequest
+import com.brmsdi.gcsystem.data.model.Role
 import com.brmsdi.gcsystem.data.model.Status
 import com.brmsdi.gcsystem.data.model.TypeProblem
+import java.time.LocalDateTime
 import java.util.Date
 
 /**
@@ -59,8 +61,8 @@ class Mock {
 
         private fun employeesList(): MutableList<Employee> {
             return mutableListOf(
-                Employee("Eliza"),
-                Employee("Wisley")
+                Employee(1 , "Eliza", "12345678910", Date(), "email@gmail.com", Role(1, "Administrador"), Date()),
+                Employee(2 , "Wisley", "12345678911", Date(), "email2@gmail.com", Role(1, "Administrador"), Date())
             )
         }
 
