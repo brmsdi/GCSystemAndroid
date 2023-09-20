@@ -94,7 +94,7 @@
             android:text="@string/label_role" />
 
         <EditText
-            android:id="@+id/edit_rule"
+            android:id="@+id/edit_role"
             style="@style/edit_form"
             android:autofillHints=""
             android:enabled="false"
