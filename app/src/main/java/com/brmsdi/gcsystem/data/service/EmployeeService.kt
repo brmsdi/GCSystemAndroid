@@ -1,6 +1,7 @@
 package com.brmsdi.gcsystem.data.service
 
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.CHANGE_PASSWORD_EMPLOYEE
+import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.MY_ACCOUNT_EMPLOYEE
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REQUEST_CODE_EMPLOYEE
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.SEND_CODE_EMPLOYEE
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.VALIDATE_TOKEN
@@ -8,6 +9,7 @@ import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.dto.TokenChangePasswordDTO
 import com.brmsdi.gcsystem.data.dto.TokenDTO
 import com.brmsdi.gcsystem.data.dto.UserAuthenticatedDTO
+import com.brmsdi.gcsystem.data.model.Employee
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -34,4 +36,7 @@ interface EmployeeService {
 
     @GET(VALIDATE_TOKEN)
     fun verifyToken(): Call<UserAuthenticatedDTO>
+
+    @GET(MY_ACCOUNT_EMPLOYEE)
+    fun myAccount(): Call<Employee>
 }

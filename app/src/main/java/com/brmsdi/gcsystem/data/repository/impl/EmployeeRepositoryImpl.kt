@@ -10,6 +10,7 @@ import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
 import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.dto.TokenDTO
 import com.brmsdi.gcsystem.data.dto.UserAuthenticatedDTO
+import com.brmsdi.gcsystem.data.model.Employee
 
 /**
  *
@@ -19,6 +20,10 @@ import com.brmsdi.gcsystem.data.dto.UserAuthenticatedDTO
 class EmployeeRepositoryImpl : EmployeeRepository {
     private lateinit var employeeService : EmployeeService
     private lateinit var loginService : LoginService
+    override fun myAccount(event: APIEvent<Employee>) {
+        employeeService = RetrofitClient.createService(EmployeeService::class.java)
+        call(employeeService.myAccount(), event)
+    }
 
     override fun authenticate(cpf: String, password: String, typeAuth: String, apiEvent: APIEvent<TokenDTO>) {
         loginService = RetrofitClient.createService(LoginService::class.java)
