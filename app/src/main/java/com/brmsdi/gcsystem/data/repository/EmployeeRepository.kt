@@ -1,5 +1,8 @@
 package com.brmsdi.gcsystem.data.repository
 
+import com.brmsdi.gcsystem.data.listeners.APIEvent
+import com.brmsdi.gcsystem.data.model.Employee
+
 
 /**
  *
@@ -7,4 +10,7 @@ package com.brmsdi.gcsystem.data.repository
  * @since 1
  */
 
-interface EmployeeRepository : CallRepository, AuthenticableRepository
+interface EmployeeRepository : CallRepository, AuthenticableRepository {
+
+    fun myAccount(event: APIEvent<Employee>)
+}
