@@ -44,6 +44,7 @@ class Constant private constructor() {
         const val CHANGE_PASSWORD_LESSEE = "$DEFAULT_API/lessees/password/change"
         const val VALIDATE_TOKEN = "$DEFAULT_API/validate/token"
         const val MY_ACCOUNT_EMPLOYEE = "$DEFAULT_API/employees/account"
+        const val MY_ACCOUNT_LESSEE = "$DEFAULT_API/lessees/account"
     }
 
     object REPAIR {

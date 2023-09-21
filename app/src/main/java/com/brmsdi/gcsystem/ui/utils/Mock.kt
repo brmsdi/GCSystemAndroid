@@ -13,7 +13,6 @@ import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.data.model.Role
 import com.brmsdi.gcsystem.data.model.Status
 import com.brmsdi.gcsystem.data.model.TypeProblem
-import java.time.LocalDateTime
 import java.util.Date
 
 /**
@@ -68,8 +67,8 @@ class Mock {
 
         fun lesseeList(): MutableList<Lessee> {
             return mutableListOf(
-                Lessee("Patrícia", mutableListOf(debtList()[0], debtList()[1])),
-                Lessee("Debora", mutableListOf(debtList()[2]))
+                Lessee(1,"Patrícia", "12345678909", Date(), "patricia@gmail.com", "92999999999", mutableListOf(debtList()[0], debtList()[1])),
+                Lessee(1,"Debora", "12345678908", Date(), "debora@gmail.com", "92999999999", mutableListOf(debtList()[2])),
             )
         }
 
