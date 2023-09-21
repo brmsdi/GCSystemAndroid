@@ -10,6 +10,7 @@ import com.brmsdi.gcsystem.data.dto.ChangePasswordDataDTO
 import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.dto.TokenDTO
 import com.brmsdi.gcsystem.data.dto.UserAuthenticatedDTO
+import com.brmsdi.gcsystem.data.model.Lessee
 
 /**
  *
@@ -19,6 +20,11 @@ import com.brmsdi.gcsystem.data.dto.UserAuthenticatedDTO
 class LesseeRepositoryImpl : LesseeRepository {
     private lateinit var lesseeService: LesseeService
     private lateinit var loginService: LoginService
+    override fun myAccount(event: APIEvent<Lessee>) {
+        lesseeService = RetrofitClient.createService(LesseeService::class.java)
+        call(lesseeService.myAccount(), event)
+    }
+
     override fun authenticate(
         cpf: String,
         password: String,

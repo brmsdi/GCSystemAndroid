@@ -6,7 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.brmsdi.gcsystem.data.model.Lessee
+import com.brmsdi.gcsystem.data.repository.LesseeRepository
 import com.brmsdi.gcsystem.databinding.FragmentMyAccountLesseeBinding
+import com.brmsdi.gcsystem.ui.utils.AuthType
+import com.brmsdi.gcsystem.ui.utils.DateUtils
+import com.brmsdi.gcsystem.ui.utils.TextUtils
+import org.koin.android.ext.android.get
+import org.koin.core.qualifier.named
 
 class MyAccountLesseeFragment : Fragment() {
 
@@ -19,16 +26,32 @@ class MyAccountLesseeFragment : Fragment() {
     ): View {
         binding = FragmentMyAccountLesseeBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[MyAccountLesseeViewModel::class.java]
-        mockData()
+        getDataMyAccount()
+        observe()
         return binding.root
     }
 
-    private fun mockData() {
-        binding.editId.setText("1234 (mock)")
-        binding.editName.setText("Wisley Bruno Marques França (mock)")
-        binding.editCpf.setText("000.000.002-51 (mock)")
-        binding.editBirthDate.setText("23/06/2023 (mock)")
-        binding.editEmail.setText("srmarquesms@gmail.com (mock)")
-        binding.editContact.setText("(92) 99107-1491")
+    private fun observe() {
+        viewModel.account.observe(this.viewLifecycleOwner) {
+            fillData(it)
+        }
+
+        viewModel.validation.observe(this.viewLifecycleOwner) {
+            TextUtils.displayMessage(this.requireContext(), it.message())
+        }
+    }
+
+    private fun getDataMyAccount() {
+        val repository = get<LesseeRepository>(named(AuthType.LESSEE.type))
+        viewModel.getDataAccount(repository)
+    }
+
+    private fun fillData(lesseeData: Lessee) {
+        binding.editId.setText(lesseeData.id.toString())
+        binding.editName.setText(lesseeData.name)
+        binding.editCpf.setText(lesseeData.cpf)
+        binding.editBirthDate.setText(DateUtils.dateFormattedToView(lesseeData.birthDate))
+        binding.editEmail.setText(lesseeData.email)
+        binding.editContact.setText(lesseeData.contactNumber)
     }
 }
