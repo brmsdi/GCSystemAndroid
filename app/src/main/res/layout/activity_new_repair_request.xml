@@ -77,7 +77,7 @@
             style="@style/spinner_form" />
 
         <ProgressBar
-            android:id="@+id/progress_login"
+            android:id="@+id/progress_save"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
