@@ -5,35 +5,32 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ArrayAdapter
-import androidx.lifecycle.ViewModelProvider
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.dto.CondominiumSpinnerDTO
+import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDataDTO
 import com.brmsdi.gcsystem.data.dto.SpinnerDTO
 import com.brmsdi.gcsystem.data.dto.TypeProblemSpinnerDTO
 import com.brmsdi.gcsystem.data.model.Condominium
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.data.model.TypeProblem
 import com.brmsdi.gcsystem.databinding.ActivityNewRepairRequestBinding
-import com.brmsdi.gcsystem.ui.utils.Mock
 import com.brmsdi.gcsystem.ui.utils.Mock.Companion.lesseeList
 import com.brmsdi.gcsystem.ui.utils.Mock.Companion.statusList
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Date
 
 class NewRepairRequestActivity : AppCompatActivity(), OnClickListener {
-    private lateinit var viewModel: NewRepairRequestViewModel
+    private val viewModel by viewModel<NewRepairRequestViewModel>()
     private lateinit var binding: ActivityNewRepairRequestBinding
     private lateinit var repairRequest: RepairRequest
-    private var condominiumList = mutableListOf<Condominium>()
-    private var typeProblemList = mutableListOf<TypeProblem>()
     private lateinit var spinnerAdapterCondominium: ArrayAdapter<SpinnerDTO<Condominium>>
     private lateinit var spinnerAdapterTypeProblem: ArrayAdapter<SpinnerDTO<TypeProblem>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewRepairRequestBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[NewRepairRequestViewModel::class.java]
         spinnerAdapterCondominium = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_dropdown_item,
@@ -46,15 +43,15 @@ class NewRepairRequestActivity : AppCompatActivity(), OnClickListener {
         )
         binding.spinnerCondominium.adapter = spinnerAdapterCondominium
         binding.spinnerTypeProblem.adapter = spinnerAdapterTypeProblem
+        observe()
         loadData()
-        loadSpinner()
         addAction()
         setContentView(binding.root)
     }
 
     override fun onClick(view: View) {
         when (view.id) {
-            binding.buttonCancel.id -> back()
+            binding.buttonCancel.id -> finish()
             binding.buttonSave.id -> {
                 repairRequest = getFields()
                 if (!fieldsIsNotEmpty(
@@ -72,18 +69,23 @@ class NewRepairRequestActivity : AppCompatActivity(), OnClickListener {
         }
     }
 
+    private fun observe() {
+        viewModel.screenData.observe(this) {
+            loadSpinner(it)
+        }
+
+        viewModel.error.observe(this) {
+            displayMessage(this, it.message())
+        }
+    }
+
     private fun save(repairRequest: RepairRequest) {
-        //viewModel.save(repairRequest)
         displayMessage(this, getString(R.string.new_repair_request_success))
     }
 
     private fun addAction() {
         binding.buttonCancel.setOnClickListener(this)
         binding.buttonSave.setOnClickListener(this)
-    }
-
-    private fun back() {
-        finish()
     }
 
     private fun getFields(): RepairRequest {
@@ -103,12 +105,11 @@ class NewRepairRequestActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun loadData() {
-        condominiumList = Mock.condominiumList()
-        typeProblemList = Mock.typeProblemList()
+        viewModel.loadDataNewRepairRequest()
     }
 
-    private fun loadSpinner() {
-        spinnerAdapterCondominium.addAll(condominiumList.map { CondominiumSpinnerDTO(it) } )
-        spinnerAdapterTypeProblem.addAll(typeProblemList.map { TypeProblemSpinnerDTO(it) })
+    private fun loadSpinner(data: RepairRequestRegisterDataDTO) {
+        spinnerAdapterCondominium.addAll(data.condominiums.map { CondominiumSpinnerDTO(it) })
+        spinnerAdapterTypeProblem.addAll(data.typeProblems.map { TypeProblemSpinnerDTO(it) })
     }
 }
