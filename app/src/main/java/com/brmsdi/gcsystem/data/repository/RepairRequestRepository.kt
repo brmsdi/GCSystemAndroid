@@ -1,7 +1,9 @@
 package com.brmsdi.gcsystem.data.repository
 
+import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDataDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
+import com.brmsdi.gcsystem.data.model.RepairRequest
 
 /**
  *
@@ -11,4 +13,6 @@ import com.brmsdi.gcsystem.data.listeners.APIEvent
 
 interface RepairRequestRepository : CallRepository {
     fun loadDataNewRepairRequest(event: APIEvent<RepairRequestRegisterDataDTO>)
+
+    fun save(repairRequestRegisterDTO: RepairRequestRegisterDTO, event: APIEvent<RepairRequest>)
 }
