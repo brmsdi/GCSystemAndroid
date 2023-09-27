@@ -1,5 +1,6 @@
 package com.brmsdi.gcsystem.data.repository.impl
 
+import com.brmsdi.gcsystem.data.dto.PaginationRepairRequestDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDataDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
@@ -9,7 +10,7 @@ import com.brmsdi.gcsystem.data.repository.RepairRequestRepository
 import com.brmsdi.gcsystem.data.service.RepairRequestService
 
 class RepairRequestRepositoryImpl : RepairRequestRepository {
-    private lateinit var repairRequestService : RepairRequestService
+    private lateinit var repairRequestService: RepairRequestService
     override fun loadDataNewRepairRequest(event: APIEvent<RepairRequestRegisterDataDTO>) {
         repairRequestService = RetrofitClient.createService(RepairRequestService::class.java)
         call(repairRequestService.loadDataNewRepairRequest(), event)
@@ -21,5 +22,13 @@ class RepairRequestRepositoryImpl : RepairRequestRepository {
     ) {
         repairRequestService = RetrofitClient.createService(RepairRequestService::class.java)
         call(repairRequestService.save(repairRequestRegisterDTO), event)
+    }
+
+    override fun loadRepairRequests(
+        params: Map<String, String>,
+        event: APIEvent<PaginationRepairRequestDTO>
+    ) {
+        repairRequestService = RetrofitClient.createService(RepairRequestService::class.java)
+        call(repairRequestService.loadRepairRequests(params), event)
     }
 }

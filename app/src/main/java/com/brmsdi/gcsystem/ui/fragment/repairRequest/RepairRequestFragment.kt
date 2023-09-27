@@ -2,7 +2,6 @@ package com.brmsdi.gcsystem.ui.fragment.repairRequest
 
 import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,9 +26,10 @@ import com.brmsdi.gcsystem.ui.utils.DialogAppUtils
 import com.brmsdi.gcsystem.ui.utils.Mock
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairRequest>, ProgressBarOnApp {
-    private lateinit var viewModel: RepairRequestViewModel
+    private val viewModel by viewModel<RepairRequestViewModel>()
     private lateinit var binding: FragmentRepairRequestBinding
     private lateinit var adapter : AdapterRepairRequest
     private var list: MutableList<RepairRequest> = mutableListOf()
@@ -39,11 +39,12 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentRepairRequestBinding.inflate(layoutInflater, container, false)
-        viewModel = ViewModelProvider(this)[RepairRequestViewModel::class.java]
+       // viewModel = ViewModelProvider(this)[RepairRequestViewModel::class.java]
         binding.recyclerRepair.layoutManager = LinearLayoutManager(context)
         adapter = AdapterRepairRequest(this)
         binding.recyclerRepair.adapter = adapter
         addAction()
+        observe()
         val itemRecyclerViewDragCallback = ItemRecyclerViewDragCallback(this)
         val itemTouchHelper = ItemTouchHelper(itemRecyclerViewDragCallback)
         itemTouchHelper.attachToRecyclerView(binding.recyclerRepair)
@@ -51,9 +52,9 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
     }
 
     override fun onResume() {
-        super.onResume()
         loadData(null)
         adapter.updateAll(list)
+        super.onResume()
     }
 
     override fun onAttach(context: Context) {
@@ -97,6 +98,13 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
         dialog.show()
     }
 
+    private fun observe() {
+        viewModel.pagination.observe(this.viewLifecycleOwner) {
+            list = it.content
+            adapter.updateAll(list)
+        }
+    }
+
     private fun addAction() {
         binding.floatingNewRepair.setOnClickListener {
             newRepairRequest()
@@ -128,6 +136,7 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
     }
 
     private fun loadData(search: String?) {
+        showOrHideView(binding.progressRepairRequest.root, true)
         list.clear()
         search?.let { text ->
             Mock.listRepairRequestList().forEach {
@@ -135,7 +144,7 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
             }
             return
         }
-        list = Mock.listRepairRequestList()
+        viewModel.loadRepairRequests(mapOf(Pair("size", "1")))
     }
 
     private fun addSearchEventListener(): SearchView.OnQueryTextListener {
