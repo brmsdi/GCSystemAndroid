@@ -3,7 +3,6 @@ package com.brmsdi.gcsystem.data.constants
 import com.brmsdi.gcsystem.data.constants.Constant.API.DEFAULT_API
 import com.brmsdi.gcsystem.data.constants.Constant.API.TYPE_AND_VERSION
 
-
 /**
  *
  * @author Wisley Bruno Marques França
@@ -47,6 +46,7 @@ class Constant private constructor() {
         const val MY_ACCOUNT_LESSEE = "$DEFAULT_API/lessees/account"
         const val DATA_SCREEN_NEW_REPAIR_REQUEST = "$DEFAULT_API/repair-requests/screen-new-data"
         const val NEW_REPAIR_REQUEST = "$DEFAULT_API/repair-requests/lessee"
+        const val REPAIR_REQUESTS_LESSEE = "$DEFAULT_API/repair-requests/lessee"
     }
 
     object REPAIR {
