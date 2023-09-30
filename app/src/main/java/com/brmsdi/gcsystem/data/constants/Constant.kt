@@ -47,6 +47,7 @@ class Constant private constructor() {
         const val DATA_SCREEN_NEW_REPAIR_REQUEST = "$DEFAULT_API/repair-requests/screen-new-data"
         const val NEW_REPAIR_REQUEST = "$DEFAULT_API/repair-requests/lessee"
         const val REPAIR_REQUESTS_LESSEE = "$DEFAULT_API/repair-requests/lessee"
+        const val SEARCH_REPAIR_REQUEST = "$DEFAULT_API/repair-requests/lessee/search"
     }
 
     object REPAIR {
@@ -68,5 +69,11 @@ class Constant private constructor() {
     object NOTIFICATION {
         const val CHANNEL1 = "com.brmsdi.gcsystem"
         const val CHANNEL1_ID = "OS"
+    }
+
+    object PARAMS {
+        const val PAGE = "page"
+        const val SIZE = "size"
+        const val KEY_SEARCH = "keySearch"
     }
 }
