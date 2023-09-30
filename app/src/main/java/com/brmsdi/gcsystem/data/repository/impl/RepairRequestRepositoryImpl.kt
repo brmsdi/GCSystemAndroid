@@ -31,4 +31,9 @@ class RepairRequestRepositoryImpl : RepairRequestRepository {
         repairRequestService = RetrofitClient.createService(RepairRequestService::class.java)
         call(repairRequestService.loadRepairRequests(params), event)
     }
+
+    override fun search(params: Map<String, String>, event: APIEvent<PaginationRepairRequestDTO>) {
+        repairRequestService = RetrofitClient.createService(RepairRequestService::class.java)
+        call(repairRequestService.search(params), event)
+    }
 }

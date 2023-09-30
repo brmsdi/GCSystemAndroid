@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.adapter.AdapterRepairRequest
+import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.KEY_SEARCH
+import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.PAGE
+import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.SIZE
 import com.brmsdi.gcsystem.data.constants.Constant.REPAIR.REPAIR_REQUEST_DATA
 import com.brmsdi.gcsystem.data.listeners.ItemRecyclerViewDragCallback
 import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
@@ -23,7 +26,6 @@ import com.brmsdi.gcsystem.ui.activity.detailRepairRequest.DetailRepairRequestAc
 import com.brmsdi.gcsystem.ui.activity.newRepairRequest.NewRepairRequestActivity
 import com.brmsdi.gcsystem.ui.activity.updateRepairRequest.UpdateRepairRequest
 import com.brmsdi.gcsystem.ui.utils.DialogAppUtils
-import com.brmsdi.gcsystem.ui.utils.Mock
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -100,8 +102,15 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
 
     private fun observe() {
         viewModel.pagination.observe(this.viewLifecycleOwner) {
-            list = it.content
-            adapter.updateAll(list)
+            showOrHideView(binding.progressRepairRequest.root, false)
+            if (it.empty) {
+                binding.textSearchInfo.text = getString(R.string.search_is_empty)
+                showOrHideView(binding.textSearchInfo, true)
+            } else {
+                showOrHideView(binding.textSearchInfo, false)
+                list = it.content
+                adapter.updateAll(list)
+            }
         }
     }
 
@@ -135,16 +144,15 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
         startActivity(intent)
     }
 
-    private fun loadData(search: String?) {
+    private fun loadData(search: String?, page: UInt = 0u, size: UInt = 5u) {
+        showOrHideView(binding.textSearchInfo, false)
         showOrHideView(binding.progressRepairRequest.root, true)
         list.clear()
         search?.let { text ->
-            Mock.listRepairRequestList().forEach {
-                if (text == it.id.toString() || contains(text, it.condominium.name)) list.add(it)
-            }
+            viewModel.search(mapOf(Pair(PAGE, page.toString()), Pair(SIZE, size.toString()), Pair(KEY_SEARCH, text)))
             return
         }
-        viewModel.loadRepairRequests(mapOf(Pair("size", "1")))
+        viewModel.loadRepairRequests(mapOf(Pair(PAGE, page.toString()), Pair(SIZE, size.toString())))
     }
 
     private fun addSearchEventListener(): SearchView.OnQueryTextListener {
@@ -162,24 +170,11 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
     }
 
     private fun performSearch(text: String) {
-        if (text.isEmpty()) {
+        if(text.isEmpty()) {
             loadData(null)
-            showOrHideView(binding.textSearchInfo, false)
-            adapter.updateAll(list)
             return
         }
         loadData(text)
-        if (list.isEmpty()) {
-            binding.textSearchInfo.text = getString(R.string.search_is_empty)
-            showOrHideView(binding.textSearchInfo, true)
-        } else {
-            showOrHideView(binding.textSearchInfo, false)
-        }
-        adapter.updateAll(list)
-    }
-
-    private fun contains(key: String, text: String): Boolean {
-        return text.uppercase().contains(key.uppercase())
     }
 
     private fun context(): Context {

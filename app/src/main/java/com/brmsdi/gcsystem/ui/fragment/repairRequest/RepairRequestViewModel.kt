@@ -23,31 +23,43 @@ class RepairRequestViewModel(
     private val _error = MutableLiveData<ValidationModelDTO>()
     val error: LiveData<ValidationModelDTO> = _error
     fun loadRepairRequests(params: Map<String, String>) {
-        repairRequestRepository.loadRepairRequests(
-            params,
-            object : APIEvent<PaginationRepairRequestDTO> {
-                override fun onResponse(model: PaginationRepairRequestDTO) {
-                    _pagination.value = model
-                }
+        load(params = params)
+    }
 
-                override fun onError(response: Response<PaginationRepairRequestDTO>) {
-                    response.errorBody()?.string()?.let {
-                        val responseRequestDTO =
-                            TextUtils.jsonToObject(it, ResponseRequestDTO::class.java)
-                        _error.value = ValidationModelDTO(responseRequestDTO.errors[0].message)
-                    }
-                }
+    fun search(params: Map<String, String>) {
+        load(params = params, isSearch = true)
+    }
 
-                override fun onFailure(throwable: Throwable) {
-                    val cause = throwable.cause
-                    if (cause is ConnectException) {
-                        _error.value =
-                            ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_CONNECTION))
-                    } else {
-                        _error.value =
-                            ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_UNEXPECTED))
-                    }
+    private fun load(params: Map<String, String>, isSearch: Boolean = false) {
+        val event = object : APIEvent<PaginationRepairRequestDTO> {
+            override fun onResponse(model: PaginationRepairRequestDTO) {
+                _pagination.value = model
+            }
+
+            override fun onError(response: Response<PaginationRepairRequestDTO>) {
+                response.errorBody()?.string()?.let {
+                    val responseRequestDTO =
+                        TextUtils.jsonToObject(it, ResponseRequestDTO::class.java)
+                    _error.value = ValidationModelDTO(responseRequestDTO.errors[0].message)
                 }
-            })
+            }
+
+            override fun onFailure(throwable: Throwable) {
+                val cause = throwable.cause
+                if (cause is ConnectException) {
+                    _error.value =
+                        ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_CONNECTION))
+                } else {
+                    _error.value =
+                        ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_UNEXPECTED))
+                }
+            }
+        }
+
+        if (isSearch) {
+            repairRequestRepository.search(params, event)
+            return
+        }
+        repairRequestRepository.loadRepairRequests(params, event)
     }
 }

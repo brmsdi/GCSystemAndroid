@@ -6,6 +6,7 @@ import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDataDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import retrofit2.Call
+import retrofit2.http.QueryMap
 
 /**
  *
@@ -27,4 +28,6 @@ interface RepairRequestRepository : CallRepository {
      *               - "size": Tamanho da página (número de itens por página) (opcional).
      */
     fun loadRepairRequests(params: Map<String, String>, event: APIEvent<PaginationRepairRequestDTO>)
+
+    fun search(@QueryMap params: Map<String, String> = mapOf(), event: APIEvent<PaginationRepairRequestDTO>)
 }
