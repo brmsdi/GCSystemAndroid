@@ -41,7 +41,6 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentRepairRequestBinding.inflate(layoutInflater, container, false)
-       // viewModel = ViewModelProvider(this)[RepairRequestViewModel::class.java]
         binding.recyclerRepair.layoutManager = LinearLayoutManager(context)
         adapter = AdapterRepairRequest(this)
         binding.recyclerRepair.adapter = adapter
@@ -110,6 +109,14 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
                 showOrHideView(binding.textSearchInfo, false)
                 list = it.content
                 adapter.updateAll(list)
+            }
+        }
+
+        viewModel.error.observe(this.viewLifecycleOwner) {
+            if (!it.status()) {
+                showOrHideView(binding.progressRepairRequest.root, false)
+                showOrHideView(binding.textSearchInfo, false)
+                displayMessage(this.requireContext(), it.message())
             }
         }
     }
