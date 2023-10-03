@@ -48,10 +48,12 @@ class Constant private constructor() {
         const val NEW_REPAIR_REQUEST = "$DEFAULT_API/repair-requests/lessee"
         const val REPAIR_REQUESTS_LESSEE = "$DEFAULT_API/repair-requests/lessee"
         const val SEARCH_REPAIR_REQUEST = "$DEFAULT_API/repair-requests/lessee/search"
+        const val REPAIR_REQUEST_DETAIL = "$DEFAULT_API/repair-requests/details/lessee"
     }
 
     object REPAIR {
         const val REPAIR_REQUEST_DATA = "RP"
+        const val REPAIR_REQUEST_DATA_ID = "RP_ID"
     }
 
     object OS {
