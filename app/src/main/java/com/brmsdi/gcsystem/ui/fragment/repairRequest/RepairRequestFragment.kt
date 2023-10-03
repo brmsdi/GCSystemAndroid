@@ -16,6 +16,7 @@ import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.KEY_SEARCH
 import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.PAGE
 import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.SIZE
 import com.brmsdi.gcsystem.data.constants.Constant.REPAIR.REPAIR_REQUEST_DATA
+import com.brmsdi.gcsystem.data.constants.Constant.REPAIR.REPAIR_REQUEST_DATA_ID
 import com.brmsdi.gcsystem.data.listeners.ItemRecyclerViewDragCallback
 import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
 import com.brmsdi.gcsystem.data.listeners.ItemRecyclerListenerListener
@@ -54,7 +55,6 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
 
     override fun onResume() {
         loadData(null)
-        adapter.updateAll(list)
         super.onResume()
     }
 
@@ -133,9 +133,9 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
 
     private fun detailsRepairRequest(repairRequest: RepairRequest) {
         val bundle = Bundle()
-        bundle.putParcelable(REPAIR_REQUEST_DATA, repairRequest)
+        bundle.putInt(REPAIR_REQUEST_DATA_ID, repairRequest.id)
         val intent = Intent(this.requireContext(), DetailRepairRequestActivity::class.java)
-        intent.putExtra(REPAIR_REQUEST_DATA, bundle)
+        intent.putExtras(bundle)
         startActivity(intent)
     }
 

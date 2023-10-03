@@ -5,14 +5,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
-import com.brmsdi.gcsystem.data.constants.Constant.REPAIR.REPAIR_REQUEST_DATA
+import com.brmsdi.gcsystem.data.constants.Constant.REPAIR.REPAIR_REQUEST_DATA_ID
+import com.brmsdi.gcsystem.data.dto.EmployeeSpinnerDTO
 import com.brmsdi.gcsystem.data.model.Employee
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.ActivityDetailRepairRequestBinding
 import com.brmsdi.gcsystem.ui.utils.LoadData
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
+import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailRepairRequestActivity : AppCompatActivity(), LoadData, ProgressBarOnApp {
+    private val viewModel by viewModel<DetailRepairRequestViewModel>()
     private lateinit var binding: ActivityDetailRepairRequestBinding
     private var repairRequest: RepairRequest? = null
 
@@ -20,10 +24,28 @@ class DetailRepairRequestActivity : AppCompatActivity(), LoadData, ProgressBarOn
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailRepairRequestBinding.inflate(layoutInflater)
-        repairRequest = load(intent.getBundleExtra(REPAIR_REQUEST_DATA), REPAIR_REQUEST_DATA, RepairRequest::class.java)
-        loadData(repairRequest)
+        load(intent.getIntExtra(REPAIR_REQUEST_DATA_ID, 0))
+        observe()
         addAction()
         setContentView(binding.root)
+    }
+
+    private fun observe() {
+        viewModel.repairRequest.observe(this) {
+            repairRequest = it
+            fillData(repairRequest)
+        }
+
+        viewModel.error.observe(this) {
+            if (!it.status()) {
+                displayMessage(this, it.message())
+            }
+        }
+    }
+
+    private fun load(id: Int) {
+        if (id <= 0) return
+        viewModel.getById(id)
     }
 
     private fun addAction() {
@@ -32,7 +54,7 @@ class DetailRepairRequestActivity : AppCompatActivity(), LoadData, ProgressBarOn
         }
     }
 
-    private fun loadData(repairRequest: RepairRequest?) {
+    private fun fillData(repairRequest: RepairRequest?) {
         repairRequest?.let {
             binding.editId.setText(it.id.toString())
             binding.editCondominium.setText(it.condominium.name)
@@ -49,9 +71,9 @@ class DetailRepairRequestActivity : AppCompatActivity(), LoadData, ProgressBarOn
     }
 
     private fun loadRecycler(employees: Set<Employee>) {
-        val list = mutableListOf<Employee>()
+        val list = mutableListOf<EmployeeSpinnerDTO>()
         employees.forEach {
-            list.add(it)
+            list.add(EmployeeSpinnerDTO(it))
         }
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
         binding.spinnerCollaborators.adapter = adapter
