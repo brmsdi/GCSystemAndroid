@@ -3,6 +3,7 @@ package com.brmsdi.gcsystem.data.service
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.DATA_SCREEN_NEW_REPAIR_REQUEST
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.NEW_REPAIR_REQUEST
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUESTS_LESSEE
+import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUEST_DETAIL
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.SEARCH_REPAIR_REQUEST
 import com.brmsdi.gcsystem.data.dto.PaginationRepairRequestDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDTO
@@ -12,7 +13,10 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 import retrofit2.http.QueryMap
+import retrofit2.http.QueryName
 
 
 /**
@@ -53,4 +57,7 @@ interface RepairRequestService {
      */
     @GET(SEARCH_REPAIR_REQUEST)
     fun search(@QueryMap params: Map<String, String> = mapOf()): Call<PaginationRepairRequestDTO>
+
+    @GET(REPAIR_REQUEST_DETAIL)
+    fun getById(@Query("id") id: Int) : Call<RepairRequest>
 }

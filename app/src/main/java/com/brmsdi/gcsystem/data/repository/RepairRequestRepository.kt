@@ -30,4 +30,6 @@ interface RepairRequestRepository : CallRepository {
     fun loadRepairRequests(params: Map<String, String>, event: APIEvent<PaginationRepairRequestDTO>)
 
     fun search(@QueryMap params: Map<String, String> = mapOf(), event: APIEvent<PaginationRepairRequestDTO>)
+
+    fun getById(id: Int, event: APIEvent<RepairRequest>)
 }
