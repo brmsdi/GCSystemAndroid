@@ -37,9 +37,9 @@ class Mock {
         )
 
         private fun debtList() = mutableListOf(
-            Debt(1, Date(), 50.00, statusList()[0]),
-            Debt(2, Date(), 30.00, statusList()[0]),
-            Debt(3, Date(), 40.00, statusList()[0]),
+            Debt(1, Date(), 50.00, statusList()[0], lesseeList()[0]),
+            Debt(2, Date(), 30.00, statusList()[0], lesseeList()[0]),
+            Debt(3, Date(), 40.00, statusList()[0], lesseeList()[0]),
         )
 
         private fun itemList() = mutableListOf(
