@@ -1,5 +1,6 @@
 package com.brmsdi.gcsystem.data.constants
 
+import com.brmsdi.gcsystem.data.constants.Constant.API.BASE_URL
 import com.brmsdi.gcsystem.data.constants.Constant.API.DEFAULT_API
 import com.brmsdi.gcsystem.data.constants.Constant.API.TYPE_AND_VERSION
 
@@ -51,6 +52,7 @@ class Constant private constructor() {
         const val REPAIR_REQUEST_DETAIL = "$DEFAULT_API/repair-requests/details/lessee"
         const val DEBTS_LESSEE = "$DEFAULT_API/debts/lessee"
         const val CONTRACTS_LESSEE = "$DEFAULT_API/contracts/lessee"
+        const val CONTRACT_DETAIL = "$BASE_URL$DEFAULT_API/contract-view/printout-contract"
     }
 
     object REPAIR {
@@ -63,7 +65,7 @@ class Constant private constructor() {
     }
 
     object CONTRACT {
-        const val CONTRACT_DATA = "CD"
+        const val CONTRACT_ID = "CID"
     }
 
     object PERMISSION {
@@ -79,5 +81,9 @@ class Constant private constructor() {
         const val PAGE = "page"
         const val SIZE = "size"
         const val KEY_SEARCH = "keySearch"
+    }
+
+    object REQUESTCODE {
+        const val WRITE_EXTERNAL_STORAGE = 1
     }
 }
