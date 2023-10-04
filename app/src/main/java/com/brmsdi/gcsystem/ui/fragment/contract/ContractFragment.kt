@@ -13,10 +13,12 @@ import com.brmsdi.gcsystem.data.listeners.ItemRecyclerClickListener
 import com.brmsdi.gcsystem.data.model.Contract
 import com.brmsdi.gcsystem.databinding.FragmentContractBinding
 import com.brmsdi.gcsystem.ui.activity.detailContract.DetailContractActivity
-import com.brmsdi.gcsystem.ui.utils.Mock.Companion.contractsList
 import com.brmsdi.gcsystem.ui.utils.NumberUtils.Companion.getSystemLocale
+import com.brmsdi.gcsystem.ui.utils.TextUtils
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ContractFragment : Fragment(), ItemRecyclerClickListener<Contract> {
+    private val viewModel by viewModel<ContractViewModel>()
     private lateinit var binding: FragmentContractBinding
     private lateinit var adapter: AdapterContract
 
@@ -28,7 +30,8 @@ class ContractFragment : Fragment(), ItemRecyclerClickListener<Contract> {
         adapter = AdapterContract(locale = getSystemLocale(this.requireContext()), listener = this)
         binding.recyclerContracts.layoutManager = LinearLayoutManager(this.requireContext())
         binding.recyclerContracts.adapter = adapter
-        loadData(contractsList())
+        loadData()
+        observe()
         return binding.root
     }
 
@@ -36,8 +39,18 @@ class ContractFragment : Fragment(), ItemRecyclerClickListener<Contract> {
         initDetailsContract(model)
     }
 
-    private fun loadData(contracts: MutableList<Contract>) {
-        adapter.updateAll(contracts)
+    private fun observe() {
+        viewModel.contracts.observe(this.viewLifecycleOwner) {
+            adapter.updateAll(it.content)
+        }
+
+        viewModel.error.observe(this.viewLifecycleOwner) {
+            TextUtils.displayMessage(this.requireContext(), it.message())
+        }
+    }
+
+    private fun loadData() {
+        viewModel.loadContract()
     }
 
     private fun initDetailsContract(contract: Contract) {
