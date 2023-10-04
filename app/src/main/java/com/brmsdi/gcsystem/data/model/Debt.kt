@@ -20,5 +20,7 @@ data class Debt(
     @SerializedName("value")
     var value: Double,
     @SerializedName("status")
-    var status: Status
+    var status: Status,
+    @SerializedName("lessee")
+    var lessee: Lessee
 ) : Parcelable
