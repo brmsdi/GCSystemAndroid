@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brmsdi.gcsystem.data.adapter.AdapterContract
-import com.brmsdi.gcsystem.data.constants.Constant.CONTRACT.CONTRACT_DATA
+import com.brmsdi.gcsystem.data.constants.Constant.CONTRACT.CONTRACT_ID
 import com.brmsdi.gcsystem.data.listeners.ItemRecyclerClickListener
 import com.brmsdi.gcsystem.data.model.Contract
 import com.brmsdi.gcsystem.databinding.FragmentContractBinding
@@ -55,9 +55,9 @@ class ContractFragment : Fragment(), ItemRecyclerClickListener<Contract> {
 
     private fun initDetailsContract(contract: Contract) {
         val bundle = Bundle()
-        bundle.putParcelable(CONTRACT_DATA, contract)
+        bundle.putInt(CONTRACT_ID, contract.id)
         val intent = Intent(this.requireContext(), DetailContractActivity::class.java)
-        intent.putExtra(CONTRACT_DATA, bundle)
+        intent.putExtras(bundle)
         startActivity(intent)
     }
 }
