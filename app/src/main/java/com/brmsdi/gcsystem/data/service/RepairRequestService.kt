@@ -33,16 +33,16 @@ interface RepairRequestService {
     @POST(NEW_REPAIR_REQUEST)
     fun save(@Body repairRequestRegisterDTO: RepairRequestRegisterDTO): Call<RepairRequest>
 
+    /**
+     * Carrega uma lista de solicitações de reparo com paginação.
+     *
+     * @param params Um mapa de parâmetros de consulta opcionais.
+     *               Pode incluir os seguintes dados:
+     *               - "page": Número da página desejada (opcional).
+     *               - "size": Tamanho da página (número de itens por página) (opcional).
+     * @return Um objeto [Call] que pode ser usado para fazer a solicitação HTTP.
+     */
     @GET(REPAIR_REQUESTS_LESSEE)
-            /**
-             * Carrega uma lista de solicitações de reparo com paginação.
-             *
-             * @param params Um mapa de parâmetros de consulta opcionais.
-             *               Pode incluir os seguintes dados:
-             *               - "page": Número da página desejada (opcional).
-             *               - "size": Tamanho da página (número de itens por página) (opcional).
-             * @return Um objeto [Call] que pode ser usado para fazer a solicitação HTTP.
-             */
     fun loadRepairRequests(@QueryMap params: Map<String, String> = mapOf()): Call<PaginationRepairRequestDTO>
 
     /**
@@ -59,5 +59,5 @@ interface RepairRequestService {
     fun search(@QueryMap params: Map<String, String> = mapOf()): Call<PaginationRepairRequestDTO>
 
     @GET(REPAIR_REQUEST_DETAIL)
-    fun getById(@Query("id") id: Int) : Call<RepairRequest>
+    fun getById(@Query("id") id: Int): Call<RepairRequest>
 }
