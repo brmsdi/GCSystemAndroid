@@ -18,7 +18,5 @@ class Lessee(
     @SerializedName("email")
     var email: String,
     @SerializedName("contactNumber")
-    var contactNumber: String,
-    @SerializedName("debts")
-    var debts: MutableList<Debt>
+    var contactNumber: String
 ) : Parcelable

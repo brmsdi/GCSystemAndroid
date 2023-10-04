@@ -67,8 +67,8 @@ class Mock {
 
         fun lesseeList(): MutableList<Lessee> {
             return mutableListOf(
-                Lessee(1,"Patrícia", "12345678909", Date(), "patricia@gmail.com", "92999999999", mutableListOf(debtList()[0], debtList()[1])),
-                Lessee(1,"Debora", "12345678908", Date(), "debora@gmail.com", "92999999999", mutableListOf(debtList()[2])),
+                Lessee(1,"Patrícia", "12345678909", Date(), "patricia@gmail.com", "92999999999"),
+                Lessee(1,"Debora", "12345678908", Date(), "debora@gmail.com", "92999999999")
             )
         }
 
