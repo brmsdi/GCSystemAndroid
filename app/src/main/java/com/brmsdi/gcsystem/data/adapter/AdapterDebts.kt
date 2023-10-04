@@ -15,7 +15,7 @@ import java.util.Locale
  * @author Wisley Bruno Marques França
  * @since 1
  */
-class AdapterDebts(val lessee: Lessee, private val locale: Locale) : RecyclerView.Adapter<DebtViewHolder>() {
+class AdapterDebts(private val locale: Locale) : RecyclerView.Adapter<DebtViewHolder>() {
     private var list : MutableList<Debt> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DebtViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -26,7 +26,7 @@ class AdapterDebts(val lessee: Lessee, private val locale: Locale) : RecyclerVie
     override fun getItemCount() = list.count()
 
     override fun onBindViewHolder(holder: DebtViewHolder, position: Int) {
-        holder.bindData(lessee, list[position])
+        holder.bindData(list[position])
     }
 
     @SuppressLint("NotifyDataSetChanged")

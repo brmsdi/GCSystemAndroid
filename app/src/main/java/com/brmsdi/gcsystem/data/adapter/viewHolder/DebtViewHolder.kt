@@ -18,11 +18,11 @@ class DebtViewHolder(
     private val locale: Locale
 ) :
     RecyclerView.ViewHolder(row.root) {
-    fun bindData(lessee: Lessee, debt: Debt) {
+    fun bindData(debt: Debt) {
         row.textId.text = debt.id.toString()
         row.textValue.text = NumberUtils.formatCoin(locale, debt.value)
         row.textDueDate.text = dateFormattedToView(debt.dueDate)
-        row.textDebtor.text = lessee.name
+        row.textDebtor.text = debt.lessee.name
         row.textStatus.text = debt.status.name
     }
 }
