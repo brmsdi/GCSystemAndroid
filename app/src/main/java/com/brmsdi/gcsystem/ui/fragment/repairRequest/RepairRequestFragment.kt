@@ -88,9 +88,6 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
                 getString(R.string.cancel),
                 object : DialogConfirmAndCancelListener {
                     override fun confirm() {
-                        //list.removeAt(position)
-                        //adapter.notifyItemRemoved(position)
-                        //displayMessage(context(), getString(R.string.delete_item_success))
                         positionItemDeleted = position
                         val id = list[position].id
                         viewModel.delete(id)
