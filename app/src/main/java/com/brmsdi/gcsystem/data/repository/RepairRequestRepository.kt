@@ -3,9 +3,9 @@ package com.brmsdi.gcsystem.data.repository
 import com.brmsdi.gcsystem.data.dto.PaginationRepairRequestDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDataDTO
+import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
 import com.brmsdi.gcsystem.data.model.RepairRequest
-import retrofit2.Call
 import retrofit2.http.QueryMap
 
 /**
@@ -20,6 +20,8 @@ interface RepairRequestRepository : CallRepository {
     fun save(repairRequestRegisterDTO: RepairRequestRegisterDTO, event: APIEvent<RepairRequest>)
 
     fun update(repairRequest: RepairRequest, event: APIEvent<RepairRequest>)
+
+    fun delete(id: Int, event: APIEvent<ResponseDTO>)
 
     /**
      * Carrega uma lista de solicitações de reparo com paginação.
