@@ -1,5 +1,6 @@
 package com.brmsdi.gcsystem.di
 
+import com.brmsdi.gcsystem.ui.activity.detailOrderService.DetailOrderServiceViewModel
 import com.brmsdi.gcsystem.ui.activity.detailRepairRequest.DetailRepairRequestViewModel
 import com.brmsdi.gcsystem.ui.activity.newRepairRequest.NewRepairRequestViewModel
 import com.brmsdi.gcsystem.ui.activity.updateRepairRequest.UpdateRepairRequestViewModel
@@ -18,4 +19,5 @@ val ViewModelModules = module {
     viewModel { DebtViewModel(get(), get()) }
     viewModel { ContractViewModel(get(), get()) }
     viewModel { OrderServiceViewModel(get(), get()) }
+    viewModel { DetailOrderServiceViewModel(get(), get()) }
 }
