@@ -85,6 +85,7 @@ class Constant private constructor() {
         const val PAGE = "page"
         const val SIZE = "size"
         const val KEY_SEARCH = "keySearch"
+        const val ID_ORDER_SERVICE = "idOrderService"
     }
 
     object REQUESTCODE {
