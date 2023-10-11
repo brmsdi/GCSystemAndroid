@@ -24,6 +24,11 @@ class RepairRequestRepositoryImpl : RepairRequestRepository {
         call(repairRequestService.save(repairRequestRegisterDTO), event)
     }
 
+    override fun update(repairRequest: RepairRequest, event: APIEvent<RepairRequest>) {
+        repairRequestService = RetrofitClient.createService(RepairRequestService::class.java)
+        call(repairRequestService.update(repairRequest), event)
+    }
+
     override fun loadRepairRequests(
         params: Map<String, String>,
         event: APIEvent<PaginationRepairRequestDTO>

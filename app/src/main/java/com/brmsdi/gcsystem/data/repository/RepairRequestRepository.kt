@@ -19,6 +19,8 @@ interface RepairRequestRepository : CallRepository {
 
     fun save(repairRequestRegisterDTO: RepairRequestRegisterDTO, event: APIEvent<RepairRequest>)
 
+    fun update(repairRequest: RepairRequest, event: APIEvent<RepairRequest>)
+
     /**
      * Carrega uma lista de solicitações de reparo com paginação.
      *
