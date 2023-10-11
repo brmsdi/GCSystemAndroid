@@ -12,4 +12,6 @@ import com.brmsdi.gcsystem.data.listeners.APIEvent
 
 interface OrderServiceRepository : CallRepository {
     fun loadOrderServices(params: Map<String, String>, event: APIEvent<PaginationOrderServiceDTO>)
+
+    fun search(params: Map<String, String>, event: APIEvent<PaginationOrderServiceDTO>)
 }
