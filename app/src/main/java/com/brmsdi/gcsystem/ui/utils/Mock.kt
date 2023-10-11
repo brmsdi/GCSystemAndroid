@@ -78,7 +78,7 @@ class Mock {
                 val element = RepairRequest(
                     id = i,
                     problemDescription = "Tomadas da sala e dos quartos não estão funcionando",
-                    date = Date(),
+                    date = Date().toString(),
                     typeProblem = typeProblemList()[1],
                     lessee = lesseeList()[0],
                     condominium = condominiumList()[1],
