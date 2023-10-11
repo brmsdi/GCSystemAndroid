@@ -50,6 +50,6 @@ class RepairRequestRepositoryImpl : RepairRequestRepository {
 
     override fun getById(id: Int, event: APIEvent<RepairRequest>) {
         repairRequestService = RetrofitClient.createService(RepairRequestService::class.java)
-        call(repairRequestService.getById(id), event)
+        call(repairRequestService.details(id), event)
     }
 }

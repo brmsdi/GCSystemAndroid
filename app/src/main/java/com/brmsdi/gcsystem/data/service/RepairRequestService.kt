@@ -11,7 +11,6 @@ import com.brmsdi.gcsystem.data.dto.PaginationRepairRequestDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDataDTO
 import com.brmsdi.gcsystem.data.dto.ResponseDTO
-import com.brmsdi.gcsystem.data.dto.ResponseRequestDTO
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import retrofit2.Call
 import retrofit2.http.Body
@@ -22,7 +21,6 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
-import retrofit2.http.QueryName
 
 
 /**
@@ -71,5 +69,5 @@ interface RepairRequestService {
     fun search(@QueryMap params: Map<String, String> = mapOf()): Call<PaginationRepairRequestDTO>
 
     @GET(REPAIR_REQUEST_DETAIL)
-    fun getById(@Query("id") id: Int): Call<RepairRequest>
+    fun details(@Query("id") id: Int): Call<RepairRequest>
 }
