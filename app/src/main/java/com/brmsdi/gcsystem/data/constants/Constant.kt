@@ -57,6 +57,7 @@ class Constant private constructor() {
         const val CONTRACT_DETAIL = "$BASE_URL$DEFAULT_API/contract-view/printout-contract"
         const val ORDER_SERVICES_EMPLOYEE = "$DEFAULT_API/order-services/employee"
         const val SEARCH_ORDER_SERVICE = "$DEFAULT_API/order-services/search"
+        const val ORDER_SERVICE_DETAILS = "$DEFAULT_API/order-services/details"
     }
 
     object REPAIR {
