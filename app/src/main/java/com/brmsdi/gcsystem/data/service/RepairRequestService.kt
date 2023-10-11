@@ -5,6 +5,7 @@ import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.NEW_REPAIR_REQUEST
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUESTS_LESSEE
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUEST_DETAIL
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.SEARCH_REPAIR_REQUEST
+import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.UPDATE_REPAIR_REQUEST
 import com.brmsdi.gcsystem.data.dto.PaginationRepairRequestDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDataDTO
@@ -13,6 +14,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
@@ -32,6 +34,9 @@ interface RepairRequestService {
 
     @POST(NEW_REPAIR_REQUEST)
     fun save(@Body repairRequestRegisterDTO: RepairRequestRegisterDTO): Call<RepairRequest>
+
+    @PUT(UPDATE_REPAIR_REQUEST)
+    fun update(@Body repairRequest: RepairRequest): Call<RepairRequest>
 
     /**
      * Carrega uma lista de solicitações de reparo com paginação.
