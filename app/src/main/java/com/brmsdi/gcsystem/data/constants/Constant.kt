@@ -47,6 +47,7 @@ class Constant private constructor() {
         const val MY_ACCOUNT_LESSEE = "$DEFAULT_API/lessees/account"
         const val DATA_SCREEN_NEW_REPAIR_REQUEST = "$DEFAULT_API/repair-requests/screen-new-data"
         const val NEW_REPAIR_REQUEST = "$DEFAULT_API/repair-requests/lessee"
+        const val UPDATE_REPAIR_REQUEST = "$DEFAULT_API/repair-requests/lessee"
         const val REPAIR_REQUESTS_LESSEE = "$DEFAULT_API/repair-requests/lessee"
         const val SEARCH_REPAIR_REQUEST = "$DEFAULT_API/repair-requests/lessee/search"
         const val REPAIR_REQUEST_DETAIL = "$DEFAULT_API/repair-requests/details/lessee"
