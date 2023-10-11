@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.dto.PaginationRepairRequestDTO
+import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.dto.ResponseRequestDTO
 import com.brmsdi.gcsystem.data.dto.ValidationModelDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
@@ -13,7 +14,6 @@ import com.brmsdi.gcsystem.data.repository.RepairRequestRepository
 import com.brmsdi.gcsystem.ui.utils.TextUtils
 import retrofit2.Response
 import java.net.ConnectException
-import java.net.SocketTimeoutException
 
 class RepairRequestViewModel(
     application: Application,
@@ -23,6 +23,8 @@ class RepairRequestViewModel(
     val pagination: LiveData<PaginationRepairRequestDTO> = _pagination
     private val _error = MutableLiveData<ValidationModelDTO>()
     val error: LiveData<ValidationModelDTO> = _error
+    private val _responseDelete = MutableLiveData<ResponseDTO>()
+    val responseDelete: LiveData<ResponseDTO> = _responseDelete
     fun loadRepairRequests(params: Map<String, String>) {
         load(params = params)
     }
@@ -63,5 +65,34 @@ class RepairRequestViewModel(
             return
         }
         repairRequestRepository.loadRepairRequests(params, event)
+    }
+
+    fun delete(id: Int) {
+        repairRequestRepository.delete(id, object : APIEvent<ResponseDTO> {
+            override fun onResponse(model: ResponseDTO) {
+                _responseDelete.value = model
+            }
+
+            override fun onError(response: Response<ResponseDTO>) {
+                response.errorBody()?.string()?.let {
+                    val responseRequestDTO =
+                        TextUtils.jsonToObject(it, ResponseRequestDTO::class.java)
+                    _error.value = ValidationModelDTO(responseRequestDTO.errors[0].message)
+                }
+            }
+
+            override fun onFailure(throwable: Throwable) {
+                val cause = throwable.cause
+                if (cause is ConnectException) {
+                    _error.value =
+                        ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_CONNECTION))
+                } else {
+                    val message = throwable.message ?: getApplication<Application>().getString(R.string.ERROR_UNEXPECTED)
+                    _error.value =
+                        ValidationModelDTO(message)
+                }
+            }
+
+        })
     }
 }
