@@ -30,11 +30,13 @@ import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairRequest>, ProgressBarOnApp {
+class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairRequest>,
+    ProgressBarOnApp {
     private val viewModel by viewModel<RepairRequestViewModel>()
     private lateinit var binding: FragmentRepairRequestBinding
-    private lateinit var adapter : AdapterRepairRequest
+    private lateinit var adapter: AdapterRepairRequest
     private var list: MutableList<RepairRequest> = mutableListOf()
+    private var positionItemDeleted: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,9 +88,12 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
                 getString(R.string.cancel),
                 object : DialogConfirmAndCancelListener {
                     override fun confirm() {
-                        list.removeAt(position)
-                        adapter.notifyItemRemoved(position)
-                        displayMessage(context(), getString(R.string.delete_item_success))
+                        //list.removeAt(position)
+                        //adapter.notifyItemRemoved(position)
+                        //displayMessage(context(), getString(R.string.delete_item_success))
+                        positionItemDeleted = position
+                        val id = list[position].id
+                        viewModel.delete(id)
                     }
 
                     override fun cancel() {
@@ -109,6 +114,14 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
                 list = it.content
                 adapter.updateAll(list)
             }
+        }
+
+        viewModel.responseDelete.observe(this.viewLifecycleOwner) {
+            positionItemDeleted?.let { position ->
+                list.removeAt(position)
+                adapter.notifyItemRemoved(position)
+            }
+            displayMessage(this.requireContext(), it.message)
         }
 
         viewModel.error.observe(this.viewLifecycleOwner) {
@@ -156,10 +169,21 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
         showOrHideView(binding.progressRepairRequest.root, true)
         list.clear()
         search?.let { text ->
-            viewModel.search(mapOf(Pair(PAGE, page.toString()), Pair(SIZE, size.toString()), Pair(KEY_SEARCH, text)))
+            viewModel.search(
+                mapOf(
+                    Pair(PAGE, page.toString()),
+                    Pair(SIZE, size.toString()),
+                    Pair(KEY_SEARCH, text)
+                )
+            )
             return
         }
-        viewModel.loadRepairRequests(mapOf(Pair(PAGE, page.toString()), Pair(SIZE, size.toString())))
+        viewModel.loadRepairRequests(
+            mapOf(
+                Pair(PAGE, page.toString()),
+                Pair(SIZE, size.toString())
+            )
+        )
     }
 
     private fun addSearchEventListener(): SearchView.OnQueryTextListener {
@@ -177,15 +201,11 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
     }
 
     private fun performSearch(text: String) {
-        if(text.isEmpty()) {
+        if (text.isEmpty()) {
             loadData(null)
             return
         }
         loadData(text)
-    }
-
-    private fun context(): Context {
-        return this.requireContext()
     }
 
     private fun verifyStatusSolicitation(repairRequest: RepairRequest): Boolean {
