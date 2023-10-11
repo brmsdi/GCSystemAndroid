@@ -13,6 +13,7 @@ import com.brmsdi.gcsystem.data.repository.RepairRequestRepository
 import com.brmsdi.gcsystem.ui.utils.TextUtils
 import retrofit2.Response
 import java.net.ConnectException
+import java.net.SocketTimeoutException
 
 class RepairRequestViewModel(
     application: Application,
@@ -50,8 +51,9 @@ class RepairRequestViewModel(
                     _error.value =
                         ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_CONNECTION))
                 } else {
+                   val message = throwable.message ?: getApplication<Application>().getString(R.string.ERROR_UNEXPECTED)
                     _error.value =
-                        ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_UNEXPECTED))
+                        ValidationModelDTO(message)
                 }
             }
         }
