@@ -15,7 +15,6 @@ import com.brmsdi.gcsystem.data.adapter.AdapterRepairRequest
 import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.KEY_SEARCH
 import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.PAGE
 import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.SIZE
-import com.brmsdi.gcsystem.data.constants.Constant.REPAIR.REPAIR_REQUEST_DATA
 import com.brmsdi.gcsystem.data.constants.Constant.REPAIR.REPAIR_REQUEST_DATA_ID
 import com.brmsdi.gcsystem.data.listeners.ItemRecyclerViewDragCallback
 import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
@@ -25,7 +24,7 @@ import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.databinding.FragmentRepairRequestBinding
 import com.brmsdi.gcsystem.ui.activity.detailRepairRequest.DetailRepairRequestActivity
 import com.brmsdi.gcsystem.ui.activity.newRepairRequest.NewRepairRequestActivity
-import com.brmsdi.gcsystem.ui.activity.updateRepairRequest.UpdateRepairRequest
+import com.brmsdi.gcsystem.ui.activity.updateRepairRequest.UpdateRepairRequestActivity
 import com.brmsdi.gcsystem.ui.utils.DialogAppUtils
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
@@ -115,7 +114,8 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
         viewModel.error.observe(this.viewLifecycleOwner) {
             if (!it.status()) {
                 showOrHideView(binding.progressRepairRequest.root, false)
-                showOrHideView(binding.textSearchInfo, false)
+                binding.textSearchInfo.text = it.message()
+                showOrHideView(binding.textSearchInfo, true)
                 displayMessage(this.requireContext(), it.message())
             }
         }
@@ -145,13 +145,13 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
             return
         }
         val bundle = Bundle()
-        bundle.putParcelable(REPAIR_REQUEST_DATA, repairRequest)
-        val intent = Intent(this.requireContext(), UpdateRepairRequest::class.java)
-        intent.putExtra(REPAIR_REQUEST_DATA, bundle)
+        bundle.putInt(REPAIR_REQUEST_DATA_ID, repairRequest.id)
+        val intent = Intent(this.requireContext(), UpdateRepairRequestActivity::class.java)
+        intent.putExtras(bundle)
         startActivity(intent)
     }
 
-    private fun loadData(search: String?, page: UInt = 0u, size: UInt = 5u) {
+    private fun loadData(search: String?, page: UInt = 0u, size: UInt = 10u) {
         showOrHideView(binding.textSearchInfo, false)
         showOrHideView(binding.progressRepairRequest.root, true)
         list.clear()
