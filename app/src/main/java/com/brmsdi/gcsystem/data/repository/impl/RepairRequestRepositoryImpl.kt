@@ -3,6 +3,7 @@ package com.brmsdi.gcsystem.data.repository.impl
 import com.brmsdi.gcsystem.data.dto.PaginationRepairRequestDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDataDTO
+import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.data.remote.retrofit.RetrofitClient
@@ -27,6 +28,11 @@ class RepairRequestRepositoryImpl : RepairRequestRepository {
     override fun update(repairRequest: RepairRequest, event: APIEvent<RepairRequest>) {
         repairRequestService = RetrofitClient.createService(RepairRequestService::class.java)
         call(repairRequestService.update(repairRequest), event)
+    }
+
+    override fun delete(id: Int, event: APIEvent<ResponseDTO>) {
+        repairRequestService = RetrofitClient.createService(RepairRequestService::class.java)
+        call(repairRequestService.delete(id), event)
     }
 
     override fun loadRepairRequests(
