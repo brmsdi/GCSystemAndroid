@@ -16,4 +16,9 @@ class OrderServiceRepositoryImpl : OrderServiceRepository {
         call(orderServiceService.loadOrderService(params), event)
     }
 
+    override fun search(params: Map<String, String>, event: APIEvent<PaginationOrderServiceDTO>) {
+        orderServiceService = RetrofitClient.createService(OrderServiceService::class.java)
+        call(orderServiceService.search(params), event)
+    }
+
 }
