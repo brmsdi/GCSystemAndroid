@@ -3,7 +3,6 @@ package com.brmsdi.gcsystem.data.model
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-import java.util.Date
 
 @Parcelize
 data class RepairRequest(
@@ -14,7 +13,7 @@ data class RepairRequest(
     var problemDescription: String,
 
     @SerializedName("date")
-    var date: Date,
+    var date: String,
 
     @SerializedName("typeProblem")
     var typeProblem: TypeProblem,
