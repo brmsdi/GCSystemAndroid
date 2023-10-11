@@ -3,15 +3,19 @@ package com.brmsdi.gcsystem.data.service
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.DATA_SCREEN_NEW_REPAIR_REQUEST
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.NEW_REPAIR_REQUEST
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUESTS_LESSEE
+import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUEST_DELETE
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUEST_DETAIL
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.SEARCH_REPAIR_REQUEST
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.UPDATE_REPAIR_REQUEST
 import com.brmsdi.gcsystem.data.dto.PaginationRepairRequestDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDataDTO
+import com.brmsdi.gcsystem.data.dto.ResponseDTO
+import com.brmsdi.gcsystem.data.dto.ResponseRequestDTO
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -37,6 +41,9 @@ interface RepairRequestService {
 
     @PUT(UPDATE_REPAIR_REQUEST)
     fun update(@Body repairRequest: RepairRequest): Call<RepairRequest>
+
+    @DELETE("$REPAIR_REQUEST_DELETE/{id}")
+    fun delete(@Path(value = "id") id: Int) : Call<ResponseDTO>
 
     /**
      * Carrega uma lista de solicitações de reparo com paginação.
