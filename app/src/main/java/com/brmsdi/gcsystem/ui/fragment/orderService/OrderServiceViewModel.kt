@@ -23,9 +23,9 @@ class OrderServiceViewModel(application: Application, private val orderServiceRe
         load(params = params)
     }
 
-//    fun search(params: Map<String, String>) {
-//        load(params = params, isSearch = true)
-//    }
+    fun search(params: Map<String, String>) {
+        load(params = params, isSearch = true)
+    }
 
     private fun load(params: Map<String, String>, isSearch: Boolean = false) {
         val event = object : APIEvent<PaginationOrderServiceDTO> {
@@ -55,7 +55,7 @@ class OrderServiceViewModel(application: Application, private val orderServiceRe
         }
 
         if (isSearch) {
-            //repairRequestRepository.search(params, event)
+            orderServiceRepository.search(params, event)
             return
         }
         orderServiceRepository.loadOrderServices(params, event)

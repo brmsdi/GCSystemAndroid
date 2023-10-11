@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.adapter.AdapterOrderService
 import com.brmsdi.gcsystem.data.constants.Constant.OS.ORDER_SERVICE_DATA
+import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.ID_ORDER_SERVICE
 import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.PAGE
 import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.SIZE
 import com.brmsdi.gcsystem.data.listeners.ItemRecyclerClickListener
@@ -116,13 +117,13 @@ class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>
         showOrHideView(binding.progressOrderService.root, true)
         list.clear()
         search?.let { text ->
-//            viewModel.search(
-//                mapOf(
-//                    Pair(PAGE, page.toString()),
-//                    Pair(SIZE, size.toString()),
-//                    Pair(KEY_SEARCH, text)
-//                )
-//            )
+            viewModel.search(
+                mapOf(
+                    Pair(PAGE, page.toString()),
+                    Pair(SIZE, size.toString()),
+                    Pair(ID_ORDER_SERVICE, text)
+                )
+            )
             return
         }
         viewModel.loadOrderServices(
