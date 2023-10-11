@@ -5,11 +5,13 @@ import com.brmsdi.gcsystem.data.repository.ContractRepository
 import com.brmsdi.gcsystem.data.repository.DebtRepository
 import com.brmsdi.gcsystem.data.repository.EmployeeRepository
 import com.brmsdi.gcsystem.data.repository.LesseeRepository
+import com.brmsdi.gcsystem.data.repository.OrderServiceRepository
 import com.brmsdi.gcsystem.data.repository.RepairRequestRepository
 import com.brmsdi.gcsystem.data.repository.impl.ContractRepositoryImpl
 import com.brmsdi.gcsystem.data.repository.impl.DebtRepositoryImpl
 import com.brmsdi.gcsystem.data.repository.impl.EmployeeRepositoryImpl
 import com.brmsdi.gcsystem.data.repository.impl.LesseeRepositoryImpl
+import com.brmsdi.gcsystem.data.repository.impl.OrderServiceRepositoryImpl
 import com.brmsdi.gcsystem.data.repository.impl.RepairRequestRepositoryImpl
 import com.brmsdi.gcsystem.ui.utils.AuthType.*
 import org.koin.core.qualifier.named
@@ -23,4 +25,5 @@ val RepositoryModules = module {
     single<RepairRequestRepository> { RepairRequestRepositoryImpl() }
     single<DebtRepository> { DebtRepositoryImpl() }
     single<ContractRepository> { ContractRepositoryImpl() }
+    single<OrderServiceRepository> { OrderServiceRepositoryImpl() }
 }
