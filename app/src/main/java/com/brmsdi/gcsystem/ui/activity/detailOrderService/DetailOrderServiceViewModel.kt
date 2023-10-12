@@ -8,6 +8,7 @@ import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.dto.ResponseRequestDTO
 import com.brmsdi.gcsystem.data.dto.ValidationModelDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
+import com.brmsdi.gcsystem.data.model.Item
 import com.brmsdi.gcsystem.data.model.OrderService
 import com.brmsdi.gcsystem.data.repository.OrderServiceRepository
 import com.brmsdi.gcsystem.data.repository.RepairRequestRepository
@@ -30,6 +31,10 @@ class DetailOrderServiceViewModel(
     val orderService: LiveData<OrderService> = _orderService
     private val _error = MutableLiveData<ValidationModelDTO>()
     val error: LiveData<ValidationModelDTO> = _error
+    private val _itemAdded = MutableLiveData<Item>()
+    val itemAdded: LiveData<Item> = _itemAdded
+    private val _errorAddItem = MutableLiveData<ValidationModelDTO>()
+    val errorAddItem: LiveData<ValidationModelDTO> = _errorAddItem
     fun details(id: Int) {
         orderServiceRepository.details(id, object : APIEvent<OrderService> {
             override fun onResponse(model: OrderService) {
@@ -50,8 +55,38 @@ class DetailOrderServiceViewModel(
                     _error.value =
                         ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_CONNECTION))
                 } else {
-                    val message = throwable.message ?: getApplication<Application>().getString(R.string.ERROR_UNEXPECTED)
+                    val message = throwable.message
+                        ?: getApplication<Application>().getString(R.string.ERROR_UNEXPECTED)
                     _error.value =
+                        ValidationModelDTO(message)
+                }
+            }
+        })
+    }
+
+    fun addAItemInTheRepairRequest(idRepairRequest: Int, item: Item) {
+        repairRequestRepository.addItem(idRepairRequest, item, object : APIEvent<Item> {
+            override fun onResponse(model: Item) {
+                _itemAdded.value = model
+            }
+
+            override fun onError(response: Response<Item>) {
+                response.errorBody()?.string()?.let {
+                    val responseRequestDTO =
+                        TextUtils.jsonToObject(it, ResponseRequestDTO::class.java)
+                    _errorAddItem.value = ValidationModelDTO(responseRequestDTO.errors[0].message)
+                }
+            }
+
+            override fun onFailure(throwable: Throwable) {
+                val cause = throwable.cause
+                if (cause is ConnectException) {
+                    _errorAddItem.value =
+                        ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_CONNECTION))
+                } else {
+                    val message = throwable.message
+                        ?: getApplication<Application>().getString(R.string.ERROR_UNEXPECTED)
+                    _errorAddItem.value =
                         ValidationModelDTO(message)
                 }
             }
