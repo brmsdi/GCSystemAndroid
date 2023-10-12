@@ -39,4 +39,6 @@ interface RepairRequestRepository : CallRepository {
     fun getById(id: Int, event: APIEvent<RepairRequest>)
 
     fun addItem(idRepairRequest: Int, item: Item, event: APIEvent<Item>)
+
+    fun removeItem(idRepairRequest: Int, idItem: Int, event: APIEvent<ResponseDTO>)
 }

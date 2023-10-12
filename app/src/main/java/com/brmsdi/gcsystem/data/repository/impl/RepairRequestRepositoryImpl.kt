@@ -58,4 +58,9 @@ class RepairRequestRepositoryImpl : RepairRequestRepository {
         repairRequestService = RetrofitClient.createService(RepairRequestService::class.java)
         call(repairRequestService.addItem(idRepairRequest, item), event)
     }
+
+    override fun removeItem(idRepairRequest: Int, idItem: Int, event: APIEvent<ResponseDTO>) {
+        repairRequestService = RetrofitClient.createService(RepairRequestService::class.java)
+        call(repairRequestService.removeItem(idRepairRequest, idItem), event)
+    }
 }
