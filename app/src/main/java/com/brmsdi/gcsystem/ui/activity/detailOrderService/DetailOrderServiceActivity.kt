@@ -48,7 +48,8 @@ class DetailOrderServiceActivity : AppCompatActivity(), AddItemListener,
     private lateinit var removeItemDialog: AlertDialog
     private lateinit var finalizeOrderServiceDialog: AlertDialog
     private lateinit var adapterRepair: AdapterOrderServiceRepairRequests
-    private var updatedRepairRequest : RepairRequest? = null
+    private var updatedRepairRequest: RepairRequest? = null
+    private var updatedItem: Item? = null
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +74,10 @@ class DetailOrderServiceActivity : AppCompatActivity(), AddItemListener,
                         override fun confirm() {
                             orderService?.let {
                                 finalizeOrderService(it)
-                                displayMessage(getContext(), getString(R.string.finished_os_success))
+                                displayMessage(
+                                    getContext(),
+                                    getString(R.string.finished_os_success)
+                                )
                                 finish()
                             }
                         }
@@ -97,11 +101,25 @@ class DetailOrderServiceActivity : AppCompatActivity(), AddItemListener,
             showInputLayout()
         }
 
-        viewModel.itemAdded.observe(this) {item ->
+        viewModel.itemAdded.observe(this) { item ->
             updatedRepairRequest?.let {
                 adapterRepair.addItem(it, item)
                 displayMessage(getContext(), getString(R.string.item_add_success))
                 updatedRepairRequest = null
+            }
+        }
+
+        viewModel.removed.observe(this) {
+            updatedRepairRequest?.let { repair ->
+                updatedItem?.let { item ->
+                    adapterRepair.removeItem(repair, item)
+                    displayMessage(
+                        getContext(),
+                        getString(R.string.delete_item_success)
+                    )
+                    updatedRepairRequest = null
+                    updatedItem = null
+                }
             }
         }
 
@@ -194,8 +212,17 @@ class DetailOrderServiceActivity : AppCompatActivity(), AddItemListener,
                         return
                     }
                     updatedRepairRequest = repairRequest
-                    viewModel.addAItemInTheRepairRequest(repairRequest.id, Item(id = null, description = description, quantity =  quantityParsed, value = valueParsed))
+                    viewModel.addAItemInTheRepairRequest(
+                        repairRequest.id,
+                        Item(
+                            id = null,
+                            description = description,
+                            quantity = quantityParsed,
+                            value = valueParsed
+                        )
+                    )
                 }
+
                 override fun cancel() {
                     closeDialog(addItemDialog)
                 }
@@ -215,16 +242,13 @@ class DetailOrderServiceActivity : AppCompatActivity(), AddItemListener,
                     val repair = adapterRepair.getList().singleOrNull {
                         !it.items.isNullOrEmpty() && it.items!!.contains(item)
                     }
-                    if (repair != null) {
-                        if (adapterRepair.removeItem(repair, item)) {
-                            displayMessage(
-                                getContext(),
-                                getString(R.string.delete_item_success)
-                            )
-                            orderService!!.repairRequests = adapterRepair.getList()
+                    repair?.let {
+                        item.id?.let { idItem ->
+                            viewModel.removeAItemInTheRepairRequest(it.id, idItem)
+                            updatedItem = item
+                            updatedRepairRequest = it
                         }
                     }
-                    closeDialog(removeItemDialog)
                 }
 
                 override fun cancel() {
