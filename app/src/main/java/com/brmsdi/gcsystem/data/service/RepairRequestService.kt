@@ -3,6 +3,7 @@ package com.brmsdi.gcsystem.data.service
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.DATA_SCREEN_NEW_REPAIR_REQUEST
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.NEW_REPAIR_REQUEST
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUESTS_LESSEE
+import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUEST_ADD_ITEM
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUEST_DELETE
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUEST_DETAIL
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.SEARCH_REPAIR_REQUEST
@@ -11,6 +12,7 @@ import com.brmsdi.gcsystem.data.dto.PaginationRepairRequestDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDataDTO
 import com.brmsdi.gcsystem.data.dto.ResponseDTO
+import com.brmsdi.gcsystem.data.model.Item
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import retrofit2.Call
 import retrofit2.http.Body
@@ -70,4 +72,7 @@ interface RepairRequestService {
 
     @GET(REPAIR_REQUEST_DETAIL)
     fun details(@Query("id") id: Int): Call<RepairRequest>
+
+    @POST(REPAIR_REQUEST_ADD_ITEM)
+    fun addItem(@Query("idRepairRequest") id: Int, @Body item: Item) : Call<Item>
 }
