@@ -5,6 +5,7 @@ import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDataDTO
 import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
+import com.brmsdi.gcsystem.data.model.Item
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import retrofit2.http.QueryMap
 
@@ -36,4 +37,6 @@ interface RepairRequestRepository : CallRepository {
     fun search(@QueryMap params: Map<String, String> = mapOf(), event: APIEvent<PaginationRepairRequestDTO>)
 
     fun getById(id: Int, event: APIEvent<RepairRequest>)
+
+    fun addItem(idRepairRequest: Int, item: Item, event: APIEvent<Item>)
 }

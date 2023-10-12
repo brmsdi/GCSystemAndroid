@@ -5,6 +5,7 @@ import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDataDTO
 import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
+import com.brmsdi.gcsystem.data.model.Item
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import com.brmsdi.gcsystem.data.remote.retrofit.RetrofitClient
 import com.brmsdi.gcsystem.data.repository.RepairRequestRepository
@@ -51,5 +52,10 @@ class RepairRequestRepositoryImpl : RepairRequestRepository {
     override fun getById(id: Int, event: APIEvent<RepairRequest>) {
         repairRequestService = RetrofitClient.createService(RepairRequestService::class.java)
         call(repairRequestService.details(id), event)
+    }
+
+    override fun addItem(idRepairRequest: Int, item: Item, event: APIEvent<Item>) {
+        repairRequestService = RetrofitClient.createService(RepairRequestService::class.java)
+        call(repairRequestService.addItem(idRepairRequest, item), event)
     }
 }
