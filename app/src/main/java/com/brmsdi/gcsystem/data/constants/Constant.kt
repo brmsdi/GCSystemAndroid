@@ -51,7 +51,7 @@ class Constant private constructor() {
         const val REPAIR_REQUESTS_LESSEE = "$DEFAULT_API/repair-requests/lessee"
         const val SEARCH_REPAIR_REQUEST = "$DEFAULT_API/repair-requests/lessee/search"
         const val REPAIR_REQUEST_DETAIL = "$DEFAULT_API/repair-requests/details/lessee"
-        const val REPAIR_REQUEST_ADD_ITEM = "$DEFAULT_API/repair-requests/item"
+        const val REPAIR_REQUEST_ITEM = "$DEFAULT_API/repair-requests/item"
         const val REPAIR_REQUEST_DELETE = "$DEFAULT_API/repair-requests"
         const val DEBTS_LESSEE = "$DEFAULT_API/debts/lessee"
         const val CONTRACTS_LESSEE = "$DEFAULT_API/contracts/lessee"
