@@ -3,7 +3,6 @@ package com.brmsdi.gcsystem.data.model
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-import java.util.Date
 
 /**
  *
@@ -13,7 +12,7 @@ import java.util.Date
 @Parcelize
 data class Item(
     @SerializedName("id")
-    var id: Int,
+    var id: Int?,
 
     @SerializedName("description")
     var description: String,
@@ -23,9 +22,4 @@ data class Item(
 
     @SerializedName("value")
     var value: Double
-) : Parcelable {
-
-    @SerializedName("date")
-    var date : Date = Date()
-
-}
+) : Parcelable
