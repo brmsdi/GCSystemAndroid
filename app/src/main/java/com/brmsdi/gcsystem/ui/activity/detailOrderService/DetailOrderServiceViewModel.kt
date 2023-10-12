@@ -33,8 +33,8 @@ class DetailOrderServiceViewModel(
     val error: LiveData<ValidationModelDTO> = _error
     private val _itemAdded = MutableLiveData<Item>()
     val itemAdded: LiveData<Item> = _itemAdded
-    private val _errorAddItem = MutableLiveData<ValidationModelDTO>()
-    val errorAddItem: LiveData<ValidationModelDTO> = _errorAddItem
+    private val _errorItem = MutableLiveData<ValidationModelDTO>()
+    val errorItem: LiveData<ValidationModelDTO> = _errorItem
     fun details(id: Int) {
         orderServiceRepository.details(id, object : APIEvent<OrderService> {
             override fun onResponse(model: OrderService) {
@@ -74,19 +74,19 @@ class DetailOrderServiceViewModel(
                 response.errorBody()?.string()?.let {
                     val responseRequestDTO =
                         TextUtils.jsonToObject(it, ResponseRequestDTO::class.java)
-                    _errorAddItem.value = ValidationModelDTO(responseRequestDTO.errors[0].message)
+                    _errorItem.value = ValidationModelDTO(responseRequestDTO.errors[0].message)
                 }
             }
 
             override fun onFailure(throwable: Throwable) {
                 val cause = throwable.cause
                 if (cause is ConnectException) {
-                    _errorAddItem.value =
+                    _errorItem.value =
                         ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_CONNECTION))
                 } else {
                     val message = throwable.message
                         ?: getApplication<Application>().getString(R.string.ERROR_UNEXPECTED)
-                    _errorAddItem.value =
+                    _errorItem.value =
                         ValidationModelDTO(message)
                 }
             }

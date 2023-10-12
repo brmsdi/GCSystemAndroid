@@ -48,6 +48,7 @@ class DetailOrderServiceActivity : AppCompatActivity(), AddItemListener,
     private lateinit var removeItemDialog: AlertDialog
     private lateinit var finalizeOrderServiceDialog: AlertDialog
     private lateinit var adapterRepair: AdapterOrderServiceRepairRequests
+    private var updatedRepairRequest : RepairRequest? = null
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,10 +97,24 @@ class DetailOrderServiceActivity : AppCompatActivity(), AddItemListener,
             showInputLayout()
         }
 
+        viewModel.itemAdded.observe(this) {item ->
+            updatedRepairRequest?.let {
+                adapterRepair.addItem(it, item)
+                displayMessage(getContext(), getString(R.string.item_add_success))
+                updatedRepairRequest = null
+            }
+        }
+
         viewModel.error.observe(this) {
             if (!it.status()) {
                 displayMessage(this, it.message())
-                showInputLayout()
+                finish()
+            }
+        }
+
+        viewModel.errorItem.observe(this) {
+            if (!it.status()) {
+                displayMessage(this, it.message())
             }
         }
     }
@@ -178,20 +193,9 @@ class DetailOrderServiceActivity : AppCompatActivity(), AddItemListener,
                         displayMessage(getContext(), getString(R.string.fields_empty))
                         return
                     }
-
-                    val repairRequestMock: RepairRequest =
-                        adapterRepair.getList().single { it.id == repairRequest.id }
-                    //MOCK
-                    val itemID =
-                        if (repairRequestMock.items != null && repairRequestMock.items!!.isNotEmpty()) repairRequestMock.items!!.count() + 1 else 1
-                    val item = Item(itemID, description, quantityParsed, valueParsed)
-                    if (adapterRepair.addItem(repairRequest, item)) {
-                        displayMessage(getContext(), getString(R.string.item_add_success))
-                        orderService!!.repairRequests = adapterRepair.getList()
-                    }
-                    closeDialog(addItemDialog)
+                    updatedRepairRequest = repairRequest
+                    viewModel.addAItemInTheRepairRequest(repairRequest.id, Item(id = null, description = description, quantity =  quantityParsed, value = valueParsed))
                 }
-
                 override fun cancel() {
                     closeDialog(addItemDialog)
                 }
