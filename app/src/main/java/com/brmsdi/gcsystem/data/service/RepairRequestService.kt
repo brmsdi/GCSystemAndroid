@@ -3,7 +3,7 @@ package com.brmsdi.gcsystem.data.service
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.DATA_SCREEN_NEW_REPAIR_REQUEST
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.NEW_REPAIR_REQUEST
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUESTS_LESSEE
-import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUEST_ADD_ITEM
+import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUEST_ITEM
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUEST_DELETE
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.REPAIR_REQUEST_DETAIL
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.SEARCH_REPAIR_REQUEST
@@ -73,6 +73,9 @@ interface RepairRequestService {
     @GET(REPAIR_REQUEST_DETAIL)
     fun details(@Query("id") id: Int): Call<RepairRequest>
 
-    @POST(REPAIR_REQUEST_ADD_ITEM)
+    @POST(REPAIR_REQUEST_ITEM)
     fun addItem(@Query("idRepairRequest") id: Int, @Body item: Item) : Call<Item>
+
+    @DELETE(REPAIR_REQUEST_ITEM)
+    fun removeItem(@Query("idRepairRequest") idRepairRequest: Int, @Query("idItem") idItem: Int) : Call<ResponseDTO>
 }
