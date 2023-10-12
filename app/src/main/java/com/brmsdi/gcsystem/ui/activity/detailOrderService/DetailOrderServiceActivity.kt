@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.adapter.AdapterOrderServiceRepairRequests
-import com.brmsdi.gcsystem.data.constants.Constant.OS.ORDER_SERVICE_DATA
+import com.brmsdi.gcsystem.data.constants.Constant.OS.ID_ORDER_SERVICE
 import com.brmsdi.gcsystem.data.dto.EmployeeSpinnerDTO
 import com.brmsdi.gcsystem.data.dto.SpinnerDTO
 import com.brmsdi.gcsystem.data.listeners.ItemDialogListener
@@ -30,15 +30,17 @@ import com.brmsdi.gcsystem.ui.utils.DateUtils.Companion.dateFormattedToView
 import com.brmsdi.gcsystem.ui.utils.DialogAppUtils.Companion.addItemDialog
 import com.brmsdi.gcsystem.ui.utils.DialogAppUtils.Companion.closeDialog
 import com.brmsdi.gcsystem.ui.utils.DialogAppUtils.Companion.createDialog
-import com.brmsdi.gcsystem.ui.utils.LoadData
 import com.brmsdi.gcsystem.ui.utils.Mock.Companion.statusList
+import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.NumberFormatException
 
-class DetailOrderServiceActivity : AppCompatActivity(), LoadData, AddItemListener,
-    OnClickListener, RemoveItemListener {
+class DetailOrderServiceActivity : AppCompatActivity(), AddItemListener,
+    OnClickListener, RemoveItemListener, ProgressBarOnApp {
     private lateinit var binding: ActivityDetailOrderServiceBinding
+    private val viewModel by viewModel<DetailOrderServiceViewModel>()
     private var orderService: OrderService? = null
     private lateinit var spinnerAdapterCollaborators: ArrayAdapter<SpinnerDTO<Employee>>
     private lateinit var recyclerOrderServiceRepairRequests: RecyclerView
@@ -51,13 +53,65 @@ class DetailOrderServiceActivity : AppCompatActivity(), LoadData, AddItemListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailOrderServiceBinding.inflate(layoutInflater)
-        orderService = load(intent.getBundleExtra(ORDER_SERVICE_DATA), ORDER_SERVICE_DATA, OrderService::class.java)
-        loadData(orderService)
+        observe()
         addAction()
+        load(intent.getIntExtra(ID_ORDER_SERVICE, 0))
         setContentView(binding.root)
     }
 
-    private fun loadData(orderService: OrderService?) {
+    override fun onClick(view: View) {
+        when (view.id) {
+            binding.buttonFinalizeOrderService.id -> {
+                finalizeOrderServiceDialog = createDialog(
+                    getContext(),
+                    getString(R.string.finalize_order_service),
+                    getString(R.string.finalize),
+                    getString(R.string.confirm),
+                    getString(R.string.cancel),
+                    object : DialogConfirmAndCancelListener {
+                        override fun confirm() {
+                            orderService?.let {
+                                finalizeOrderService(it)
+                                displayMessage(getContext(), getString(R.string.finished_os_success))
+                                finish()
+                            }
+                        }
+
+                        override fun cancel() {
+                            closeDialog(finalizeOrderServiceDialog)
+                        }
+                    }
+                )
+                finalizeOrderServiceDialog.show()
+            }
+
+            binding.buttonBack.id -> finish()
+        }
+    }
+
+    private fun observe() {
+        viewModel.orderService.observe(this) {
+            orderService = it
+            fillData(orderService)
+            showInputLayout()
+        }
+
+        viewModel.error.observe(this) {
+            if (!it.status()) {
+                displayMessage(this, it.message())
+                showInputLayout()
+            }
+        }
+    }
+
+    private fun load(id: Int) {
+        if (id <= 0) return
+        showOrHideView(binding.layoutInputData, false)
+        showOrHideView(binding.progressOrderService, true)
+        viewModel.details(id)
+    }
+
+    private fun fillData(orderService: OrderService?) {
         orderService?.let {
             binding.editId.setText(orderService.id.toString())
             binding.editCreatedDate.setText(dateFormattedToView(orderService.generationDate))
@@ -97,36 +151,6 @@ class DetailOrderServiceActivity : AppCompatActivity(), LoadData, AddItemListene
             if (isCompleted(orderService)) {
                 binding.buttonFinalizeOrderService.visibility = GONE
             }
-        }
-    }
-
-    override fun onClick(view: View) {
-        when (view.id) {
-            binding.buttonFinalizeOrderService.id -> {
-                finalizeOrderServiceDialog = createDialog(
-                    getContext(),
-                    getString(R.string.finalize_order_service),
-                    getString(R.string.finalize),
-                    getString(R.string.confirm),
-                    getString(R.string.cancel),
-                    object : DialogConfirmAndCancelListener {
-                        override fun confirm() {
-                            orderService?.let {
-                                finalizeOrderService(it)
-                                displayMessage(getContext(), getString(R.string.finished_os_success))
-                                finish()
-                            }
-                        }
-
-                        override fun cancel() {
-                            closeDialog(finalizeOrderServiceDialog)
-                        }
-                    }
-                )
-                finalizeOrderServiceDialog.show()
-            }
-
-            binding.buttonBack.id -> finish()
         }
     }
 
@@ -216,5 +240,10 @@ class DetailOrderServiceActivity : AppCompatActivity(), LoadData, AddItemListene
 
     fun finalizeOrderService(orderService: OrderService) {
         orderService.status = statusList()[3]
+    }
+
+    private fun showInputLayout() {
+        showOrHideView(binding.layoutInputData, true)
+        showOrHideView(binding.progressOrderService, false)
     }
 }
