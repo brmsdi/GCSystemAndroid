@@ -19,5 +19,5 @@ val ViewModelModules = module {
     viewModel { DebtViewModel(get(), get()) }
     viewModel { ContractViewModel(get(), get()) }
     viewModel { OrderServiceViewModel(get(), get()) }
-    viewModel { DetailOrderServiceViewModel(get(), get()) }
+    viewModel { DetailOrderServiceViewModel(get(), get(), get()) }
 }

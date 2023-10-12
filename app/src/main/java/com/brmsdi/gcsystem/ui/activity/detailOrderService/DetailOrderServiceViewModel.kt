@@ -10,6 +10,7 @@ import com.brmsdi.gcsystem.data.dto.ValidationModelDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
 import com.brmsdi.gcsystem.data.model.OrderService
 import com.brmsdi.gcsystem.data.repository.OrderServiceRepository
+import com.brmsdi.gcsystem.data.repository.RepairRequestRepository
 import com.brmsdi.gcsystem.ui.utils.TextUtils
 import retrofit2.Response
 import java.net.ConnectException
@@ -22,7 +23,8 @@ import java.net.ConnectException
  */
 class DetailOrderServiceViewModel(
     application: Application,
-    private val orderServiceRepository: OrderServiceRepository
+    private val orderServiceRepository: OrderServiceRepository,
+    private val repairRequestRepository: RepairRequestRepository
 ) : AndroidViewModel(application) {
     private val _orderService = MutableLiveData<OrderService>()
     val orderService: LiveData<OrderService> = _orderService
