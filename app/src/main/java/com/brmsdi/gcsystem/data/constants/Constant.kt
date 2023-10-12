@@ -61,12 +61,10 @@ class Constant private constructor() {
     }
 
     object REPAIR {
-        const val REPAIR_REQUEST_DATA = "RP"
         const val REPAIR_REQUEST_DATA_ID = "RP_ID"
     }
 
     object OS {
-        const val ORDER_SERVICE_DATA = "OS"
         const val ID_ORDER_SERVICE = "id_os"
     }
 
