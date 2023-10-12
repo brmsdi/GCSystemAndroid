@@ -24,8 +24,8 @@ class DetailRepairRequestActivity : AppCompatActivity(), LoadData, ProgressBarOn
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailRepairRequestBinding.inflate(layoutInflater)
-        load(intent.getIntExtra(REPAIR_REQUEST_DATA_ID, 0))
         observe()
+        load(intent.getIntExtra(REPAIR_REQUEST_DATA_ID, 0))
         addAction()
         setContentView(binding.root)
     }
