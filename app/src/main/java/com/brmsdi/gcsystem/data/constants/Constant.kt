@@ -67,6 +67,7 @@ class Constant private constructor() {
 
     object OS {
         const val ORDER_SERVICE_DATA = "OS"
+        const val ID_ORDER_SERVICE = "id_os"
     }
 
     object CONTRACT {
