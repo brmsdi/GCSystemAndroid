@@ -19,7 +19,7 @@ class Constant private constructor() {
         private const val TYPE = "api"
         private const val VERSION = "v1"
         private const val AGENT = "mobile"
-        const val BASE_URL = "http://192.168.15.2:8080/"
+        const val BASE_URL = "http://192.168.15.172:8080/"
         const val TYPE_AND_VERSION = "$TYPE/$VERSION"
         const val DEFAULT_API = "$TYPE_AND_VERSION/$AGENT"
     }
