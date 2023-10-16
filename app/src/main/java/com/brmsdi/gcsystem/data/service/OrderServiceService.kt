@@ -1,12 +1,15 @@
 package com.brmsdi.gcsystem.data.service
 
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.ORDER_SERVICES_EMPLOYEE
+import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.ORDER_SERVICE_CLOSE
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.ORDER_SERVICE_DETAILS
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.SEARCH_ORDER_SERVICE
 import com.brmsdi.gcsystem.data.dto.PaginationOrderServiceDTO
+import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.model.OrderService
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
@@ -46,4 +49,7 @@ interface OrderServiceService {
 
     @GET(ORDER_SERVICE_DETAILS)
     fun details(@Query("id") id: Int): Call<OrderService>
+
+    @POST(ORDER_SERVICE_CLOSE)
+    fun close(@Query("id") id: Int) : Call<ResponseDTO>
 }
