@@ -38,6 +38,9 @@ class DetailOrderServiceViewModel(
     val errorItem: LiveData<ValidationModelDTO> = _errorItem
     private val _removed = MutableLiveData<ResponseDTO>()
     val removed: LiveData<ResponseDTO> = _removed
+    private val _closed = MutableLiveData<ResponseDTO>()
+    val closed: LiveData<ResponseDTO> = _closed
+
     fun details(id: Int) {
         orderServiceRepository.details(id, object : APIEvent<OrderService> {
             override fun onResponse(model: OrderService) {
@@ -122,7 +125,35 @@ class DetailOrderServiceViewModel(
                         ValidationModelDTO(message)
                 }
             }
+        })
+    }
 
+    fun closeOrderService(id: Int) {
+        orderServiceRepository.close(id, object : APIEvent<ResponseDTO> {
+            override fun onResponse(model: ResponseDTO) {
+                _closed.value = model
+            }
+
+            override fun onError(response: Response<ResponseDTO>) {
+                response.errorBody()?.string()?.let {
+                    val responseRequestDTO =
+                        TextUtils.jsonToObject(it, ResponseRequestDTO::class.java)
+                    _error.value = ValidationModelDTO(responseRequestDTO.errors[0].message)
+                }
+            }
+
+            override fun onFailure(throwable: Throwable) {
+                val cause = throwable.cause
+                if (cause is ConnectException) {
+                    _error.value =
+                        ValidationModelDTO(getApplication<Application>().getString(R.string.ERROR_CONNECTION))
+                } else {
+                    val message = throwable.message
+                        ?: getApplication<Application>().getString(R.string.ERROR_UNEXPECTED)
+                    _error.value =
+                        ValidationModelDTO(message)
+                }
+            }
         })
     }
 }

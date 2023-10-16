@@ -1,6 +1,7 @@
 package com.brmsdi.gcsystem.data.repository
 
 import com.brmsdi.gcsystem.data.dto.PaginationOrderServiceDTO
+import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
 import com.brmsdi.gcsystem.data.model.OrderService
 
@@ -17,4 +18,6 @@ interface OrderServiceRepository : CallRepository {
     fun search(params: Map<String, String>, event: APIEvent<PaginationOrderServiceDTO>)
 
     fun details(id: Int, event: APIEvent<OrderService>)
+
+    fun close(id: Int, event: APIEvent<ResponseDTO>)
 }

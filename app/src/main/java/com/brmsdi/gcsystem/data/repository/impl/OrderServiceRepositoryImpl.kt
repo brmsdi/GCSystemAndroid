@@ -1,6 +1,7 @@
 package com.brmsdi.gcsystem.data.repository.impl
 
 import com.brmsdi.gcsystem.data.dto.PaginationOrderServiceDTO
+import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
 import com.brmsdi.gcsystem.data.model.OrderService
 import com.brmsdi.gcsystem.data.remote.retrofit.RetrofitClient
@@ -25,6 +26,11 @@ class OrderServiceRepositoryImpl : OrderServiceRepository {
     override fun details(id: Int, event: APIEvent<OrderService>) {
         orderServiceService = RetrofitClient.createService(OrderServiceService::class.java)
         call(orderServiceService.details(id), event)
+    }
+
+    override fun close(id: Int, event: APIEvent<ResponseDTO>) {
+        orderServiceService = RetrofitClient.createService(OrderServiceService::class.java)
+        call(orderServiceService.close(id), event)
     }
 
 }

@@ -30,7 +30,6 @@ import com.brmsdi.gcsystem.ui.utils.DateUtils.Companion.dateFormattedToView
 import com.brmsdi.gcsystem.ui.utils.DialogAppUtils.Companion.addItemDialog
 import com.brmsdi.gcsystem.ui.utils.DialogAppUtils.Companion.closeDialog
 import com.brmsdi.gcsystem.ui.utils.DialogAppUtils.Companion.createDialog
-import com.brmsdi.gcsystem.ui.utils.Mock.Companion.statusList
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.fieldsIsNotEmpty
@@ -57,8 +56,12 @@ class DetailOrderServiceActivity : AppCompatActivity(), AddItemListener,
         binding = ActivityDetailOrderServiceBinding.inflate(layoutInflater)
         observe()
         addAction()
-        load(intent.getIntExtra(ID_ORDER_SERVICE, 0))
         setContentView(binding.root)
+    }
+
+    override fun onResume() {
+        load(intent.getIntExtra(ID_ORDER_SERVICE, 0))
+        super.onResume()
     }
 
     override fun onClick(view: View) {
@@ -121,6 +124,11 @@ class DetailOrderServiceActivity : AppCompatActivity(), AddItemListener,
                     updatedItem = null
                 }
             }
+        }
+
+        viewModel.closed.observe(this) {
+            displayMessage(this, it.message)
+            finish()
         }
 
         viewModel.error.observe(this) {
@@ -267,7 +275,7 @@ class DetailOrderServiceActivity : AppCompatActivity(), AddItemListener,
     }
 
     fun finalizeOrderService(orderService: OrderService) {
-        orderService.status = statusList()[3]
+        viewModel.closeOrderService(orderService.id)
     }
 
     private fun showInputLayout() {
