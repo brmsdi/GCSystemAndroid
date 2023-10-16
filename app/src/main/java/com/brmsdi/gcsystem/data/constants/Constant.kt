@@ -59,6 +59,7 @@ class Constant private constructor() {
         const val ORDER_SERVICES_EMPLOYEE = "$DEFAULT_API/order-services/employee"
         const val SEARCH_ORDER_SERVICE = "$DEFAULT_API/order-services/search"
         const val ORDER_SERVICE_DETAILS = "$DEFAULT_API/order-services/details"
+        const val ORDER_SERVICE_CLOSE = "$DEFAULT_API/order-services/order-service/close"
     }
 
     object REPAIR {
