@@ -28,7 +28,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>, ProgressBarOnApp {
     private lateinit var binding: FragmentOrderServiceBinding
     private val viewModel by viewModel<OrderServiceViewModel>()
-    private var list: MutableList<OrderService> = mutableListOf()
     private lateinit var adapter: AdapterOrderService
 
     override fun onCreateView(
@@ -67,18 +66,19 @@ class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>
                 binding.swipeRefreshLayout.isRefreshing = false
             } else {
                 showOrHideView(binding.textSearchInfo, false)
-                list = it.content
-                adapter.updateAll(list)
+                adapter.updateAll(it.content)
                 binding.swipeRefreshLayout.isRefreshing = false
             }
         }
 
         viewModel.error.observe(this.viewLifecycleOwner) {
             if (!it.status()) {
+                adapter.updateAll(mutableListOf())
                 binding.textSearchInfo.text = it.message()
                 showOrHideView(binding.textSearchInfo, true)
                 binding.swipeRefreshLayout.isRefreshing = false
                 displayMessage(this.requireContext(), it.message())
+
             }
         }
     }
@@ -123,7 +123,7 @@ class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>
     private fun loadData(search: String?, page: UInt = 0u, size: UInt = 10u) {
         binding.swipeRefreshLayout.isRefreshing = true
         showOrHideView(binding.textSearchInfo, false)
-        list.clear()
+        adapter.updateAll(mutableListOf())
         search?.let { text ->
             viewModel.search(
                 mapOf(
