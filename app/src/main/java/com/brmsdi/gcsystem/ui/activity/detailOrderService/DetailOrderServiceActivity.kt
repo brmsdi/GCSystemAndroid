@@ -77,11 +77,6 @@ class DetailOrderServiceActivity : AppCompatActivity(), AddItemListener,
                         override fun confirm() {
                             orderService?.let {
                                 finalizeOrderService(it)
-                                displayMessage(
-                                    getContext(),
-                                    getString(R.string.finished_os_success)
-                                )
-                                finish()
                             }
                         }
 
