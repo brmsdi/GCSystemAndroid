@@ -11,11 +11,12 @@ import com.brmsdi.gcsystem.data.repository.EmployeeRepository
 import com.brmsdi.gcsystem.databinding.FragmentMyAccountEmployeeBinding
 import com.brmsdi.gcsystem.ui.utils.AuthType
 import com.brmsdi.gcsystem.ui.utils.DateUtils.Companion.dateFormattedToView
+import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import org.koin.android.ext.android.get
 import org.koin.core.qualifier.named
 
-class MyAccountEmployeeFragment : Fragment() {
+class MyAccountEmployeeFragment : Fragment(), ProgressBarOnApp {
     private lateinit var binding: FragmentMyAccountEmployeeBinding
     private lateinit var viewModel: MyAccountEmployeeViewModel
     override fun onCreateView(
@@ -32,15 +33,21 @@ class MyAccountEmployeeFragment : Fragment() {
     private fun observe() {
         viewModel.account.observe(this.viewLifecycleOwner) {
             fillData(it)
+            showOrHideView(binding.progress.root, false)
+            showOrHideView(binding.layoutInputData, true)
         }
 
         viewModel.validation.observe(this.viewLifecycleOwner) {
             displayMessage(this.requireContext(), it.message())
+            showOrHideView(binding.progress.root, false)
+            showOrHideView(binding.layoutInputData, true)
         }
     }
 
     private fun getDataMyAccount() {
         val repository = get<EmployeeRepository>(named(AuthType.EMPLOYEE.type))
+        showOrHideView(binding.layoutInputData, false)
+        showOrHideView(binding.progress.root, true)
         viewModel.getDataAccount(repository)
     }
     private fun fillData(employeeData: Employee) {

@@ -20,6 +20,7 @@ import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
 import com.brmsdi.gcsystem.data.model.OrderService
 import com.brmsdi.gcsystem.databinding.FragmentOrderServiceBinding
 import com.brmsdi.gcsystem.ui.activity.detailOrderService.DetailOrderServiceActivity
+import com.brmsdi.gcsystem.ui.utils.ColorUtils.Companion.getColorSwipeRefreshLayout
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -39,6 +40,7 @@ class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>
         binding.recyclerOrderService.layoutManager = LinearLayoutManager(context)
         binding.recyclerOrderService.adapter = adapter
         observe()
+        addAction()
         return binding.root
     }
 
@@ -49,8 +51,8 @@ class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>
     }
 
     override fun onResume() {
-        loadData(null)
         super.onResume()
+        loadData(null)
     }
 
     override fun onClick(model: OrderService) {
@@ -59,24 +61,32 @@ class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>
 
     private fun observe() {
         viewModel.pagination.observe(this.viewLifecycleOwner) {
-            showOrHideView(binding.progressOrderService.root, false)
             if (it.empty) {
                 binding.textSearchInfo.text = getString(R.string.search_is_empty)
                 showOrHideView(binding.textSearchInfo, true)
+                binding.swipeRefreshLayout.isRefreshing = false
             } else {
                 showOrHideView(binding.textSearchInfo, false)
                 list = it.content
                 adapter.updateAll(list)
+                binding.swipeRefreshLayout.isRefreshing = false
             }
         }
 
         viewModel.error.observe(this.viewLifecycleOwner) {
             if (!it.status()) {
-                showOrHideView(binding.progressOrderService.root, false)
                 binding.textSearchInfo.text = it.message()
                 showOrHideView(binding.textSearchInfo, true)
+                binding.swipeRefreshLayout.isRefreshing = false
                 displayMessage(this.requireContext(), it.message())
             }
+        }
+    }
+
+    private fun addAction() {
+        getColorSwipeRefreshLayout(resources, binding.swipeRefreshLayout)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            loadData(null)
         }
     }
 
@@ -111,8 +121,8 @@ class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>
     }
 
     private fun loadData(search: String?, page: UInt = 0u, size: UInt = 10u) {
+        binding.swipeRefreshLayout.isRefreshing = true
         showOrHideView(binding.textSearchInfo, false)
-        showOrHideView(binding.progressOrderService.root, true)
         list.clear()
         search?.let { text ->
             viewModel.search(

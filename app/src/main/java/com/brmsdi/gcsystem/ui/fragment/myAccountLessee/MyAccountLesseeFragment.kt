@@ -11,11 +11,12 @@ import com.brmsdi.gcsystem.data.repository.LesseeRepository
 import com.brmsdi.gcsystem.databinding.FragmentMyAccountLesseeBinding
 import com.brmsdi.gcsystem.ui.utils.AuthType
 import com.brmsdi.gcsystem.ui.utils.DateUtils
-import com.brmsdi.gcsystem.ui.utils.TextUtils
+import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
+import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import org.koin.android.ext.android.get
 import org.koin.core.qualifier.named
 
-class MyAccountLesseeFragment : Fragment() {
+class MyAccountLesseeFragment : Fragment(), ProgressBarOnApp {
 
     private lateinit var viewModel: MyAccountLesseeViewModel
     private lateinit var binding: FragmentMyAccountLesseeBinding
@@ -34,15 +35,21 @@ class MyAccountLesseeFragment : Fragment() {
     private fun observe() {
         viewModel.account.observe(this.viewLifecycleOwner) {
             fillData(it)
+            showOrHideView(binding.progress.root, false)
+            showOrHideView(binding.layoutInputData, true)
         }
 
         viewModel.validation.observe(this.viewLifecycleOwner) {
-            TextUtils.displayMessage(this.requireContext(), it.message())
+            displayMessage(this.requireContext(), it.message())
+            showOrHideView(binding.progress.root, false)
+            showOrHideView(binding.layoutInputData, true)
         }
     }
 
     private fun getDataMyAccount() {
         val repository = get<LesseeRepository>(named(AuthType.LESSEE.type))
+        showOrHideView(binding.layoutInputData, false)
+        showOrHideView(binding.progress.root, true)
         viewModel.getDataAccount(repository)
     }
 
