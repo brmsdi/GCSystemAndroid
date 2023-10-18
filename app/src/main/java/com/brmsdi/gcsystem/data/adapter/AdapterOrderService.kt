@@ -32,6 +32,7 @@ class AdapterOrderService(private val listener: ItemRecyclerClickListener<OrderS
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateAll(newList: MutableList<OrderService>) {
+        list.clear()
         list = newList
         notifyDataSetChanged()
     }
