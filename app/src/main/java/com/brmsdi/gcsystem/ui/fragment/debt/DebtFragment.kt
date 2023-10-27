@@ -4,16 +4,18 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.paging.map
+import androidx.paging.LoadState.Loading
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brmsdi.gcsystem.data.adapter.PagingDataDebtsAdapter
 import com.brmsdi.gcsystem.databinding.FragmentDebtBinding
 import com.brmsdi.gcsystem.ui.utils.NumberUtils.Companion.getSystemLocale
-import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -27,39 +29,27 @@ class DebtFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDebtBinding.inflate(inflater, container, false)
+        binding.progressDebts.root.visibility = VISIBLE
         val items = viewModel.items
         adapter = PagingDataDebtsAdapter(getSystemLocale(this.requireContext()))
         binding.recyclerDebts.layoutManager = LinearLayoutManager(this.requireContext())
         binding.recyclerDebts.adapter = adapter
-
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 items.collectLatest {
-                    println("RETORNO")
-                    println("" + it.toString() )
-                    it.map { r -> println(r.toString()) }
                     adapter.submitData(it)
                 }
             }
         }
-
-        //loadData()
-        // observe()
-
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                adapter.loadStateFlow.collect {
+                    if (it.source.refresh !is Loading) binding.progressDebts.root.visibility = GONE
+                    binding.prependProgress.isVisible = it.source.prepend is Loading
+                    binding.appendProgress.isVisible = it.source.append is Loading
+                }
+            }
+        }
         return binding.root
-    }
-
-    private fun observe() {
-        viewModel.debts.observe(this.viewLifecycleOwner) {
-            //adapter.updateAll(it.content)
-        }
-
-        viewModel.error.observe(this.viewLifecycleOwner) {
-            displayMessage(this.requireContext(), it.message())
-        }
-    }
-
-    private fun loadData() {
-        viewModel.loadDebts()
     }
 }
