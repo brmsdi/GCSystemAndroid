@@ -4,13 +4,21 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.brmsdi.gcsystem.R
+import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.ITEMS_PER_PAGE
 import com.brmsdi.gcsystem.data.dto.PaginationDebtDTO
 import com.brmsdi.gcsystem.data.dto.ResponseRequestDTO
 import com.brmsdi.gcsystem.data.dto.ValidationModelDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
+import com.brmsdi.gcsystem.data.model.Debt
 import com.brmsdi.gcsystem.data.repository.DebtRepository
 import com.brmsdi.gcsystem.ui.utils.TextUtils
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import java.net.ConnectException
 
@@ -46,4 +54,9 @@ class DebtViewModel(application: Application, private val debtRepository: DebtRe
             }
         })
     }
+
+    val items: Flow<PagingData<Debt>> = Pager(
+        config = PagingConfig(pageSize = ITEMS_PER_PAGE, enablePlaceholders = false),
+        pagingSourceFactory = { debtRepository.debtPagingSource() }
+    ).flow.cachedIn(viewModelScope)
 }
