@@ -84,10 +84,12 @@ class Constant private constructor() {
     }
 
     object PARAMS {
+        const val STARTING_KEY = 0
         const val PAGE = "page"
         const val SIZE = "size"
         const val KEY_SEARCH = "keySearch"
         const val ID_ORDER_SERVICE = "idOrderService"
+        const val ITEMS_PER_PAGE = 2
     }
 
     object REQUESTCODE {
