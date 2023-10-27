@@ -9,7 +9,6 @@ import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.STARTING_KEY
 import com.brmsdi.gcsystem.data.dto.PaginationDebtDTO
 import com.brmsdi.gcsystem.data.model.Debt
 import com.brmsdi.gcsystem.data.service.DebtService
-import kotlinx.coroutines.delay
 import java.lang.Integer.max
 
 /**
@@ -33,7 +32,6 @@ class DebtPagingSource(private val debtService: DebtService) :
             val size = params.loadSize
             val requestParams = mapOf(Pair(PAGE, "$start"), Pair(SIZE, "$size"))
             val response = debtService.load(requestParams)
-            delay(3_000L)
             if (response.isSuccessful) {
                 val data: PaginationDebtDTO? = response.body()
                 val prevKey : Int?
