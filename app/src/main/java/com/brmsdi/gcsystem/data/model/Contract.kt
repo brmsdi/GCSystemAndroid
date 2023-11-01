@@ -1,6 +1,7 @@
 package com.brmsdi.gcsystem.data.model
 
 import android.os.Parcelable
+import com.brmsdi.gcsystem.data.pagingsource.PagingModel
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import java.util.Date
@@ -33,4 +34,7 @@ data class Contract(
     var condominium: Condominium,
     @SerializedName("lessee")
     var lessee: Lessee,
-) : Parcelable
+) : Parcelable, PagingModel<Contract> {
+    override fun getPagingID() : Int = id
+    override fun getModel(): Contract = this
+}
