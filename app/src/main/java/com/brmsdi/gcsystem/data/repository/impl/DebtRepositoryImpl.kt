@@ -2,7 +2,8 @@ package com.brmsdi.gcsystem.data.repository.impl
 
 import com.brmsdi.gcsystem.data.dto.PaginationDebtDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
-import com.brmsdi.gcsystem.data.pagingsource.DebtPagingSource
+import com.brmsdi.gcsystem.data.model.Debt
+import com.brmsdi.gcsystem.data.pagingsource.GenericPagingSource
 import com.brmsdi.gcsystem.data.remote.retrofit.RetrofitClient
 import com.brmsdi.gcsystem.data.repository.DebtRepository
 import com.brmsdi.gcsystem.data.service.DebtService
@@ -15,8 +16,8 @@ class DebtRepositoryImpl : DebtRepository {
         call(debtService.loadDebts(params), event)
     }
 
-    override fun debtPagingSource() : DebtPagingSource {
+    override fun pagingSource(): GenericPagingSource<Debt> {
         debtService = RetrofitClient.createService(DebtService::class.java)
-        return DebtPagingSource(debtService)
+        return GenericPagingSource(debtService)
     }
 }
