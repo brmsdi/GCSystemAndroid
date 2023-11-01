@@ -1,7 +1,9 @@
 package com.brmsdi.gcsystem.data.service
 
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.DEBTS_LESSEE
+import com.brmsdi.gcsystem.data.dto.PaginationDTO
 import com.brmsdi.gcsystem.data.dto.PaginationDebtDTO
+import com.brmsdi.gcsystem.data.model.Debt
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
@@ -28,5 +30,5 @@ interface DebtService {
     fun loadDebts(@QueryMap params: Map<String, String> = mapOf()) : Call<PaginationDebtDTO>
 
     @GET(DEBTS_LESSEE)
-    suspend fun load(@QueryMap params: Map<String, String> = mapOf()) : Response<PaginationDebtDTO>
+    suspend fun load(@QueryMap params: Map<String, String> = mapOf()) : Response<PaginationDTO<Debt>>
 }
