@@ -7,7 +7,7 @@ import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.PAGE
 import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.SIZE
 import com.brmsdi.gcsystem.data.constants.Constant.PARAMS.STARTING_KEY
 import com.brmsdi.gcsystem.data.dto.PaginationDTO
-import com.brmsdi.gcsystem.data.service.DebtService
+import com.brmsdi.gcsystem.data.service.PagingSourceService
 import java.lang.Integer.max
 
 /**
@@ -16,7 +16,7 @@ import java.lang.Integer.max
  * @since 1
  */
 @Suppress("UNCHECKED_CAST")
-class GenericPagingSource<E : PagingModel<E>>(private val debtService: DebtService) :
+open class GenericPagingSource<E : PagingModel<E>>(private val pagingSourceService: PagingSourceService) :
     PagingSource<Int, E>() {
     override fun getRefreshKey(state: PagingState<Int, E>): Int? {
         // In our case we grab the item closest to the anchor position
@@ -31,7 +31,7 @@ class GenericPagingSource<E : PagingModel<E>>(private val debtService: DebtServi
             val start = params.key ?: STARTING_KEY
             val size = params.loadSize
             val requestParams = mapOf(Pair(PAGE, "$start"), Pair(SIZE, "$size"))
-            val response = debtService.load(requestParams)
+            val response = pagingSourceService.load(requestParams)
             return if (response.isSuccessful) {
                 val data = response.body() as PaginationDTO<E>
                 val prevKey : Int? = if (data.first) null else start - 1
