@@ -1,6 +1,5 @@
 package com.brmsdi.gcsystem.data.dto
 
-import com.brmsdi.gcsystem.data.pagingsource.PagingModel
 import com.google.gson.annotations.SerializedName
 
 
@@ -9,9 +8,7 @@ import com.google.gson.annotations.SerializedName
  * @author Wisley Bruno Marques França
  * @since 1
  */
-open class PaginationDTO<T : PagingModel<T>>(
-    @SerializedName("content")
-    var content: MutableList<T>,
+abstract class PaginationDTO(
     @SerializedName("totalElements")
     var totalElements: Int,
     @SerializedName("totalPages")
