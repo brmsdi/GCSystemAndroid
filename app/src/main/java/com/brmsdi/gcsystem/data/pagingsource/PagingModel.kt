@@ -1,15 +1,12 @@
 package com.brmsdi.gcsystem.data.pagingsource
 
-
 /**
  *
  * @author Wisley Bruno Marques França
  * @since 1
  */
 
-interface PagingModel<E> {
+interface PagingModel {
 
     fun getPagingID() : Int
-
-    fun getModel() : E
 }
