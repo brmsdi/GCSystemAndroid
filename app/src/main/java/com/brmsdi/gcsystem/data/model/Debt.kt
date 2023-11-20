@@ -24,8 +24,7 @@ data class Debt(
     var status: Status,
     @SerializedName("lessee")
     var lessee: Lessee
-) : Parcelable, PagingModel<Debt> {
+) : Parcelable, PagingModel {
     override fun getPagingID() : Int = id
-    override fun getModel(): Debt = this
 
 }

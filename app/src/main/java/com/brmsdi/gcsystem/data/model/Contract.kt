@@ -34,7 +34,6 @@ data class Contract(
     var condominium: Condominium,
     @SerializedName("lessee")
     var lessee: Lessee,
-) : Parcelable, PagingModel<Contract> {
+) : Parcelable, PagingModel {
     override fun getPagingID() : Int = id
-    override fun getModel(): Contract = this
 }
