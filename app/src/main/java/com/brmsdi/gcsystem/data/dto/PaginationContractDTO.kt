@@ -1,6 +1,7 @@
 package com.brmsdi.gcsystem.data.dto
 
 import com.brmsdi.gcsystem.data.model.Contract
+import com.google.gson.annotations.SerializedName
 
 /**
  *
@@ -8,7 +9,8 @@ import com.brmsdi.gcsystem.data.model.Contract
  * @since 1
  */
 class PaginationContractDTO(
-    content: MutableList<Contract>,
+    @SerializedName("content")
+    var content: MutableList<Contract>,
     totalElements: Int,
     totalPages: Int,
     last: Boolean,
@@ -17,8 +19,7 @@ class PaginationContractDTO(
     number: Int,
     numberOfElements: Int,
     empty: Boolean
-) : PaginationDTO<Contract>(
-    content,
+) : PaginationDTO (
     totalElements,
     totalPages,
     last,

@@ -1,6 +1,7 @@
 package com.brmsdi.gcsystem.data.dto
 
 import com.brmsdi.gcsystem.data.model.OrderService
+import com.google.gson.annotations.SerializedName
 
 /**
  *
@@ -8,7 +9,8 @@ import com.brmsdi.gcsystem.data.model.OrderService
  * @since 1
  */
 class PaginationOrderServiceDTO(
-    content: MutableList<OrderService>,
+    @SerializedName("content")
+    var content: MutableList<OrderService>,
     totalElements: Int,
     totalPages: Int,
     last: Boolean,
@@ -17,8 +19,7 @@ class PaginationOrderServiceDTO(
     number: Int,
     numberOfElements: Int,
     empty: Boolean
-) : PaginationDTO<OrderService>(
-    content,
+) : PaginationDTO(
     totalElements,
     totalPages,
     last,

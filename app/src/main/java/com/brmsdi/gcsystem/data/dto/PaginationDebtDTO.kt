@@ -1,6 +1,7 @@
 package com.brmsdi.gcsystem.data.dto
 
 import com.brmsdi.gcsystem.data.model.Debt
+import com.google.gson.annotations.SerializedName
 
 /**
  *
@@ -8,7 +9,8 @@ import com.brmsdi.gcsystem.data.model.Debt
  * @since 1
  */
 class PaginationDebtDTO(
-    content: MutableList<Debt>,
+    @SerializedName("content")
+    var content: MutableList<Debt>,
     totalElements: Int,
     totalPages: Int,
     last: Boolean,
@@ -17,8 +19,7 @@ class PaginationDebtDTO(
     number: Int,
     numberOfElements: Int,
     empty: Boolean
-) : PaginationDTO<Debt>(
-    content,
+) : PaginationDTO(
     totalElements,
     totalPages,
     last,

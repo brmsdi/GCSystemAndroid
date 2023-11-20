@@ -1,6 +1,7 @@
 package com.brmsdi.gcsystem.data.dto
 
 import com.brmsdi.gcsystem.data.model.RepairRequest
+import com.google.gson.annotations.SerializedName
 
 /**
  *
@@ -8,7 +9,8 @@ import com.brmsdi.gcsystem.data.model.RepairRequest
  * @since 1
  */
 class PaginationRepairRequestDTO(
-    content: MutableList<RepairRequest>,
+    @SerializedName("content")
+    var content: MutableList<RepairRequest>,
     totalElements: Int,
     totalPages: Int,
     last: Boolean,
@@ -17,8 +19,7 @@ class PaginationRepairRequestDTO(
     number: Int,
     numberOfElements: Int,
     empty: Boolean
-) : PaginationDTO<RepairRequest>(
-    content,
+) : PaginationDTO(
     totalElements,
     totalPages,
     last,
