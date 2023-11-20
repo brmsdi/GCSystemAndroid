@@ -1,8 +1,7 @@
 package com.brmsdi.gcsystem.data.service
 
 import com.brmsdi.gcsystem.data.constants.Constant.ENDPOINT.DEBTS_LESSEE
-import com.brmsdi.gcsystem.data.dto.PaginationDTO
-import com.brmsdi.gcsystem.data.model.Debt
+import com.brmsdi.gcsystem.data.dto.PaginationDebtDTO
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
@@ -14,7 +13,7 @@ import retrofit2.http.QueryMap
  * @since 1
  */
 
-interface DebtService : PagingSourceService {
+interface DebtService {
 
     /**
      * Carrega uma lista de debitos com paginação.
@@ -26,5 +25,5 @@ interface DebtService : PagingSourceService {
      * @return Um objeto [Call] que pode ser usado para fazer a solicitação HTTP.
      */
     @GET(DEBTS_LESSEE)
-    override suspend fun load(@QueryMap params: Map<String, String>) : Response<PaginationDTO<Debt>>
+    suspend fun load(@QueryMap params: Map<String, String>) : Response<PaginationDebtDTO>
 }

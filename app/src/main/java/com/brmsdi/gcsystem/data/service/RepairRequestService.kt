@@ -15,6 +15,7 @@ import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.model.Item
 import com.brmsdi.gcsystem.data.model.RepairRequest
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -55,7 +56,7 @@ interface RepairRequestService {
      * @return Um objeto [Call] que pode ser usado para fazer a solicitação HTTP.
      */
     @GET(REPAIR_REQUESTS_LESSEE)
-    fun loadRepairRequests(@QueryMap params: Map<String, String> = mapOf()): Call<PaginationRepairRequestDTO>
+    suspend fun load(@QueryMap params: Map<String, String>): Response<PaginationRepairRequestDTO>
 
     /**
      * Realiza uma busca na lista de solicitações de reparo com paginação.
@@ -68,7 +69,7 @@ interface RepairRequestService {
      * @return Um objeto [Call] que pode ser usado para fazer a solicitação HTTP.
      */
     @GET(SEARCH_REPAIR_REQUEST)
-    fun search(@QueryMap params: Map<String, String> = mapOf()): Call<PaginationRepairRequestDTO>
+    suspend fun search(@QueryMap params: Map<String, String> = mapOf()): Response<PaginationRepairRequestDTO>
 
     @GET(REPAIR_REQUEST_DETAIL)
     fun details(@Query("id") id: Int): Call<RepairRequest>
