@@ -3,9 +3,9 @@ package com.brmsdi.gcsystem.data.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.brmsdi.gcsystem.data.adapter.viewHolder.DebtViewHolder
-import com.brmsdi.gcsystem.data.model.Debt
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import com.brmsdi.gcsystem.data.dto.PagingDebtModel
 import com.brmsdi.gcsystem.databinding.RowDebtBinding
 import java.util.Locale
 
@@ -14,7 +14,8 @@ import java.util.Locale
  * @author Wisley Bruno Marques França
  * @since 1
  */
-class PagingDataDebtsAdapter(private val locale: Locale) : PagingDataAdapter<Debt, DebtViewHolder>(DEBT_DIFF_CALLBACK) {
+class PagingDataDebtsAdapter(private val locale: Locale) :
+    PagingDataAdapter<PagingDebtModel, DebtViewHolder>(DEBT_DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DebtViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -25,16 +26,22 @@ class PagingDataDebtsAdapter(private val locale: Locale) : PagingDataAdapter<Deb
     override fun onBindViewHolder(holder: DebtViewHolder, position: Int) {
         val tile = getItem(position)
         if (tile != null) {
-            holder.bindData(tile)
+            holder.bindData(tile.debt)
         }
     }
 
     companion object {
-        private val DEBT_DIFF_CALLBACK = object : DiffUtil.ItemCallback<Debt>() {
-            override fun areItemsTheSame(oldItem: Debt, newItem: Debt): Boolean =
-                oldItem.id == newItem.id
+        private val DEBT_DIFF_CALLBACK = object : DiffUtil.ItemCallback<PagingDebtModel>() {
+            override fun areItemsTheSame(
+                oldItem: PagingDebtModel,
+                newItem: PagingDebtModel
+            ): Boolean =
+                oldItem.key == newItem.key
 
-            override fun areContentsTheSame(oldItem: Debt, newItem: Debt): Boolean =
+            override fun areContentsTheSame(
+                oldItem: PagingDebtModel,
+                newItem: PagingDebtModel
+            ): Boolean =
                 oldItem == newItem
         }
     }

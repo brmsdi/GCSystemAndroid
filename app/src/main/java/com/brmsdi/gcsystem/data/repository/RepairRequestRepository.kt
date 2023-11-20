@@ -1,6 +1,8 @@
 package com.brmsdi.gcsystem.data.repository
 
+import androidx.paging.PagingSource
 import com.brmsdi.gcsystem.data.dto.PaginationRepairRequestDTO
+import com.brmsdi.gcsystem.data.dto.PagingRepairRequestModel
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDTO
 import com.brmsdi.gcsystem.data.dto.RepairRequestRegisterDataDTO
 import com.brmsdi.gcsystem.data.dto.ResponseDTO
@@ -33,6 +35,8 @@ interface RepairRequestRepository : CallRepository {
      *               - "size": Tamanho da página (número de itens por página) (opcional).
      */
     fun loadRepairRequests(params: Map<String, String>, event: APIEvent<PaginationRepairRequestDTO>)
+
+    fun pagingSource(search: String?) : PagingSource<Int, PagingRepairRequestModel>
 
     fun search(@QueryMap params: Map<String, String> = mapOf(), event: APIEvent<PaginationRepairRequestDTO>)
 
