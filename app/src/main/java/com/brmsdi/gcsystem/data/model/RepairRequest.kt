@@ -36,7 +36,6 @@ data class RepairRequest(
 
     @SerializedName("orderService")
     var orderService: OrderService?
-) : Parcelable, PagingModel<RepairRequest> {
+) : Parcelable, PagingModel {
     override fun getPagingID() : Int = id
-    override fun getModel(): RepairRequest = this
 }
