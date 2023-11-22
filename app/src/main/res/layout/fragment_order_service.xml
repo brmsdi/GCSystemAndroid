@@ -10,7 +10,7 @@
     tools:context=".ui.fragment.orderService.OrderServiceFragment">
 
     <TextView
-        android:id="@+id/text_search_info"
+        android:id="@+id/text_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_size_label"

@@ -61,11 +61,11 @@ class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>
     private fun observe() {
         viewModel.pagination.observe(this.viewLifecycleOwner) {
             if (it.empty) {
-                binding.textSearchInfo.text = getString(R.string.search_is_empty)
-                showOrHideView(binding.textSearchInfo, true)
+                binding.textInfo.text = getString(R.string.search_is_empty)
+                showOrHideView(binding.textInfo, true)
                 binding.swipeRefreshLayout.isRefreshing = false
             } else {
-                showOrHideView(binding.textSearchInfo, false)
+                showOrHideView(binding.textInfo, false)
                 adapter.updateAll(it.content)
                 binding.swipeRefreshLayout.isRefreshing = false
             }
@@ -74,8 +74,8 @@ class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>
         viewModel.error.observe(this.viewLifecycleOwner) {
             if (!it.status()) {
                 adapter.updateAll(mutableListOf())
-                binding.textSearchInfo.text = it.message()
-                showOrHideView(binding.textSearchInfo, true)
+                binding.textInfo.text = it.message()
+                showOrHideView(binding.textInfo, true)
                 binding.swipeRefreshLayout.isRefreshing = false
                 displayMessage(this.requireContext(), it.message())
 
@@ -122,7 +122,7 @@ class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>
 
     private fun loadData(search: String?, page: UInt = 0u, size: UInt = 10u) {
         binding.swipeRefreshLayout.isRefreshing = true
-        showOrHideView(binding.textSearchInfo, false)
+        showOrHideView(binding.textInfo, false)
         adapter.updateAll(mutableListOf())
         search?.let { text ->
             viewModel.search(

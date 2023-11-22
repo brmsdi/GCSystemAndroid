@@ -59,8 +59,8 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
         binding.recyclerRepair.adapter = adapter
         binding.progressRepairRequest.root.visibility = View.VISIBLE
         observe()
-        viewModel.load(search)
         addAction()
+        viewModel.load(search)
         itemRecyclerViewDragCallback = ItemRecyclerViewDragCallback(this)
         itemTouchHelper = ItemTouchHelper(itemRecyclerViewDragCallback)
         itemTouchHelper.attachToRecyclerView(binding.recyclerRepair)
@@ -111,10 +111,6 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
     }
 
     private fun observe() {
-        viewModel.loadData.observe(this.viewLifecycleOwner) {
-            binding.progressRepairRequest.root.visibility = View.GONE
-            adapter.submitData(viewLifecycleOwner.lifecycle, it)
-        }
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 adapter.loadStateFlow.collect {
@@ -123,12 +119,14 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
                 }
             }
         }
-
+        viewModel.loadData.observe(this.viewLifecycleOwner) {
+            adapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
         viewModel.error.observe(this.viewLifecycleOwner) {
             if (!it.status()) {
                 showOrHideView(binding.progressRepairRequest.root, false)
-                binding.textSearchInfo.text = it.message()
-                showOrHideView(binding.textSearchInfo, true)
+                binding.textInfo.text = it.message()
+                showOrHideView(binding.textInfo, true)
                 displayMessage(this.requireContext(), it.message())
             }
         }
@@ -138,9 +136,22 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
         binding.floatingNewRepair.setOnClickListener {
             newRepairRequest()
         }
+        adapter.addOnPagesUpdatedListener {
+            verifyData()
+        }
     }
 
     private fun that() = this
+
+    private fun verifyData() {
+        showOrHideView(binding.progressRepairRequest.root, false)
+        if (adapter.itemCount <= 0) {
+            binding.textInfo.text = getString(R.string.search_is_empty)
+            binding.textInfo.isVisible = true
+            return
+        }
+        binding.textInfo.isVisible = false
+    }
 
     private fun newRepairRequest() {
         startForResult.launch(Intent(this.requireContext(), NewRepairRequestActivity::class.java))

@@ -11,13 +11,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState.Loading
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.adapter.PagingDataDebtsAdapter
 import com.brmsdi.gcsystem.databinding.FragmentDebtBinding
 import com.brmsdi.gcsystem.ui.utils.NumberUtils.Companion.getSystemLocale
+import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DebtFragment : Fragment() {
+class DebtFragment : Fragment(), ProgressBarOnApp {
     private val viewModel by viewModel<DebtViewModel>()
     private lateinit var binding: FragmentDebtBinding
     private lateinit var adapter: PagingDataDebtsAdapter
@@ -31,6 +33,7 @@ class DebtFragment : Fragment() {
         binding.recyclerDebts.layoutManager = LinearLayoutManager(this.requireContext())
         binding.recyclerDebts.adapter = adapter
         observe()
+        addAction()
         viewModel.load(search)
         return binding.root
     }
@@ -47,5 +50,21 @@ class DebtFragment : Fragment() {
         viewModel.loadData.observe(viewLifecycleOwner) {
             adapter.submitData(lifecycle, it)
         }
+    }
+
+    private fun addAction() {
+        adapter.addOnPagesUpdatedListener {
+            verifyData()
+        }
+    }
+
+    private fun verifyData() {
+        showOrHideView(binding.progressDebts.root, false)
+        if (adapter.itemCount <= 0) {
+            binding.textInfo.text = getString(R.string.search_is_empty)
+            binding.textInfo.isVisible = true
+            return
+        }
+        binding.textInfo.isVisible = false
     }
 }
