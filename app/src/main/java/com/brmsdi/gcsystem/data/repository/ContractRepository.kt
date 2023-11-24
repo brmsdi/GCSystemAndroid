@@ -1,8 +1,7 @@
 package com.brmsdi.gcsystem.data.repository
 
-import com.brmsdi.gcsystem.data.dto.PaginationContractDTO
-import com.brmsdi.gcsystem.data.listeners.APIEvent
-
+import androidx.paging.PagingSource
+import com.brmsdi.gcsystem.data.dto.PagingContractModel
 
 /**
  *
@@ -11,5 +10,5 @@ import com.brmsdi.gcsystem.data.listeners.APIEvent
  */
 
 interface ContractRepository : CallRepository {
-    fun loadContracts(params: Map<String, String> = mapOf(), event: APIEvent<PaginationContractDTO>)
+    fun pagingSource(search: String?) : PagingSource<Int, PagingContractModel>
 }
