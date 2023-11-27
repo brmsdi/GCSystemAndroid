@@ -1,10 +1,10 @@
 package com.brmsdi.gcsystem.data.repository
 
-import com.brmsdi.gcsystem.data.dto.PaginationOrderServiceDTO
+import androidx.paging.PagingSource
+import com.brmsdi.gcsystem.data.dto.PagingOrderServiceModel
 import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.listeners.APIEvent
 import com.brmsdi.gcsystem.data.model.OrderService
-
 
 /**
  *
@@ -13,11 +13,9 @@ import com.brmsdi.gcsystem.data.model.OrderService
  */
 
 interface OrderServiceRepository : CallRepository {
-    fun loadOrderServices(params: Map<String, String>, event: APIEvent<PaginationOrderServiceDTO>)
-
-    fun search(params: Map<String, String>, event: APIEvent<PaginationOrderServiceDTO>)
-
     fun details(id: Int, event: APIEvent<OrderService>)
 
     fun close(id: Int, event: APIEvent<ResponseDTO>)
+
+    fun pagingSource(search: String?) : PagingSource<Int, PagingOrderServiceModel>
 }

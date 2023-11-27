@@ -8,6 +8,7 @@ import com.brmsdi.gcsystem.data.dto.PaginationOrderServiceDTO
 import com.brmsdi.gcsystem.data.dto.ResponseDTO
 import com.brmsdi.gcsystem.data.model.OrderService
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -32,7 +33,7 @@ interface OrderServiceService {
      * @return Um objeto [Call] que pode ser usado para fazer a solicitação HTTP.
      */
     @GET(ORDER_SERVICES_EMPLOYEE)
-    fun loadOrderService(@QueryMap params: Map<String, String>) : Call<PaginationOrderServiceDTO>
+    suspend fun loadOrderService(@QueryMap params: Map<String, String>) : Response<PaginationOrderServiceDTO>
 
     /**
      * Realiza uma busca na lista de ordem de serviço com paginação.
@@ -45,7 +46,7 @@ interface OrderServiceService {
      * @return Um objeto [Call] que pode ser usado para fazer a solicitação HTTP.
      */
     @GET(SEARCH_ORDER_SERVICE)
-    fun search(@QueryMap params: Map<String, String> = mapOf()): Call<PaginationOrderServiceDTO>
+    suspend fun search(@QueryMap params: Map<String, String> = mapOf()): Response<PaginationOrderServiceDTO>
 
     @GET(ORDER_SERVICE_DETAILS)
     fun details(@Query("id") id: Int): Call<OrderService>
