@@ -122,4 +122,5 @@
     <string name="unlock_device">Desbloquear dispositivo</string>
     <string name="input_password">Insira a senha de desbloqueio</string>
     <string name="new_repair_request_success">Solicitação de reparo realizada com sucesso</string>
+    <string name="show_password">Mostrar Senha</string>
 </resources>
