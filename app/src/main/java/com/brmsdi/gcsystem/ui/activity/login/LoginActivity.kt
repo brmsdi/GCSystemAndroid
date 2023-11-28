@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ArrayAdapter
@@ -210,6 +211,15 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
     private fun addAction() {
         binding.buttonSend.setOnClickListener(this)
         binding.textChangePassword.setOnClickListener(this)
+        binding.switchShowPassword.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.editPassword.transformationMethod = null
+            } else {
+                binding.editPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+            val length = binding.editPassword.text.length
+            binding.editPassword.setSelection(length)
+        }
     }
 
     private fun addTypes() {
