@@ -16,5 +16,11 @@ class DateUtils private constructor() {
             val formatter = SimpleDateFormat(format, Locale("pt", "BR"))
             return formatter.format(date)
         }
+
+        fun dateFormattedNotHoursToView(date: Date): String {
+            val format = "dd/MM/yyyy"
+            val formatter = SimpleDateFormat(format, Locale("pt", "BR"))
+            return formatter.format(date)
+        }
     }
 }
