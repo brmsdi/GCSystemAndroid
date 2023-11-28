@@ -57,7 +57,7 @@ class MyAccountLesseeFragment : Fragment(), ProgressBarOnApp {
         binding.editId.setText(lesseeData.id.toString())
         binding.editName.setText(lesseeData.name)
         binding.editCpf.setText(lesseeData.cpf)
-        binding.editBirthDate.setText(DateUtils.dateFormattedToView(lesseeData.birthDate))
+        binding.editBirthDate.setText(DateUtils.dateFormattedNotHoursToView(lesseeData.birthDate))
         binding.editEmail.setText(lesseeData.email)
         binding.editContact.setText(lesseeData.contactNumber)
     }
