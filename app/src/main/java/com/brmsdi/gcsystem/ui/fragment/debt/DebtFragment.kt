@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.brmsdi.gcsystem.R
 import com.brmsdi.gcsystem.data.adapter.PagingDataDebtsAdapter
 import com.brmsdi.gcsystem.databinding.FragmentDebtBinding
+import com.brmsdi.gcsystem.ui.utils.ColorUtils
 import com.brmsdi.gcsystem.ui.utils.NumberUtils.Companion.getSystemLocale
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import kotlinx.coroutines.launch
@@ -32,8 +33,10 @@ class DebtFragment : Fragment(), ProgressBarOnApp {
         adapter = PagingDataDebtsAdapter(getSystemLocale(this.requireContext()))
         binding.recyclerDebts.layoutManager = LinearLayoutManager(this.requireContext())
         binding.recyclerDebts.adapter = adapter
+        binding.progressDebts.root.visibility = View.VISIBLE
         observe()
         addAction()
+        ColorUtils.getColorSwipeRefreshLayout(resources, binding.swipeRefreshLayout)
         viewModel.load(search)
         return binding.root
     }
@@ -56,15 +59,23 @@ class DebtFragment : Fragment(), ProgressBarOnApp {
         adapter.addOnPagesUpdatedListener {
             verifyData()
         }
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.load(search)
+        }
     }
 
     private fun verifyData() {
-        showOrHideView(binding.progressDebts.root, false)
+        removeLoadingComponent()
         if (adapter.itemCount <= 0) {
             binding.textInfo.text = getString(R.string.search_is_empty)
             binding.textInfo.isVisible = true
             return
         }
         binding.textInfo.isVisible = false
+    }
+
+    private fun removeLoadingComponent() {
+        showOrHideView(binding.progressDebts.root, false)
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 }

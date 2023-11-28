@@ -33,6 +33,7 @@ import com.brmsdi.gcsystem.databinding.FragmentRepairRequestBinding
 import com.brmsdi.gcsystem.ui.activity.detailRepairRequest.DetailRepairRequestActivity
 import com.brmsdi.gcsystem.ui.activity.newRepairRequest.NewRepairRequestActivity
 import com.brmsdi.gcsystem.ui.activity.updateRepairRequest.UpdateRepairRequestActivity
+import com.brmsdi.gcsystem.ui.utils.ColorUtils
 import com.brmsdi.gcsystem.ui.utils.DialogAppUtils
 import com.brmsdi.gcsystem.ui.utils.DialogAppUtils.Companion.closeDialog
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
@@ -60,6 +61,7 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
         binding.progressRepairRequest.root.visibility = View.VISIBLE
         observe()
         addAction()
+        ColorUtils.getColorSwipeRefreshLayout(resources, binding.swipeRefreshLayout)
         viewModel.load(search)
         itemRecyclerViewDragCallback = ItemRecyclerViewDragCallback(this)
         itemTouchHelper = ItemTouchHelper(itemRecyclerViewDragCallback)
@@ -139,18 +141,26 @@ class RepairRequestFragment : Fragment(), ItemRecyclerListenerListener<RepairReq
         adapter.addOnPagesUpdatedListener {
             verifyData()
         }
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.load(search)
+        }
     }
 
     private fun that() = this
 
     private fun verifyData() {
-        showOrHideView(binding.progressRepairRequest.root, false)
+        removeLoadingComponent()
         if (adapter.itemCount <= 0) {
             binding.textInfo.text = getString(R.string.search_is_empty)
             binding.textInfo.isVisible = true
             return
         }
         binding.textInfo.isVisible = false
+    }
+
+    private fun removeLoadingComponent() {
+        showOrHideView(binding.progressRepairRequest.root, false)
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 
     private fun newRepairRequest() {

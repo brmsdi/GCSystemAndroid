@@ -19,6 +19,7 @@ import com.brmsdi.gcsystem.data.listeners.ItemRecyclerClickListener
 import com.brmsdi.gcsystem.data.model.Contract
 import com.brmsdi.gcsystem.databinding.FragmentContractBinding
 import com.brmsdi.gcsystem.ui.activity.detailContract.DetailContractActivity
+import com.brmsdi.gcsystem.ui.utils.ColorUtils
 import com.brmsdi.gcsystem.ui.utils.NumberUtils.Companion.getSystemLocale
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import kotlinx.coroutines.launch
@@ -41,6 +42,7 @@ class ContractFragment : Fragment(), ItemRecyclerClickListener<Contract>, Progre
         binding.progressContracts.root.visibility = View.VISIBLE
         observe()
         addAction()
+        ColorUtils.getColorSwipeRefreshLayout(resources, binding.swipeRefreshLayout)
         viewModel.load(search)
         return binding.root
     }
@@ -75,15 +77,23 @@ class ContractFragment : Fragment(), ItemRecyclerClickListener<Contract>, Progre
         adapter.addOnPagesUpdatedListener {
             verifyData()
         }
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.load(search)
+        }
     }
 
     private fun verifyData() {
-        showOrHideView(binding.progressContracts.root, false)
+        removeLoadingComponent()
         if (adapter.itemCount <= 0) {
             binding.textInfo.text = getString(R.string.search_is_empty)
             binding.textInfo.isVisible = true
             return
         }
         binding.textInfo.isVisible = false
+    }
+
+    private fun removeLoadingComponent() {
+        showOrHideView(binding.progressContracts.root, false)
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 }

@@ -25,6 +25,7 @@ import com.brmsdi.gcsystem.data.listeners.OnSearchViewListener
 import com.brmsdi.gcsystem.data.model.OrderService
 import com.brmsdi.gcsystem.databinding.FragmentOrderServiceBinding
 import com.brmsdi.gcsystem.ui.activity.detailOrderService.DetailOrderServiceActivity
+import com.brmsdi.gcsystem.ui.utils.ColorUtils
 import com.brmsdi.gcsystem.ui.utils.ProgressBarOnApp
 import com.brmsdi.gcsystem.ui.utils.TextUtils.Companion.displayMessage
 import kotlinx.coroutines.launch
@@ -41,12 +42,13 @@ class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentOrderServiceBinding.inflate(inflater, container, false)
-        binding.fragmentOrderService.isVisible = true
         binding.recyclerOrderService.layoutManager = LinearLayoutManager(context)
         adapter = PagingDataOrderService(this)
         binding.recyclerOrderService.adapter = adapter
+        binding.progressOrderService.root.visibility = View.VISIBLE
         observe()
         addAction()
+        ColorUtils.getColorSwipeRefreshLayout(resources, binding.swipeRefreshLayout)
         viewModel.load(search)
         return binding.root
     }
@@ -87,16 +89,24 @@ class OrderServiceFragment : Fragment(), ItemRecyclerClickListener<OrderService>
         adapter.addOnPagesUpdatedListener {
             verifyData()
         }
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.load(search)
+        }
     }
 
     private fun verifyData() {
-        showOrHideView(binding.progressOrderService.root, false)
+        removeLoadingComponent()
         if (adapter.itemCount <= 0) {
             binding.textInfo.text = getString(R.string.search_is_empty)
             binding.textInfo.isVisible = true
             return
         }
         binding.textInfo.isVisible = false
+    }
+
+    private fun removeLoadingComponent() {
+        showOrHideView(binding.progressOrderService.root, false)
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 
     private fun addSearchEventListener(): SearchView.OnQueryTextListener {
