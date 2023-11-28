@@ -212,11 +212,8 @@ class LoginActivity : TypedActivity(), OnClickListener, ProgressBarOnApp {
         binding.buttonSend.setOnClickListener(this)
         binding.textChangePassword.setOnClickListener(this)
         binding.switchShowPassword.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                binding.editPassword.transformationMethod = null
-            } else {
-                binding.editPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-            }
+            if (isChecked) binding.editPassword.transformationMethod = null
+            else binding.editPassword.transformationMethod = PasswordTransformationMethod.getInstance()
             val length = binding.editPassword.text.length
             binding.editPassword.setSelection(length)
         }
