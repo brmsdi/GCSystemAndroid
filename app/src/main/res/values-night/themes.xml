@@ -132,4 +132,28 @@
         <item name="android:layout_margin">16dp</item>
         <item name="android:backgroundTint">?attr/colorPrimaryVariant</item>
     </style>
+
+    <style name="imageButton_wpp_style">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:background">@drawable/round_button_wpp_background</item>
+        <item name="android:src">@drawable/baseline_whatsapp_24</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="imageButton_email_style">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:background">@drawable/round_button_email_background</item>
+        <item name="android:src">@drawable/baseline_email_24_pink</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="imageButton_github_style">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:background">@drawable/round_button_github_background_yellow</item>
+        <item name="android:src">@drawable/baseline_code_24_yellow</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
 </resources>

@@ -123,4 +123,10 @@
     <string name="input_password">Insira a senha de desbloqueio</string>
     <string name="new_repair_request_success">Solicitação de reparo realizada com sucesso</string>
     <string name="show_password">Mostrar Senha</string>
+    <string name="label_home_title">APP PARA GERENCIAMENTO DE CONDOMÍNIOS</string>
+    <string name="label_home_development">Desenvolvido por Wisley Bruno Marques França</string>
+    <string name="label_home_contact">Contato: 92 991071491</string>
+    <string name="label_home_email">Email: srwisley.dev@gmail.com</string>
+    <string name="label_home_wpp">WhatsApp Icon</string>
+    <string name="label_home_github">GitHub icon</string>
 </resources>
